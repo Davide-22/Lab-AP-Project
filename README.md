@@ -1,1 +1,1 @@
-# Project of Laboratory of Advanced Programming test
+# Project of Laboratory of Advanced Programming
