@@ -1,0 +1,72 @@
+<div *ngIf="add" class="card">
+   <div class="card-body mt-auto">
+       <form [formGroup]="Form">
+           <div class="mb-3">
+               <label for="username" class="form-lable required">
+                   Travel Name
+               </label>
+               <div class="input-group">
+                   <input class="form-control" formcontrolname="TravelName">
+               </div>
+           </div>
+           <div class="mb-3">
+            <label for="username" class="form-lable required">
+                Daily Budget
+            </label>
+            <div class="input-group">
+                <input class="form-control" formcontrolname="DailyBudget">
+            </div>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-lable required">
+                    Starting Day
+                </label>
+                <div class="input-group">
+                    <input type="date" class="form-control" formcontrolname="StartingDay">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-lable required">
+                    Description
+                </label>
+                <div class="input-group">
+                    <input class="form-control" formcontrolname="Description">
+                </div>
+            </div>
+       </form>
+       <div class="mb-3">
+        <label for="username" class="form-lable required">
+            Destination
+        </label>
+        <div class="input-group m-2" *ngFor="let i of destinations">
+            <input [(ngModel)]="destinations[i]">
+        </div>
+        <button class="plus" (click)="destination()">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+   </div> 
+</div>
+<div class="row mt-5">
+    <div *ngIf="!add" class="col-sm-12 text-center">
+        <button class="btn btn-dark" (click)="form()">
+            <i class="fa fa-plus"></i>
+            Add a travel
+        </button>
+        <button class="btn btn-dark ml-5">
+            <i class="fa fa-bar-chart"></i>
+            Compare two travels
+        </button>  
+    </div>  
+    <div *ngIf="add" class="col-sm-12 text-center">
+        <button class="btn btn-dark" (click)="addTravel()">
+            <i class="fa fa-plus"></i>
+            Add
+        </button>
+        <button class="btn btn-dark ml-5" (click)="form()">
+            <i class="fa fa-times"></i>
+            Cancel
+        </button>  
+    </div>
+</div>
+

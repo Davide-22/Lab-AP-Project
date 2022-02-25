@@ -1,0 +1,10 @@
+.plus{
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    vertical-align: middle;
+    text-decoration: none;
+    border: .5em solid rgba(0,0,0,0);
+    border-radius: 100%;
+    background: rgb(245,245,245) linear-gradient(rgb(245,245,245), rgb(188,192,193)) 50% 50% / calc(3em + .5em*2) calc(3em + .5em*2);
+}
