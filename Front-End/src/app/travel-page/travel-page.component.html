@@ -1,0 +1,50 @@
+<!--<p>travel-page works!</p>-->
+
+&nbsp;
+&nbsp;
+
+<div class="row">
+    <div class="column">
+        <i class="fa fa-plane fa-2x"> Travel One</i><p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="column">
+        <button class="btn btn-dark">
+            <i class="fa fa-plus"></i>
+            Add a travel
+        </button>
+        <br> <br>
+        <button class="btn btn-dark">
+            Complete the travel
+        </button>
+    </div>
+    
+    
+    <div class="column">
+        <div class="pag card text-center">
+            <div class="card-body mt-auto">
+                <div *ngFor="let day of days">
+                    <div class="card m-2">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-1">
+                                    <i class="fa fa-calendar" style="font-size:36px" ></i>
+                                </div>
+                                <div class="col-8">
+                                    <h2>
+                                        {{day}}
+                                    </h2>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column"></div>
+</div>
+<br> <br>
+
