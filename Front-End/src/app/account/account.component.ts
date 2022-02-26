@@ -12,4 +12,16 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  logout(): void {
+    window.location.href = "";
+  }
+
+  changePassword(): void {
+
+  }
+
+  deleteAccount(): void {
+    window.location.href = "/sign-up";
+  }
+
 }
