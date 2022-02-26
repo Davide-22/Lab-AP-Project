@@ -6,6 +6,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 
+
 const routes: Routes = [
   {path: 'account', component: AccountComponent},
   {path: 'main-page', component: MainPageComponent},
