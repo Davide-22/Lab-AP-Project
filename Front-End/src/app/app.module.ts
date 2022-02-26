@@ -8,6 +8,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { TravelPageComponent } from './travel-page/travel-page.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MainPageComponent,
     AccountComponent,
     ChangePasswordComponent,
+    TravelPageComponent,
   ],
   imports: [
     BrowserModule,
