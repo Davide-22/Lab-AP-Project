@@ -1,15 +1,38 @@
-<h1>Account</h1>
-<button class="btn btn-dark" (click)="logout()">
-    Logout
-</button>
-<p>Username</p>
-<p>Email</p>
-<p>3 Travels done</p>
-<p>18 days on travel</p>
-<button class="btn btn-dark" (click)="changePassword()">
-    Change Password
-</button>
-
-<button class="btn btn-danger ml-5" (click)="deleteAccount()">
-    Delete Account
-</button>
+<div class="card account mt-5">
+    <div class="card-body mt-auto">
+        <div class="row">
+            <div class="col">
+                <h1>Account</h1>
+            </div>
+            <div class="col">
+                <button class="btn btn-dark" (click)="logout()">
+                    Logout
+                </button>
+            </div>
+        </div>
+        <div class="row center mt-3">
+            <h5>Username</h5> 
+        </div>
+        <div class="row center mt-3">
+            <h5>Email</h5>
+        </div>
+        <div class="row center mt-3">
+            <h5>3 Travels done</h5>
+        </div>
+        <div class="row center mt-3">
+            <h5>18 days on travel</h5>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <button class="btn btn-dark" (click)="changePassword()">
+                    Change Password
+                </button>
+            </div>
+            <div class="col">
+                <button class="btn btn-danger ml-5" (click)="deleteAccount()">
+                    Delete Account
+                </button>
+            </div> 
+        </div>
+    </div>
+</div>

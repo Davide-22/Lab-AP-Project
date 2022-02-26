@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AccountComponent } from './account/account.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -12,7 +13,11 @@ const routes: Routes = [
   {path: 'account', component: AccountComponent},
   {path: 'main-page', component: MainPageComponent},
   {path: 'sign-up', component: SignUpComponent},
+<<<<<<< HEAD
   {path: 'travel-page', component: TravelPageComponent},
+=======
+  {path: 'change-password', component: ChangePasswordComponent},
+>>>>>>> 71177d1b036900713413fd1cdef704b166da031f
   {path: '', component: LoginPageComponent}
 ];
 
