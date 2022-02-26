@@ -1,29 +1,100 @@
-<div *ngIf="add" class="card">
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Delete Travel</h4>
+            </div>
+            <div class="modal-body">
+                <p> Are you sure to delete the Travel? </p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-secondary" (click)="closePopUp()">
+                            NO
+                        </button>
+                    </div>
+                    <div class="col-sm">
+                        <button type="button"class="btn btn-danger" (click)="deleteTravel()">
+                            YES
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<div class="pag card text-center">
+    <div class="card-body mt-auto">
+        <div *ngFor="let travel of travels">
+            <div class="card m-2">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa fa-plane fa-3x"></i>
+                        </div>
+                        <div class="col-8">
+                            <h2>
+                                {{travel}}
+                            </h2>
+                        </div>
+                        <div class="col-3">
+                            <button class="but" (click)="openPopUp()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="add" class="pag card text-center mt-5">
    <div class="card-body mt-auto">
        <form [formGroup]="Form">
-           <div class="mb-3">
-               <label for="username" class="form-lable required">
-                   Travel Name
-               </label>
-               <div class="input-group">
-                   <input class="form-control" formcontrolname="TravelName">
-               </div>
-           </div>
-           <div class="mb-3">
-            <label for="username" class="form-lable required">
-                Daily Budget
-            </label>
-            <div class="input-group">
-                <input class="form-control" formcontrolname="DailyBudget">
-            </div>
-            </div>
-            <div class="mb-3">
-                <label for="username" class="form-lable required">
-                    Starting Day
-                </label>
-                <div class="input-group">
-                    <input type="date" class="form-control" formcontrolname="StartingDay">
+           <div class="row">
+               <div class="col-sm">
+                    <label for="username" class="form-lable required">
+                        Travel Name
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" formcontrolname="TravelName">
+                    </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <label for="username" class="form-lable required">
+                        Daily Budget
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" formcontrolname="DailyBudget">
+                    </div> 
+                </div>
+                <div class="col-sm">
+                    <label for="username" class="form-lable required">
+                        Starting Day
+                    </label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" formcontrolname="StartingDay">
+                    </div>
+                </div>  
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <label for="username" class="form-lable required">
+                        Destination
+                    </label>
+                    <div class="input-group m-2" *ngFor="let i of destinations">
+                        <input class="form-control" [(ngModel)]="destinations[i]" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button class="plus" (click)="destination()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>    
             </div>
             <div class="mb-3">
                 <label for="username" class="form-lable required">
@@ -34,20 +105,9 @@
                 </div>
             </div>
        </form>
-       <div class="mb-3">
-        <label for="username" class="form-lable required">
-            Destination
-        </label>
-        <div class="input-group m-2" *ngFor="let i of destinations">
-            <input [(ngModel)]="destinations[i]">
-        </div>
-        <button class="plus" (click)="destination()">
-            <i class="fa fa-plus"></i>
-        </button>
     </div>
-   </div> 
 </div>
-<div class="row mt-5">
+<div class="m-5">
     <div *ngIf="!add" class="col-sm-12 text-center">
         <button class="btn btn-dark" (click)="form()">
             <i class="fa fa-plus"></i>
@@ -58,7 +118,7 @@
             Compare two travels
         </button>  
     </div>  
-    <div *ngIf="add" class="col-sm-12 text-center">
+    <div *ngIf="add" class="text-center">
         <button class="btn btn-dark" (click)="addTravel()">
             <i class="fa fa-plus"></i>
             Add

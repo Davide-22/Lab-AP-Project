@@ -8,10 +8,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MainPageComponent implements OnInit {
   public Form: FormGroup;
-  public t: number=1;
   public destinations: string[] = [''];
-
+  public displayStyle: any = "none";
   public add: boolean = false;
+  public travels: string[] = ['Travel One', 'Travel Two', 'Travel Three'];
 
   constructor() { }
 
@@ -41,7 +41,18 @@ export class MainPageComponent implements OnInit {
 
   destination(): void {
     this.destinations.push('');
-    console.log(this.destinations);
+  }
+
+  deleteTravel(): void {
+    
+  }
+
+  openPopUp(): void {
+    this.displayStyle="block";
+  }
+
+  closePopUp(): void {
+    this.displayStyle="none";
   }
 
 }
