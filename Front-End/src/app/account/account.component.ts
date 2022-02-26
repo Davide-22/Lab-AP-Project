@@ -17,7 +17,7 @@ export class AccountComponent implements OnInit {
   }
 
   changePassword(): void {
-
+    window.location.href = "/change-password";
   }
 
   deleteAccount(): void {
