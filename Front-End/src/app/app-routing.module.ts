@@ -13,11 +13,7 @@ const routes: Routes = [
   {path: 'account', component: AccountComponent},
   {path: 'main-page', component: MainPageComponent},
   {path: 'sign-up', component: SignUpComponent},
-<<<<<<< HEAD
-  {path: 'travel-page', component: TravelPageComponent},
-=======
   {path: 'change-password', component: ChangePasswordComponent},
->>>>>>> 71177d1b036900713413fd1cdef704b166da031f
   {path: '', component: LoginPageComponent}
 ];
 
