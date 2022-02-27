@@ -5,10 +5,16 @@
 .travel{
     width: 80%;
     left: 8%;
+    border-radius: 40px;
 }
 
-select{
+.travels{
     width: 40%;
     border-color: black;
     border-radius: 10px;
+}
+
+.compares{
+    border-radius: 10px;
+    width: 20%;
 }
