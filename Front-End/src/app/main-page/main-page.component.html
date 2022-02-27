@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center">Delete Travel</h4>
+                <h4 class="modal-title text-center">Delete Travel: {{travel}}</h4>
             </div>
             <div class="modal-body">
                 <p> Are you sure to delete the Travel? </p>
@@ -28,7 +28,7 @@
 <div class="pag card text-center">
     <div class="card-body mt-auto">
         <div *ngFor="let travel of travels">
-            <div class="card m-2">
+            <div class="travels card m-2">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-1">
@@ -36,13 +36,13 @@
                         </div>
                         <div class="col-8">
                             <h2>
-                                <a [routerLink]="['/travels', travel.name]">
+                                <a [routerLink]="['/travels', travel.name]" style="text-decoration: none; color: black">
                                 {{travel.name}}
                                 </a>
                             </h2>
                         </div>
                         <div class="col-3">
-                            <button class="but" (click)="openPopUp()">
+                            <button class="but" (click)="openPopUp(travel.name)">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -115,7 +115,7 @@
             <i class="fa fa-plus"></i>
             Add a travel
         </button>
-        <button class="btn btn-dark ml-5">
+        <button class="btn btn-dark ml-5" (click)="compare()">
             <i class="fa fa-bar-chart"></i>
             Compare two travels
         </button>  
