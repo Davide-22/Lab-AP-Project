@@ -23,11 +23,12 @@
 }
 
 .pag{
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 40px;
+    margin-top: 6%;
     width: 500px;
     left: 33%;
 }
 
-.card{
+.travels{
     border-radius: 10px 10px 10px 10px;
 }

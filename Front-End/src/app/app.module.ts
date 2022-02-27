@@ -10,6 +10,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { TravelPageComponent } from './travel-page/travel-page.component';
 import { DayPageComponent } from './day-page/day-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { ComparePageComponent } from './compare-page/compare-page.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { DayPageComponent } from './day-page/day-page.component';
     ChangePasswordComponent,
     TravelPageComponent,
     DayPageComponent,
+    LoginPageComponent,
+    SignUpComponent,
+    ComparePageComponent
   ],
   imports: [
     BrowserModule,

@@ -12,4 +12,8 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  change(): void {
+    window.location.href="/account";
+  }
+
 }

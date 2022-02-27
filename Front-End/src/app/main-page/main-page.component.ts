@@ -15,7 +15,7 @@ export class MainPageComponent implements OnInit {
   //public travels: string[] = ['Travel One', 'Travel Two', 'Travel Three'];
 
   travels = travels;
-  
+  public travel: string;
   constructor() { }
 
   buildForm(): void {
@@ -47,15 +47,21 @@ export class MainPageComponent implements OnInit {
   }
 
   deleteTravel(): void {
-    
+    this.displayStyle="none";
   }
 
-  openPopUp(): void {
+  openPopUp(name: string): void {
     this.displayStyle="block";
+    this.travel = name;
+
   }
 
   closePopUp(): void {
     this.displayStyle="none";
+  }
+
+  compare(): void {
+    window.location.href="/compare";
   }
 
 }

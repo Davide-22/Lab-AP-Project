@@ -12,4 +12,8 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  submit(): void {
+    window.location.href="/main-page";
+  }
+
 }

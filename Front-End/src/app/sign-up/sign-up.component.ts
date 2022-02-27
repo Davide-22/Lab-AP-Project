@@ -12,4 +12,8 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  submit(): void {
+    window.location.href="";
+  }
+
 }

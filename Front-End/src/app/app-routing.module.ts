@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ComparePageComponent } from './compare-page/compare-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -19,6 +20,10 @@ const routes: Routes = [
   {path: 'day-page', component: DayPageComponent},
   {path: 'travel-page', component: TravelPageComponent},
   {path: 'days/:dayName', component: DayPageComponent},
+  {path: 'travel-page', component: TravelPageComponent},
+  {path: 'travels/:travelName', component: TravelPageComponent},
+  {path: 'compare', component: ComparePageComponent},
+  {path: '', component: LoginPageComponent},
 ];
 
 @NgModule({

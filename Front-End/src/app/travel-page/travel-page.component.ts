@@ -4,7 +4,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Travel, travels } from '../travels';
 import { days } from '../days';
 
-
 @Component({
   selector: 'app-travel-page',
   templateUrl: './travel-page.component.html',
