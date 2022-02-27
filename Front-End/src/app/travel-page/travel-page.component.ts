@@ -58,5 +58,8 @@ export class TravelPageComponent implements OnInit {
     this.displayStyle="none";
   }
 
+  completeTravel(): void {
+    window.location.href = "/main-page";
+  }
 
 }
