@@ -36,7 +36,9 @@
                         </div>
                         <div class="col-8">
                             <h2>
-                                {{travel}}
+                                <a [routerLink]="['/travels', travel.name]">
+                                {{travel.name}}
+                                </a>
                             </h2>
                         </div>
                         <div class="col-3">

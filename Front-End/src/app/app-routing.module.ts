@@ -15,7 +15,8 @@ const routes: Routes = [
   {path: 'sign-up', component: SignUpComponent},
   {path: 'change-password', component: ChangePasswordComponent},
   {path: 'travel-page', component: TravelPageComponent},
-  {path: '', component: LoginPageComponent}
+  {path: '', component: LoginPageComponent},
+  { path: 'travels/:travelName', component: TravelPageComponent }
 ];
 
 @NgModule({

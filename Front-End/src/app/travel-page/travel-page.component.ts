@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Travel, travels } from '../travels';
 
 @Component({
   selector: 'app-travel-page',
@@ -8,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
 export class TravelPageComponent implements OnInit {
   public days: string[] = ['Day One', 'Day Two', 'Day Three'];
   
-
-  constructor() { }
+  travel: Travel | undefined;
+  
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+  // get the travel name from the current route.
+  const routeParams = this.route.snapshot.paramMap;
+  const travelNameFromRoute = String(routeParams.get('travelName'));
+
+  // Find the product that correspond with the id provided in route.
+  this.travel = travels.find(travel => travel.name === travelNameFromRoute);
+  
   }
 
 

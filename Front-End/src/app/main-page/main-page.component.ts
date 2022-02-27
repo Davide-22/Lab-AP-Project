@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { travels } from '../travels';
 
 @Component({
   selector: 'app-main-page',
@@ -11,8 +12,9 @@ export class MainPageComponent implements OnInit {
   public destinations: string[] = [''];
   public displayStyle: any = "none";
   public add: boolean = false;
-  public travels: string[] = ['Travel One', 'Travel Two', 'Travel Three'];
+  //public travels: string[] = ['Travel One', 'Travel Two', 'Travel Three'];
 
+  travels = travels;
   constructor() { }
 
   buildForm(): void {

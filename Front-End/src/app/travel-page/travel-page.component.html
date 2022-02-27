@@ -5,7 +5,11 @@
 
 <div class="row">
     <div class="column">
-        <i class="fa fa-plane fa-2x"> Travel One</i><p>
+        <i class="fa fa-plane fa-2x"> 
+            <div *ngIf="travel">
+                <p>{{ travel.name }}</p>
+              </div>
+        </i>
     </div>
 </div>
 
