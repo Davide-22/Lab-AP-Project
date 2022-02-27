@@ -1,11 +1,12 @@
 <div class="compare">
-    <h1> Compare Two Travels </h1>
+    <h1 style="color: white"> Compare Two Travels </h1>
     <div class="row mt-5">
         <div class="col">
             <div class="card travel">
                 <div class="card-body mt-auto">
                     <select name="travels" id="travels1" class="travels">
-                        <option value="" disabled selected> Travel One</option>
+                        <option value="" disabled selected> Travels </option>
+                        <option *ngFor="let travel of travels" value="{{travel.name}}"> {{travel.name}} </option>
                     </select>
                 </div>
             </div>
@@ -14,7 +15,8 @@
             <div class="card travel">
                 <div class="card-body mt-auto">
                     <select name="travels" id="travels2" class="travels">
-                        <option value="" disabled selected> Travel Two</option>
+                        <option value="" disabled selected> Travels </option>
+                        <option *ngFor="let travel of travels" value="{{travel.name}}"> {{travel.name}} </option>
                     </select>
                 </div>
             </div>
@@ -23,6 +25,7 @@
     <div class="mt-5">
         <select name="compare" id="compare" class="compares">
             <option value="" disabled selected> Select Graph </option>
+            <option *ngFor="let compare of compares" value="{{compare}}"> {{compare}} </option>
         </select>
     </div>
 </div>
