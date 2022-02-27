@@ -20,8 +20,6 @@ const routes: Routes = [
   {path: 'day-page', component: DayPageComponent},
   {path: 'travel-page', component: TravelPageComponent},
   {path: 'days/:dayName', component: DayPageComponent},
-  {path: 'travel-page', component: TravelPageComponent},
-  {path: 'travels/:travelName', component: TravelPageComponent},
   {path: 'compare', component: ComparePageComponent},
   {path: '', component: LoginPageComponent},
 ];
