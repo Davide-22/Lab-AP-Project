@@ -9,6 +9,7 @@ import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { TravelPageComponent } from './travel-page/travel-page.component';
+import { DayPageComponent } from './day-page/day-page.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TravelPageComponent } from './travel-page/travel-page.component';
     AccountComponent,
     ChangePasswordComponent,
     TravelPageComponent,
+    DayPageComponent,
   ],
   imports: [
     BrowserModule,

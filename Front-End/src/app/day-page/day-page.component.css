@@ -1,0 +1,32 @@
+.but{
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    vertical-align: middle;
+    text-decoration: none;
+    border: .5em solid rgba(0,0,0,0);
+    border-radius: 100%;
+    background: rgb(245,245,245) linear-gradient(rgb(245,245,245), rgb(188,192,193)) 50% 50% / calc(3em + .5em*2) calc(3em + .5em*2);
+}
+
+.pag{
+    border-radius: 10px 10px 10px 10px;
+    width: 500px;
+    left: 33%;
+}
+
+.card{
+    border-radius: 10px 10px 10px 10px;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+  }
+  
+  
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }

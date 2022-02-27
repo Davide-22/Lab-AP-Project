@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Travel, travels } from '../travels';
-import { days } from '../days';
-
+import { Day, days } from '../days';
+import { expenses } from '../expenses';
 
 @Component({
-  selector: 'app-travel-page',
-  templateUrl: './travel-page.component.html',
-  styleUrls: ['./travel-page.component.css']
+  selector: 'app-day-page',
+  templateUrl: './day-page.component.html',
+  styleUrls: ['./day-page.component.css']
 })
-export class TravelPageComponent implements OnInit {
-  //public days: string[] = ['Day One', 'Day Two', 'Day Three'];
-  days = days;
+export class DayPageComponent implements OnInit {
 
+  expenses = expenses;
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
-  travel: Travel | undefined;
   
+  day: Day | undefined;
+  
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -26,10 +26,10 @@ export class TravelPageComponent implements OnInit {
     this.buildForm();
     // get the travel name from the current route.
     const routeParams = this.route.snapshot.paramMap;
-    const travelNameFromRoute = String(routeParams.get('travelName'));
+    const dayNameFromRoute = String(routeParams.get('dayName'));
 
     // Find the product that correspond with the id provided in route.
-    this.travel = travels.find(travel => travel.name === travelNameFromRoute);
+    this.day = days.find(day => day.name === dayNameFromRoute);
   
   }
 
@@ -51,6 +51,10 @@ export class TravelPageComponent implements OnInit {
     this.add = !this.add;
   }
 
+  deleteExpense(): void {
+    //chiamata back-end
+  }
+
   openPopUp(): void {
     this.displayStyle="block";
   }
@@ -58,6 +62,5 @@ export class TravelPageComponent implements OnInit {
   closePopUp(): void {
     this.displayStyle="none";
   }
-
 
 }

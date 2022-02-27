@@ -1,11 +1,38 @@
 &nbsp;
 &nbsp;
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Delete Expense</h4>
+            </div>
+            <div class="modal-body">
+                <p> Are you sure to delete the Expense? </p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-secondary" (click)="closePopUp()">
+                            NO
+                        </button>
+                    </div>
+                    <div class="col-sm">
+                        <button type="button"class="btn btn-danger" (click)="deleteExpense()">
+                            YES
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
 
 <div class="row">
     <div class="column">
-        <i class="fa fa-plane fa-2x"> 
-            <div *ngIf="travel">
-                <p>{{ travel.name }}</p>
+        <i class="fa fa-calendar fa-2x"> 
+            <div *ngIf="day">
+                <p>{{ day.name }}</p>
               </div>
         </i>
     </div>
@@ -79,10 +106,6 @@
                 <i class="fa fa-plus"></i>
                 Add an expense
             </button>
-            <br> <br>
-            <button class="btn btn-dark">
-                <a href="main-page" class="btn btn-info">Complete the travel</a>
-            </button>
         </div>
         
     </div>
@@ -91,29 +114,33 @@
     <div class="column">
         <div class="pag card text-center">
             <div class="card-body mt-auto">
-                <div *ngFor="let day of days">
+                <div *ngFor="let expense of expenses">
                     <div class="card m-2">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-1">
-                                    <i class="fa fa-calendar" style="font-size:36px" ></i>
+                            
                                 </div>
                                 <div class="col-8">
                                     <h2>
-                                        <a [routerLink]="['/days', day.name]">
-                                            {{ day.name }}
-                                        </a>
+                                        {{expense.name}}
                                     </h2>
+                                    {{expense.amount}} &euro;
+                                </div>
+                                <div class="col-3">
+                                    <button class="but" (click)="openPopUp()">
+                                        <i class="fa fa-times"></i>
+                                    </button>
                                 </div>
                             </div> 
                         </div>
                     </div>
                 </div>
             </div>
+            <p>Budget left: 30</p>
+            <p>Total budget: 50</p>
         </div>
     </div>
     <div class="column"></div>
 </div>
-<br> 
-
-
+<br>
