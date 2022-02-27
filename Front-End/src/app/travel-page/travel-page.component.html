@@ -15,14 +15,79 @@
 
 <div class="row">
     <div class="column">
-        <button class="btn btn-dark">
-            <i class="fa fa-plus"></i>
-            Add an expense
-        </button>
-        <br> <br>
-        <button class="btn btn-dark">
-            <a href="main-page" class="btn btn-info">Complete the travel</a>
-        </button>
+        <div *ngIf="add" class="pag card text-center mt-5">
+            <div class="card-body mt-auto">
+                <form [formGroup]="Form">
+                    <div class="row">
+                        <div class="col-sm">
+                             <label for="username" class="form-lable required">
+                                 Expense Name
+                             </label>
+                             <div class="input-group">
+                                 <input class="form-control" formcontrolname="ExpenseName">
+                             </div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-sm">
+                             <label for="username" class="form-lable required">
+                                 Amount
+                             </label>
+                             <div class="input-group">
+                                 <input class="form-control" formcontrolname="ExpenseAmount">
+                             </div> 
+                         </div>
+                         <div class="col-sm">
+                            <label for="username" class="form-lable required">
+                                Category
+                            </label>
+                            <div class="input-group">
+                                <select class="form-control" formcontrolname="ExpenseCategory">
+                                    <option value="accomodation">Accomodation</option>
+                                    <option value="food">Food</option>
+                                    <option value="event">Event</option>
+                                    <option value="cultural place">Cultural place</option>
+                                    <option value="transport">Transport</option>
+                                  </select>
+                                <!--<input class="form-control" formcontrolname="ExpenseCategory">-->
+                            </div> 
+                         </div>  
+                     </div>
+                     <div class="row">
+                         <div class="col-8">
+                             <label for="username" class="form-lable required">
+                                 Place
+                             </label>
+                             <div class="input-group">
+                                <input class="form-control" formcontrolname="ExpensePlace">
+                            </div> 
+                         </div>
+                     </div>
+                </form>
+             </div>
+         </div>
+        <br>
+        <div *ngIf="add">
+            <button class="btn btn-dark" (click)="addExpense()">
+                <i class="fa fa-plus"></i>
+                Add an expense
+            </button>
+            <button class="btn btn-dark ml-5" (click)="form()">
+                <i class="fa fa-times"></i>
+                Cancel
+            </button>  
+        </div>
+        <div *ngIf="!add" class="text-center">
+            <button class="btn btn-dark" (click)="form()">
+                <i class="fa fa-plus"></i>
+                Add an expense
+            </button>
+            <br> <br>
+            <button class="btn btn-dark">
+                <a href="main-page" class="btn btn-info">Complete the travel</a>
+            </button>
+        </div>
+        
     </div>
     
     
@@ -50,5 +115,6 @@
     </div>
     <div class="column"></div>
 </div>
-<br> <br> <br>
+<br> 
+
 

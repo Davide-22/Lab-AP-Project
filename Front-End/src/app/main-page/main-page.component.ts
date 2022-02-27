@@ -15,6 +15,7 @@ export class MainPageComponent implements OnInit {
   //public travels: string[] = ['Travel One', 'Travel Two', 'Travel Three'];
 
   travels = travels;
+  
   constructor() { }
 
   buildForm(): void {
