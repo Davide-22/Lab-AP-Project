@@ -10,9 +10,9 @@
 }
 
 .pag{
+    margin: 0 auto;
     border-radius: 10px 10px 10px 10px;
     width: 500px;
-    left: 33%;
 }
 
 .card{

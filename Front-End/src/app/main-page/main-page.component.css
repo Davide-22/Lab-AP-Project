@@ -24,9 +24,10 @@
 
 .pag{
     border-radius: 40px;
+    margin: 0 auto;
     margin-top: 6%;
     width: 500px;
-    left: 33%;
+    
 }
 
 .travels{
