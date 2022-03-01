@@ -20,8 +20,12 @@
 }
 
 .error{
-    margin-top: 3%;
-    color: red;
+    border-radius: 40px;
+    margin: 0 auto;
+    width: 22%;
+    background-color: white;
+    margin-top: 2%;
+    color: black;
 }
 
 .icon{

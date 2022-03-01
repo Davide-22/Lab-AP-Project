@@ -10,6 +10,7 @@ export class SignUpComponent implements OnInit {
 
   form: FormGroup;
   formError : string; 
+  error: boolean = false;
 
   constructor(public fb: FormBuilder) { 
     this.form = fb.group({
@@ -26,10 +27,12 @@ export class SignUpComponent implements OnInit {
   checkPassword() : boolean{
     if(this.form.controls['password'].value.length < 8){
       this.formError = "Password's length must be at least 8 characters";
+      this.error = true;
       return true;
     }
     if(this.form.controls['password'].value.length != this.form.controls['repeatpassword'].value.length){
       this.formError = "Passwords don't match";
+      this.error = true;
       return true;
     }
     return false;
@@ -37,6 +40,7 @@ export class SignUpComponent implements OnInit {
   send() : void{
     if(!this.form.valid){
       this.formError = "You must fill all the fields";
+      this.error = true;
       return;
     }
     if(this.checkPassword()){
