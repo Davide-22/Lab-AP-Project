@@ -1,23 +1,28 @@
 <div class="card signupform">
     <div class="card-body mt-auto">
-        <form>
+        <form [formGroup] = "form" (ngSubmit)="send()">
             <div class="mb-3 inputfield">
                 <label for="inputUsername" class="form-label">Username</label>
-                <input type="text" class="form-control" id="inputUsername" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="inputUsername" aria-describedby="emailHelp" formControlName="user">
             </div>
             <div class="mb-3 inputfield">
             <label for="inputEmail" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" formControlName="email">
             </div>
             <div class="mb-3 inputfield">
             <label for="inputPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword">
+            <input type="password" class="form-control" id="inputPassword" formControlName="password">
             </div>
             <div class="mb-3 inputfield">
                 <label for="inputRepeatPassword" class="form-label">Repeat password</label>
-                <input type="password" class="form-control" id="inputRepeatPassword">
+                <input type="password" class="form-control" id="inputRepeatPassword" formControlName="repeatpassword">
             </div>
-            <button type="submit" class="btn btn-dark submitbtn" (click)="submit()">Submit</button>
+            <button type="submit" class="btn btn-dark submitbtn">Submit</button>
         </form>
     </div>
+</div>
+<div class="error">
+    <h3>
+        {{formError}}
+    </h3>
 </div>

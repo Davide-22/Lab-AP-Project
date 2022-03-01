@@ -86,10 +86,18 @@
     display: inline-block;
   }
 }
+
 body {
-  background-image: url('images/travel-hd.jpg');
-  font-weight:600;
   text-align:center !important;
+  font-weight:600;
+}
+
+.bg {
+  background-image: url("images/travel-hd.jpg");
+  height: 965px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 nav {
