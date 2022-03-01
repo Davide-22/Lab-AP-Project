@@ -5,13 +5,13 @@ var bodyParser = require('body-parser');
 const cn = {
     host: 'localhost',
     port: 5432,
-    database: '',
+    database: 'Progetto',
     user: 'postgres',
-    password: ''
+    password: 'Stefano25'
 };
 const db = pgp(cn);
 const app = expr();
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json();
 
 app.post('/addTravel', jsonParser, function (req,res) {
     var name = req.body.name;
@@ -22,8 +22,14 @@ app.post('/addTravel', jsonParser, function (req,res) {
     var description = req.body.description;
     var customer = req.body.customer;
     db.query("INSERT INTO travel VALUES ($1,$2,$3,$4,$5,$6,$7)", [daily_budget,start_date,end_date,destination,description,customer,name])
-})
+});
+
+app.get('/travels', function(req,res) {
+    db.query("SELECT name FROM travel").then(result => {
+        res.send(result)
+    })
+});
 
 app.listen(3002, () => {
     console.log('Listening on port: ' + 3002);
-})
+});
