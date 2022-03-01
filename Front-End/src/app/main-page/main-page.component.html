@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="pag card text-center">
+<div class="pag card text-center" *ngIf="!compares">
     <div class="card-body mt-auto">
         <div *ngFor="let travel of travels">
             <div class="travels card m-2">
@@ -109,7 +109,7 @@
        </form>
     </div>
 </div>
-<div class="m-5">
+<div class="m-5" *ngIf="!compares">
     <div *ngIf="!add" class="col-sm-12 text-center">
         <button class="btn btn-dark" (click)="form()">
             <i class="fa fa-plus"></i>
@@ -129,7 +129,6 @@
             <i class="fa fa-times"></i>
             Cancel
         </button>  
-        
     </div>
 </div>
-
+<app-compare-page *ngIf="compares" [travels] = "travels"></app-compare-page>

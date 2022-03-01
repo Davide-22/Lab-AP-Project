@@ -16,6 +16,7 @@ export class MainPageComponent implements OnInit {
 
   travels = travels;
   public travel: string;
+  public compares: boolean = false;
   constructor() { }
 
   buildForm(): void {
@@ -61,7 +62,7 @@ export class MainPageComponent implements OnInit {
   }
 
   compare(): void {
-    window.location.href="/compare";
+    this.compares=true;
   }
 
 }

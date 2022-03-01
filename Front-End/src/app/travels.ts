@@ -11,5 +11,8 @@ export interface Travel {
     },
     {
       name: 'Travel Three',
+    },
+    {
+      name: 'Travel Four',
     }
   ];
