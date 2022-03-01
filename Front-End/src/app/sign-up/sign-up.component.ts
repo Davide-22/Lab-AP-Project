@@ -28,6 +28,10 @@ export class SignUpComponent implements OnInit {
       this.formError = "Password's length must be at least 8 characters";
       return true;
     }
+    if(this.form.controls['password'].value.length != this.form.controls['repeatpassword'].value.length){
+      this.formError = "Passwords don't match";
+      return true;
+    }
     return false;
   }
   send() : void{
