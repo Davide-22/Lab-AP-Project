@@ -94,10 +94,14 @@ body {
 
 .bg {
   background-image: url("images/travel-hd.jpg");
-  height: 965px;
+  height: 100%;//969px;
+  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  position: fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 nav {

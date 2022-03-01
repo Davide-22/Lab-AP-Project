@@ -6,13 +6,25 @@ const app = expr();
 const cn = {
     host: 'localhost',
     port: 5432,
-    database: '',
+    database: 'LAPdb',
     user: 'postgres',
-    password: ''
+    password: 'secPWD78'
 };
 const db = pgp(cn);
 
-
+app.get("/",function (req, res) {
+    email = "1";
+    hash = "abc";
+    username = "1";
+    db.query('INSERT INTO users VALUES ($1, $2, $3)', [email, hash, username])
+            .then(result => {
+                res.send("OK");
+            })
+            .catch(err => {
+                res.send("Error");
+                console.log(err.message);
+            })
+})
 app.post('/signup', function (req, res) {
     password = req.body.password;
     username = req.body.user;
