@@ -37,6 +37,12 @@ app.post('/deleteTravel', jsonParser, function (req,res) {
     db.query("DELETE FROM travel WHERE travel.name = $1", [name]).then(res.send("SUCCESS"));
 })
 
+app.post('/completeTravel', jsonParser, function (req,res) {
+    var end_date = req.body.end_date;
+    var name = req.body.name;
+    db.query("UPDATE travel SET end_date=$1 WHERE name=$2", [end_date, name]).then(res.send("SUCCESS"));
+})
+
 app.listen(3002, () => {
     console.log('Listening on port: ' + 3002);
 });
