@@ -21,7 +21,9 @@ app.post('/addTravel', jsonParser, function (req,res) {
     var destination = req.body.destination;
     var description = req.body.description;
     var customer = req.body.customer;
-    db.query("INSERT INTO travel VALUES ($1,$2,$3,$4,$5,$6,$7)", [daily_budget,start_date,end_date,destination,description,customer,name])
+    db.query("INSERT INTO travel VALUES ($1,$2,$3,$4,$5,$6,$7)", [daily_budget,start_date,end_date,destination,description,customer,name]).then(
+        res.send('SUCCESS')
+    )
 });
 
 app.get('/travels', function(req,res) {
@@ -29,6 +31,11 @@ app.get('/travels', function(req,res) {
         res.send(result)
     })
 });
+
+app.post('/deleteTravel', jsonParser, function (req,res) {
+    var name = req.body.name;
+    db.query("DELETE FROM travel WHERE travel.name = $1", [name]).then(res.send("SUCCESS"));
+})
 
 app.listen(3002, () => {
     console.log('Listening on port: ' + 3002);
