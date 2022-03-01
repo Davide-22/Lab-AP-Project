@@ -1,6 +1,9 @@
 <div class="card signupform">
     <div class="card-body mt-auto">
         <form [formGroup] = "form" (ngSubmit)="send()">
+            <div class="col-2 icon">
+                <i class="fa fa-globe fa-3x" aria-hidden="true"></i>
+            </div>
             <div class="mb-3 inputfield">
                 <label for="inputUsername" class="form-label">Username</label>
                 <input type="text" class="form-control" id="inputUsername" aria-describedby="emailHelp" formControlName="user">
