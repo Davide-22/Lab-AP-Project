@@ -4,7 +4,8 @@
   "description": "Back-End",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "pg-promise": "^10.11.1"
   },
   "devDependencies": {},
   "scripts": {
