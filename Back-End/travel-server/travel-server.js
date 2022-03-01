@@ -26,7 +26,7 @@ app.post('/addTravel', jsonParser, function (req,res) {
     )
 });
 
-app.get('/travels', function(req,res) {
+app.get('/allTravels', function(req,res) {
     db.query("SELECT name FROM travel").then(result => {
         res.send(result)
     })
@@ -42,6 +42,13 @@ app.post('/completeTravel', jsonParser, function (req,res) {
     var name = req.body.name;
     db.query("UPDATE travel SET end_date=$1 WHERE name=$2", [end_date, name]).then(res.send("SUCCESS"));
 })
+
+app.post('/travels', jsonParser, function (req,res) {
+    var user = req.body.customer;
+    db.query("SELECT name FROM travel WHERE travel.customer = $1", [user]).then(result => {
+        res.send(result);
+    })
+});
 
 app.listen(3002, () => {
     console.log('Listening on port: ' + 3002);
