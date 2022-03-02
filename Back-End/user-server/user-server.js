@@ -12,20 +12,14 @@ const cn = {
 };
 const db = pgp(cn);
 
-app.get("/",function (req, res) {
-    email = "1";
-    hash = "abc";
-    username = "1";
-    db.query('INSERT INTO users VALUES ($1, $2, $3)', [email, hash, username])
-            .then(result => {
-                res.send("OK");
-            })
-            .catch(err => {
-                res.send("Error");
-                console.log(err.message);
-            })
+
+app.get('/', function (req, res) {
+    console.log("GET /");
+    res.send("CIAO");
 })
+
 app.post('/signup', function (req, res) {
+    console.log("POST /signup");
     password = req.body.password;
     username = req.body.user;
     email = req.body.email;
@@ -41,6 +35,6 @@ app.post('/signup', function (req, res) {
             })
 });
 
-app.listen(3002, () => {
-    console.log('Listening on port: ' + 3002);
+app.listen(3003, () => {
+    console.log('Listening on port: ' + 3003);
 })

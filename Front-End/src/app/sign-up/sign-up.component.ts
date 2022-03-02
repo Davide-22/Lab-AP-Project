@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { User } from '../models/user.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +14,7 @@ export class SignUpComponent implements OnInit {
   formError : string; 
   error: boolean = false;
 
-  constructor(public fb: FormBuilder, private http: HttpClient) { 
+  constructor(public fb: FormBuilder, private readonly userService: UserService) { 
     this.form = fb.group({
       'user' : ['',Validators.required],
       'email' : ['',Validators.required],
@@ -54,8 +53,11 @@ export class SignUpComponent implements OnInit {
     this.http.post<any>('', body).subscribe(data => {
         console.log(data);
     });*/
-    window.location.href="";
-    console.log(this.form.controls['user'].value);
+    //console.log(this.form.value as User);
+    const data = this.userService.signUp(this.form.value as User);
+    console.log(data);
+    //window.location.href="";
+    //console.log(this.form.controls['user'].value);
   }
 }
 
