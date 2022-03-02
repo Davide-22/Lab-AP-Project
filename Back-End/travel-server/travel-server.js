@@ -5,9 +5,9 @@ var bodyParser = require('body-parser');
 const cn = {
     host: 'localhost',
     port: 5432,
-    database: 'LabAP',
+    database: '',
     user: 'postgres',
-    password: 'lolDU56'
+    password: ''
 };
 const db = pgp(cn);
 const app = expr();
