@@ -7,9 +7,9 @@ const app = expr();
 const cn = {
     host: 'localhost',
     port: 5432,
-    database: 'Progetto',
+    database: 'LAPdb',
     user: 'postgres',
-    password: 'Stefano25'
+    password: 'secPWD78'
 };
 const db = pgp(cn);
 var jsonParser = bodyParser.json();
@@ -35,11 +35,15 @@ app.post('/signup',jsonParser, function (req, res) {
     const hash = sha256.update(password).digest('base64');
     db.query('INSERT INTO users VALUES ($1, $2, $3)', [email, hash, username])
             .then(result => {
-                res.send("OK");
+                res.send({status: true, msg:"ok"});
             })
             .catch(err => {
-                res.send("Error");
-                console.log(err.message);
+                if(err.code == '23505'){
+                    res.send({status: false, msg:"keyerror"});
+                }else{
+                    res.send({status: false, msg:"error"});
+                }
+                console.log(err);
             })
 });
 

@@ -54,7 +54,18 @@ export class SignUpComponent implements OnInit {
         console.log(data);
     });*/
     //console.log(this.form.value as User);
-    this.userService.signUp(this.form.value as User).subscribe(result => console.log(result));
+    this.userService.signUp(this.form.value as User)
+    .subscribe(result => {
+      if(result.status){
+        window.location.href="";
+      }else if(result.msg == "keyerror"){
+        this.formError = "Email already in use";
+        this.error = true;
+      }else{
+        this.formError = "Error";
+        this.error = true;
+      }
+    });
     //window.location.href="";
     //console.log(this.form.controls['user'].value);
   }

@@ -2,7 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import {User} from "../models/user.model";
-
+import {map} from "rxjs/operators"
+import { Ack } from "../models/acks";
 
 @Injectable({providedIn: 'root' })
 export class UserService {
@@ -10,9 +11,13 @@ export class UserService {
 
     constructor(private readonly http: HttpClient) {}
 
-    public signUp(user: User): Observable<string> {
-        console.log('post front-end');
-        return this.http.post<string>('http://localhost:3003/signup', User.toJSON(user));
+    public signUp(user: User): Observable<Ack> {
+        return this.http.post<Ack>('http://localhost:3003/signup', User.toJSON(user))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
     }
     
 }
