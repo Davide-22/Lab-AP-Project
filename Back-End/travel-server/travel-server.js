@@ -5,9 +5,9 @@ var bodyParser = require('body-parser');
 const cn = {
     host: 'localhost',
     port: 5432,
-    database: '',
+    database: 'LabAP',
     user: 'postgres',
-    password: ''
+    password: 'lolDU56'
 };
 const db = pgp(cn);
 const app = expr();
@@ -48,6 +48,25 @@ app.post('/travels', jsonParser, function (req,res) {
     db.query("SELECT name FROM travel WHERE travel.customer = $1", [user]).then(result => {
         res.send(result);
     })
+});
+
+//test solo per vedere se funziona correttamente
+app.get('/allExpenses', function(req,res) {
+    db.query("SELECT name FROM expense").then(result => {
+        res.send(result)
+    })
+});
+
+app.post('/addExpense', jsonParser, function(req,res){
+    var name = req.body.name;
+    var amount = req.body.amount;
+    var category = req.body.category;
+    var place = req.body.place;
+    var date = req.body.date;
+    var trip = req.body.trip;
+    db.query("INSERT INTO expense VALUES ($1,$2,$3,$4,$5,$6)", [name,amount,category,place,date,trip]).then(
+        res.send('SUCCESS')
+    )
 });
 
 app.listen(3002, () => {
