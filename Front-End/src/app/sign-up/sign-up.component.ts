@@ -54,8 +54,7 @@ export class SignUpComponent implements OnInit {
         console.log(data);
     });*/
     //console.log(this.form.value as User);
-    const data = this.userService.signUp(this.form.value as User);
-    console.log(data);
+    this.userService.signUp(this.form.value as User).subscribe(result => console.log(result));
     //window.location.href="";
     //console.log(this.form.controls['user'].value);
   }

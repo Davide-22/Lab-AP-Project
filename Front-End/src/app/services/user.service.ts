@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import {User, UserJSON} from "../models/user.model";
+import {User} from "../models/user.model";
 
 
 @Injectable({providedIn: 'root' })
@@ -12,8 +12,7 @@ export class UserService {
 
     public signUp(user: User): Observable<string> {
         console.log('post front-end');
-        return this.http.get<string>('${this.URL}');
-        //return this.http.post<string>('${this.URL}/signup', User.toJSON(user));
+        return this.http.post<string>('http://localhost:3003/signup', User.toJSON(user));
     }
     
 }
