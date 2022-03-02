@@ -1,16 +1,18 @@
 const expr = require('express');
 const crypto = require('crypto');
+var bodyParser = require('body-parser');
 const pgp = require("pg-promise")();
 
 const app = expr();
 const cn = {
     host: 'localhost',
     port: 5432,
-    database: 'LAPdb',
+    database: 'Progetto',
     user: 'postgres',
-    password: 'secPWD78'
+    password: 'Stefano25'
 };
 const db = pgp(cn);
+var jsonParser = bodyParser.json();
 
 
 app.get('/', function (req, res) {
@@ -18,7 +20,7 @@ app.get('/', function (req, res) {
     res.send("CIAO");
 })
 
-app.post('/signup', function (req, res) {
+app.post('/signup',jsonParser, function (req, res) {
     console.log("POST /signup");
     password = req.body.password;
     username = req.body.user;
