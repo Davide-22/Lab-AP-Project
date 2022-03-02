@@ -50,7 +50,7 @@ app.post('/travels', jsonParser, function (req,res) {
     })
 });
 
-//test solo per vedere se funziona correttamente
+//Ritorna tutte le expense di un travel (serve solo per testare)
 app.get('/allExpenses', function(req,res) {
     db.query("SELECT name FROM expense").then(result => {
         res.send(result)
@@ -68,6 +68,22 @@ app.post('/addExpense', jsonParser, function(req,res){
         res.send('SUCCESS')
     )
 });
+
+app.post('/deleteExpense', jsonParser, function (req,res) {
+    var expense_name = req.body.expense_name;
+    var travel_name = req.body.travel_name;
+    db.query("DELETE FROM expense WHERE expense.name = $1 AND expense.trip = $2", [expense_name, travel_name]).then(
+        res.send("SUCCESS"));
+});
+
+//Ritorna tutte le expense di un dato giorno
+app.get('/dayTravel', jsonParser, function(req,res) {
+    var travel_name = req.body.travel_name;
+    var date = req.body.date;
+    db.query("SELECT name FROM expense WHERE expense.trip = $1 AND expense.date = $2", [travel_name, date]).then(result => {
+        res.send(result)
+    })
+})
 
 app.listen(3002, () => {
     console.log('Listening on port: ' + 3002);
