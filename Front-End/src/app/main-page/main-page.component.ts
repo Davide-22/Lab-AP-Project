@@ -47,6 +47,10 @@ export class MainPageComponent implements OnInit {
     this.destinations.push('');
   }
 
+  minus(): void {
+    this.destinations.pop();
+  }
+
   deleteTravel(): void {
     this.displayStyle="none";
   }

@@ -96,7 +96,10 @@
                     <button class="plus" (click)="destination()">
                         <i class="fa fa-plus"></i>
                     </button>
-                </div>    
+                    <button *ngIf="destinations.length> 1"class="minus" (click)="minus()">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>   
             </div>
             <div class="mb-3">
                 <label for="username" class="form-lable required">
