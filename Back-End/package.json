@@ -4,8 +4,10 @@
   "description": "Back-End",
   "main": "index.js",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
     "pg-promise": "^10.11.1"
   },
   "devDependencies": {},

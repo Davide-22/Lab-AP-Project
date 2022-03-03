@@ -3,20 +3,25 @@
         <div class="col-2 icon">
             <i class="fa fa-globe fa-3x" aria-hidden="true"></i>
         </div>
-        <form>
+        <form [formGroup]  = "form" (ngSubmit)="submit()">
             <div class="mb-3 inputfield">
             <label for="inputEmail" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" formControlName="email">
             </div>
             <div class="mb-3 inputfield">
             <label for="inputPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword">
+            <input type="password" class="form-control" id="inputPassword" formControlName="password">
             </div>
-            <button type="submit" class="btn btn-dark submitbtn" (click)="submit()">Submit</button>
+            <button type="submit" class="btn btn-dark submitbtn">Submit</button>
         </form>
         <p>Don't have an account?
             <a href="sign-up" class="link-light">
             <h5>Sign up now!</h5></a>
         </p>
     </div>
+</div>
+<div class="error" *ngIf="error">
+    <h3>
+        {{formError}}
+    </h3>
 </div>

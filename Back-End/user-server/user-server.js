@@ -2,6 +2,8 @@ const expr = require('express');
 const crypto = require('crypto');
 var bodyParser = require('body-parser');
 const pgp = require("pg-promise")();
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const app = expr();
 const cn = {
@@ -43,6 +45,31 @@ app.post('/signup',jsonParser, function (req, res) {
                 }else{
                     res.send({status: false, msg:"error"});
                 }
+                console.log(err);
+            })
+});
+
+app.post('/login',jsonParser, function (req, res) {
+    console.log("POST /login " + req.body.email);
+    email = req.body.email;
+    password = req.body.password;
+    const sha256 = crypto.createHash('sha256');
+    const hash = sha256.update(password).digest('base64');
+    db.query('SELECT * FROM users WHERE email = $1 AND password = $2', [email, hash])
+            .then(result => {
+                if(result.length > 0){
+                    let data = {
+                        email: email,
+                        time: Date()
+                    }
+                    const token = jwt.sign(data, "testkey");
+                    res.send({status: true, msg: token});
+                }else{
+                    res.send({status: false, msg:"wrong email or password"});
+                }
+            })
+            .catch(err => {
+                res.send({status: false, msg:"error"});
                 console.log(err);
             })
 });
