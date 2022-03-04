@@ -40,12 +40,12 @@ app.post('/signup',jsonParser, function (req, res) {
                 res.send({status: true, msg:"ok"});
             })
             .catch(err => {
-                if(err.code == '23505'){
-                    res.send({status: false, msg:"keyerror"});
-                }else{
-                    res.send({status: false, msg:"error"});
-                }
                 console.log(err);
+                if(err.code == '23505'){
+                    return res.send({status: false, msg:"keyerror"});
+                }else{
+                    return res.send({status: false, msg:"error"});
+                }      
             })
 });
 
@@ -66,13 +66,53 @@ app.post('/login',jsonParser, function (req, res) {
                     const token = jwt.sign(data, "testkey");
                     res.send({status: true, msg: token});
                 }else{
-                    res.send({status: false, msg:"wrong email or password"});
+                    return res.send({status: false, msg:"wrong email or password"});
                 }
             })
             .catch(err => {
-                res.send({status: false, msg:"error"});
                 console.log(err);
+                return res.send({status: false, msg:"error"});
+                
             })
+});
+
+app.post('/changepassword',jsonParser, function (req, res) {
+    console.log("POST /changepassword");
+    oldpassword = req.body.oldpassword;
+    password = req.body.password;
+    token = req.body.token;
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        const sha256 = crypto.createHash('sha256');
+        const hash = sha256.update(password).digest('base64');
+        const sha256_2 = crypto.createHash('sha256');
+        const hash2 = sha256_2.update(oldpassword).digest('base64');
+        console.log(hash2);
+        db.query('SELECT password FROM users WHERE email = $1', [email])
+            .then(result => {
+                if(result[0].password == hash2){
+                    db.query('UPDATE users SET password=$1 WHERE email=$2', [hash,email,hash2])
+                    .then(result1 => {
+                        return res.send({status: true, msg: "ok"});
+                    })
+                    .catch(err1 => {
+                        console.log(err1);
+                        return res.send({status: false, msg:"error"});    
+                    })
+                }else{
+                    return res.send({status: false, msg:"wrong password"});
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg:"error"});    
+            })
+
+    }catch(error){
+        console.log(error);
+        return res.send({status: false, msg:"error"});
+    }
 });
 
 app.listen(3003, () => {

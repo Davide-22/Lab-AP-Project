@@ -25,6 +25,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   submit(): void {
+    if(!this.form.valid){
+      this.formError = "You must fill all the fields";
+      this.error = true;
+      return;
+    }
     //window.location.href="/main-page";
     this.userService.logIn(this.form.value as Login)
     .subscribe(result => {

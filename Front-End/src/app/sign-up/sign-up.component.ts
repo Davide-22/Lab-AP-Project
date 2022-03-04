@@ -48,12 +48,6 @@ export class SignUpComponent implements OnInit {
     if(this.checkPassword()){
       return;
     }
-    /*
-    const body = {}
-    this.http.post<any>('', body).subscribe(data => {
-        console.log(data);
-    });*/
-    //console.log(this.form.value as User);
     this.userService.signUp(this.form.value as User)
     .subscribe(result => {
       if(result.status){

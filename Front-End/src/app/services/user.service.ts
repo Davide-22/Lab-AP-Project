@@ -5,6 +5,7 @@ import {User} from "../models/user.model";
 import {map} from "rxjs/operators"
 import { Ack } from "../models/acks";
 import { Login } from "../models/login.model";
+import { Passwords } from "../models/passwords.model";
 
 @Injectable({providedIn: 'root' })
 export class UserService {
@@ -23,6 +24,15 @@ export class UserService {
 
     public logIn(login: Login): Observable<Ack> {
         return this.http.post<Ack>('http://localhost:3003/login', Login.toJSON(login))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
+    }
+
+    public changePassword(passwords : Passwords): Observable<Ack> {
+        return this.http.post<Ack>('http://localhost:3003/changepassword', Passwords.toJSON(passwords))
         .pipe(
             map(res => {
                 return res
