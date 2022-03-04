@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit {
     this.userService.logIn(this.form.value as Login)
     .subscribe(result => {
       if(result.status){
-        sessionStorage.setItem('auth', result.msg);
+        document.cookie = "auth="+result.msg;
         window.location.href="/main-page";
       }else if(result.msg == "error"){
         this.formError = "Error";

@@ -58,9 +58,10 @@ app.post('/login',jsonParser, function (req, res) {
     db.query('SELECT * FROM users WHERE email = $1 AND password = $2', [email, hash])
             .then(result => {
                 if(result.length > 0){
+                    const d = new Date();
                     let data = {
                         email: email,
-                        time: Date()
+                        time: d.toUTCString()
                     }
                     const token = jwt.sign(data, "testkey");
                     res.send({status: true, msg: token});
