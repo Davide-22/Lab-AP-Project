@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Email } from '../models/email.model';
 import { Travel } from '../models/travel.model';
 import { TravelService } from '../services/travel.service';
@@ -16,6 +16,8 @@ export class MainPageComponent implements OnInit {
   public displayStyle: any = "none";
   public add: boolean = false;
   public travels: Travel[] = [];
+  public error: boolean = false;
+  public errorString: string='You must fill all the field';
 
   public travel: string;
   public compares: boolean = false;
@@ -23,10 +25,10 @@ export class MainPageComponent implements OnInit {
 
   buildForm(): void {
     this.Form = new FormGroup({
-      name: new FormControl(null),
-      daily_budget: new FormControl(null),
-      start_date: new FormControl(null),
-      description: new FormControl(null),
+      name: new FormControl(null, Validators.required),
+      daily_budget: new FormControl(null, Validators.min(1)),
+      start_date: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
       end_date: new FormControl(null),
       user: new FormControl('servillostefano@gmail.com')
     });
@@ -44,12 +46,23 @@ export class MainPageComponent implements OnInit {
   }
 
   addTravel(): void {
-    let Travel: Travel = this.Form.value as Travel;
-    Travel.destination = this.destinations;
-    console.log(this.Form.value);
-    this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
-    this.add = !this.add;
-    this.travelService.getTravelsByUser({email: 'servillostefano@gmail.com'}).subscribe(result => this.travels = result);
+    if(this.Form.valid && this.destinations.length > 0) {
+      this.error = false;
+      let Travel: Travel = this.Form.value as Travel;
+      Travel.destination = this.destinations;
+      this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
+      this.add = !this.add;
+      this.travelService.getTravelsByUser({email: 'servillostefano@gmail.com'}).subscribe(result => this.travels = result);
+    } else if (this.destinations.length == 0) {
+      this.errorString = "Enter at least one destination";
+      this.error = true;
+    } else if (this.Form.get('daily_budget').value < 1) {
+      this.errorString = 'Enter a daily budget >= 1';
+      this.error = true;
+    } else {
+      this.errorString = 'You must fill all the field';
+      this.error = true;
+    }
   }
 
   plus(): void {
@@ -67,7 +80,6 @@ export class MainPageComponent implements OnInit {
   openPopUp(name: string): void {
     this.displayStyle="block";
     this.travel = name;
-
   }
 
   closePopUp(): void {

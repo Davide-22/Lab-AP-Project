@@ -65,6 +65,7 @@
         </div>
     </div>
 </div>
+
 <div *ngIf="add" class="pag card text-center mt-5">
    <div class="card-body mt-auto">
        <form [formGroup]="Form" (submit)="addTravel()">
@@ -72,21 +73,21 @@
                <div class="col-sm">
                     <label for="inputName" class="form-lable">Travel Name</label>
                     <div class="input-group">
-                        <input type="name" id="inputName"class="form-control" formControlName="name">
+                        <input type="string" id="inputName"class="form-control" formControlName="name">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm">
-                    <label for="username" class="form-lable required">
+                    <label for="number" class="form-lable">
                         Daily Budget
                     </label>
                     <div class="input-group">
-                        <input type="number" class="form-control" formControlName="daily_budget">
+                        <input type="number" id="inputDailyBudget" class="form-control" formControlName="daily_budget" min="1">
                     </div> 
                 </div>
                 <div class="col-sm">
-                    <label for="username" class="form-lable required">
+                    <label for="date" class="form-lable required">
                         Starting Day
                     </label>
                     <div class="input-group">
@@ -129,6 +130,11 @@
                 Cancel
             </button>
        </form>
+    </div>
+    <div class="error" *ngIf="error">
+        <h3>
+            {{errorString}}
+        </h3>
     </div>
 </div>
 <div class="m-5" *ngIf="!compares">

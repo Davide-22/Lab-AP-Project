@@ -33,11 +33,6 @@ app.post('/addTravel', jsonParser, function (req,res) {
     )
 });
 
-app.get('/allTravels', function(req,res) {
-    db.query("SELECT name FROM travel").then(result => {
-        res.send(result)
-    })
-});
 
 app.post('/deleteTravel', jsonParser, function (req,res) {
     var name = req.body.name;
@@ -53,7 +48,6 @@ app.post('/completeTravel', jsonParser, function (req,res) {
 app.post('/travels', jsonParser, function (req,res) {
     var user = req.body.email;
     console.log("Post /travels");
-    console.log(user);
     db.query("SELECT name FROM travel WHERE travel.user = $1", [user]).then(result => {
         res.send(result);
     })
