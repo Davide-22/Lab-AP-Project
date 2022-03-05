@@ -13,16 +13,23 @@ const db = pgp(cn);
 const app = expr();
 var jsonParser = bodyParser.json();
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
 app.post('/addTravel', jsonParser, function (req,res) {
+    console.log('Post /addTravel');
     var name = req.body.name;
     var daily_budget = req.body.daily_budget;
     var start_date = req.body.start_date;
     var end_date = req.body.end_date;
     var destination = req.body.destination;
     var description = req.body.description;
-    var customer = req.body.customer;
-    db.query("INSERT INTO travel VALUES ($1,$2,$3,$4,$5,$6,$7)", [daily_budget,start_date,end_date,destination,description,customer,name]).then(
-        res.send('SUCCESS')
+    var user = req.body.user;
+    db.query("INSERT INTO travel VALUES ($1,$2,$3,$4,$5,$6,$7)", [daily_budget,start_date,end_date,destination,description,user,name]).then(
+        res.send({status: true, msg:"ok"})
     )
 });
 
@@ -44,8 +51,10 @@ app.post('/completeTravel', jsonParser, function (req,res) {
 })
 
 app.post('/travels', jsonParser, function (req,res) {
-    var user = req.body.customer;
-    db.query("SELECT name FROM travel WHERE travel.customer = $1", [user]).then(result => {
+    var user = req.body.email;
+    console.log("Post /travels");
+    console.log(user);
+    db.query("SELECT name FROM travel WHERE travel.user = $1", [user]).then(result => {
         res.send(result);
     })
 });

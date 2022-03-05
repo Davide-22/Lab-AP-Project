@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { travels } from '../travels';
+import { Email } from '../models/email.model';
+import { Travel } from '../models/travel.model';
+import { TravelService } from '../services/travel.service';
 
 @Component({
   selector: 'app-main-page',
@@ -9,46 +11,53 @@ import { travels } from '../travels';
 })
 export class MainPageComponent implements OnInit {
   public Form: FormGroup;
-  public destinations: string[] = [''];
+  public destinations: string[] = [];
+  public indexDestination: number[] = [1];
   public displayStyle: any = "none";
   public add: boolean = false;
-  //public travels: string[] = ['Travel One', 'Travel Two', 'Travel Three'];
+  public travels: Travel[] = [];
 
-  travels = travels;
   public travel: string;
   public compares: boolean = false;
-  constructor() { }
+  constructor(private readonly travelService: TravelService) { }
 
   buildForm(): void {
     this.Form = new FormGroup({
-      TravelName: new FormControl(null),
-      DailyBudget: new FormControl(null),
-      StartingDay: new FormControl(null),
-      Description: new FormControl(null)
+      name: new FormControl(null),
+      daily_budget: new FormControl(null),
+      start_date: new FormControl(null),
+      description: new FormControl(null),
+      end_date: new FormControl(null),
+      user: new FormControl('servillostefano@gmail.com')
     });
   }
 
   ngOnInit(): void {
     this.buildForm();
+    this.travelService.getTravelsByUser({email: 'servillostefano@gmail.com'}).subscribe(result => this.travels = result);
   }
 
-  form(): void {
+  cancel(): void {
     this.add = !this.add;
-    this.destinations = [''];
+    this.destinations = [];
+    this.indexDestination = [1];
   }
 
   addTravel(): void {
-    //aggiungere chiamata al db
+    let Travel: Travel = this.Form.value as Travel;
+    Travel.destination = this.destinations;
+    console.log(this.Form.value);
+    this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
     this.add = !this.add;
-    this.destinations = [''];
+    this.travelService.getTravelsByUser({email: 'servillostefano@gmail.com'}).subscribe(result => this.travels = result);
   }
 
-  destination(): void {
-    this.destinations.push('');
+  plus(): void {
+    this.indexDestination.push(1);
   }
 
   minus(): void {
-    this.destinations.pop();
+    this.indexDestination.pop();
   }
 
   deleteTravel(): void {
