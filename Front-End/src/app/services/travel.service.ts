@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import {map} from "rxjs/operators"
 import { Ack } from "../models/acks";
 import { Email } from "../models/email.model";
+import { Name } from "../models/name.model";
 import { Travel } from "../models/travel.model";
 
 @Injectable({providedIn: 'root' })
@@ -22,6 +23,15 @@ export class TravelService {
 
     public addTravelToUser(travel: Travel): Observable<Ack>{
         return this.http.post<Ack>('http://localhost:3002/addTravel', Travel.toJSON(travel))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
+    }
+
+    public deleteTravel(name: Name): Observable<Ack>{
+        return this.http.post<Ack>('http://localhost:3002/deleteTravel', Name.toJSON(name))
         .pipe(
             map(res => {
                 return res

@@ -35,14 +35,16 @@ app.post('/addTravel', jsonParser, function (req,res) {
 
 
 app.post('/deleteTravel', jsonParser, function (req,res) {
+    console.log('Post /deleteTravel');
     var name = req.body.name;
-    db.query("DELETE FROM travel WHERE travel.name = $1", [name]).then(res.send("SUCCESS"));
+    db.query("DELETE FROM travel WHERE travel.name = $1", [name]).then(res.send({status: true, msg:"ok"}));
 })
 
 app.post('/completeTravel', jsonParser, function (req,res) {
+    console.log('Post /completeTravel');
     var end_date = req.body.end_date;
     var name = req.body.name;
-    db.query("UPDATE travel SET end_date=$1 WHERE name=$2", [end_date, name]).then(res.send("SUCCESS"));
+    db.query("UPDATE travel SET end_date=$1 WHERE name=$2", [end_date, name]).then(res.send({status: true, msg:"ok"}));
 })
 
 app.post('/travels', jsonParser, function (req,res) {

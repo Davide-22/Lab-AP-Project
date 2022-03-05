@@ -7,12 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
+  public email: string;
   constructor() { }
 
   ngOnInit(): void {
+    this.email = sessionStorage.getItem('email');
   }
 
   logout(): void {
+    sessionStorage.clear();
     window.location.href = "";
   }
 

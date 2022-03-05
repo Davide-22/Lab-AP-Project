@@ -30,10 +30,10 @@ export class LoginPageComponent implements OnInit {
       this.error = true;
       return;
     }
-    //window.location.href="/main-page";
     this.userService.logIn(this.form.value as Login)
     .subscribe(result => {
       if(result.status){
+        sessionStorage.setItem('email',this.form.get('email').value);
         document.cookie = "auth="+result.msg;
         window.location.href="/main-page";
       }else if(result.msg == "error"){

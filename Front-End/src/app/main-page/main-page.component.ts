@@ -18,6 +18,7 @@ export class MainPageComponent implements OnInit {
   public travels: Travel[] = [];
   public error: boolean = false;
   public errorString: string='You must fill all the field';
+  public email: string;
 
   public travel: string;
   public compares: boolean = false;
@@ -30,13 +31,14 @@ export class MainPageComponent implements OnInit {
       start_date: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
       end_date: new FormControl(null),
-      user: new FormControl('servillostefano@gmail.com')
+      user: new FormControl(this.email)
     });
   }
 
   ngOnInit(): void {
+    this.email = sessionStorage.getItem('email');
     this.buildForm();
-    this.travelService.getTravelsByUser({email: 'servillostefano@gmail.com'}).subscribe(result => this.travels = result);
+    this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
   }
 
   cancel(): void {
@@ -52,7 +54,7 @@ export class MainPageComponent implements OnInit {
       Travel.destination = this.destinations;
       this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
       this.add = !this.add;
-      this.travelService.getTravelsByUser({email: 'servillostefano@gmail.com'}).subscribe(result => this.travels = result);
+      this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
     } else if (this.destinations.length == 0) {
       this.errorString = "Enter at least one destination";
       this.error = true;
@@ -73,8 +75,10 @@ export class MainPageComponent implements OnInit {
     this.indexDestination.pop();
   }
 
-  deleteTravel(): void {
+  deleteTravel(name: string): void {
+    this.travelService.deleteTravel({name: name}).subscribe(result => console.log(result));
     this.displayStyle="none";
+    this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
   }
 
   openPopUp(name: string): void {
