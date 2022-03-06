@@ -22,7 +22,6 @@
   opacity:0;
   background: -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
   background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
-  /* W3C */
   transition-duration: 0.3s;
   transition-property: transform, opacity;
 }
@@ -74,9 +73,6 @@
   animation-duration: 2s;
 }
 
-
-
-/*everything below here is just setting up the page, so dont worry about it */
 
 
 @media (min-width: 768px) {

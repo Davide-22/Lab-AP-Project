@@ -20,8 +20,6 @@
         </p>
     </div>
 </div>
-<div class="error" *ngIf="error">
-    <h3>
-        {{formError}}
-    </h3>
+<div class="alert alert-danger error" role="alert" *ngIf="error">
+    <h5>{{formError}}</h5>
 </div>
