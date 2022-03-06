@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { travels } from '../travels';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Email } from '../models/email.model';
+import { Travel } from '../models/travel.model';
+import { TravelService } from '../services/travel.service';
 
 @Component({
   selector: 'app-main-page',
@@ -9,56 +11,79 @@ import { travels } from '../travels';
 })
 export class MainPageComponent implements OnInit {
   public Form: FormGroup;
-  public destinations: string[] = [''];
+  public destinations: string[] = [];
+  public indexDestination: number[] = [1];
   public displayStyle: any = "none";
   public add: boolean = false;
-  //public travels: string[] = ['Travel One', 'Travel Two', 'Travel Three'];
+  public travels: Travel[] = [];
+  public error: boolean = false;
+  public errorString: string='You must fill all the field';
+  public email: string;
 
-  travels = travels;
   public travel: string;
   public compares: boolean = false;
-  constructor() { }
+  constructor(private readonly travelService: TravelService) { }
 
   buildForm(): void {
     this.Form = new FormGroup({
-      TravelName: new FormControl(null),
-      DailyBudget: new FormControl(null),
-      StartingDay: new FormControl(null),
-      Description: new FormControl(null)
+      name: new FormControl(null, Validators.required),
+      daily_budget: new FormControl(null, Validators.min(1)),
+      start_date: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
+      end_date: new FormControl(null),
+      user: new FormControl(this.email)
     });
   }
 
   ngOnInit(): void {
+    this.email = sessionStorage.getItem('email');
     this.buildForm();
+    this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
   }
 
-  form(): void {
+  cancel(): void {
     this.add = !this.add;
-    this.destinations = [''];
+    this.destinations = [];
+    this.indexDestination = [1];
   }
 
   addTravel(): void {
-    //aggiungere chiamata al db
-    this.add = !this.add;
-    this.destinations = [''];
+    if(this.Form.valid && this.destinations.length > 0) {
+      this.error = false;
+      let Travel: Travel = this.Form.value as Travel;
+      Travel.destination = this.destinations;
+      this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
+      this.add = !this.add;
+      this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
+    } else if (this.destinations.length == 0) {
+      this.errorString = "Enter at least one destination";
+      this.error = true;
+    } else if (this.Form.get('daily_budget').value < 1) {
+      this.errorString = 'Enter a daily budget >= 1';
+      this.error = true;
+    } else {
+      this.errorString = 'You must fill all the field';
+      this.error = true;
+    }
   }
 
-  destination(): void {
-    this.destinations.push('');
+  plus(): void {
+    this.indexDestination.push(1);
   }
 
   minus(): void {
-    this.destinations.pop();
+    this.indexDestination.pop();
   }
 
-  deleteTravel(): void {
+  deleteTravel(name: string): void {
+    this.travelService.deleteTravel({name: name}).subscribe(result => console.log(result));
     this.displayStyle="none";
+    this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
   }
 
   openPopUp(name: string): void {
     this.displayStyle="block";
     this.travel = name;
-
   }
 
   closePopUp(): void {

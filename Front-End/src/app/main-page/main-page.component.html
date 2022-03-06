@@ -15,7 +15,7 @@
                         </button>
                     </div>
                     <div class="col-sm">
-                        <button type="button"class="btn btn-danger" (click)="deleteTravel()">
+                        <button type="button"class="btn btn-danger" (click)="deleteTravel(travel)">
                             YES
                         </button>
                     </div>
@@ -25,7 +25,20 @@
     </div>
 </div>
 
-<div class="pag card text-center" *ngIf="!compares">
+<div class="pag card text-center" *ngIf="travels.length == 0">
+    <div class="card-body mt-auto">
+        <div class="row">
+            <div class="col-3">
+                <i class="fa fa-exclamation-circle fa-4x"></i>
+            </div>
+            <div class="col-9">
+                <h2> No travels added </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pag card text-center" *ngIf="!compares && travels.length > 0">
     <div class="card-body mt-auto">
         <div *ngFor="let travel of travels">
             <div class="travels card m-2">
@@ -52,51 +65,50 @@
         </div>
     </div>
 </div>
+
 <div *ngIf="add" class="pag card text-center mt-5">
    <div class="card-body mt-auto">
-       <form [formGroup]="Form">
+       <form [formGroup]="Form" (submit)="addTravel()">
            <div class="row">
                <div class="col-sm">
-                    <label for="username" class="form-lable required">
-                        Travel Name
-                    </label>
+                    <label for="inputName" class="form-lable">Travel Name</label>
                     <div class="input-group">
-                        <input class="form-control" formcontrolname="TravelName">
+                        <input type="string" id="inputName"class="form-control" formControlName="name">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm">
-                    <label for="username" class="form-lable required">
+                    <label for="number" class="form-lable">
                         Daily Budget
                     </label>
                     <div class="input-group">
-                        <input class="form-control" formcontrolname="DailyBudget">
+                        <input type="number" id="inputDailyBudget" class="form-control" formControlName="daily_budget" min="1">
                     </div> 
                 </div>
                 <div class="col-sm">
-                    <label for="username" class="form-lable required">
+                    <label for="date" class="form-lable required">
                         Starting Day
                     </label>
                     <div class="input-group">
-                        <input type="date" class="form-control" formcontrolname="StartingDay">
+                        <input type="date" class="form-control" formControlName="start_date">
                     </div>
                 </div>  
             </div>
             <div class="row">
                 <div class="col-8">
-                    <label for="username" class="form-lable required">
+                    <label for="destination" class="form-lable required">
                         Destination
                     </label>
-                    <div class="input-group m-2" *ngFor="let i of destinations">
-                        <input class="form-control" [(ngModel)]="destinations[i]" [ngModelOptions]="{standalone: true}">
+                    <div class="input-group m-2" *ngFor="let d of indexDestination; let i = index">
+                        <input class="form-control" id="destination" [(ngModel)]="destinations[i]" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="col-4">
-                    <button class="plus" (click)="destination()">
+                    <button class="plus" (click)="plus()">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <button *ngIf="destinations.length> 1"class="minus" (click)="minus()">
+                    <button *ngIf="indexDestination.length> 1"class="minus" (click)="minus()">
                         <i class="fa fa-minus"></i>
                     </button>
                 </div>   
@@ -106,31 +118,34 @@
                     Description
                 </label>
                 <div class="input-group">
-                    <input class="form-control" formcontrolname="Description">
+                    <input class="form-control" formControlName="description">
                 </div>
             </div>
+            <button type="submit" class="btn btn-dark">
+                <i class="fa fa-plus"></i>
+                Add
+            </button>
+            <button class="btn btn-dark ml-5" (click)="cancel()">
+                <i class="fa fa-times"></i>
+                Cancel
+            </button>
        </form>
+    </div>
+    <div class="error" *ngIf="error">
+        <h3>
+            {{errorString}}
+        </h3>
     </div>
 </div>
 <div class="m-5" *ngIf="!compares">
     <div *ngIf="!add" class="col-sm-12 text-center">
-        <button class="btn btn-dark" (click)="form()">
+        <button class="btn btn-dark" (click)="cancel()">
             <i class="fa fa-plus"></i>
             Add a travel
         </button>
         <button class="btn btn-dark ml-5" (click)="compare()">
             <i class="fa fa-bar-chart"></i>
             Compare two travels
-        </button>  
-    </div>  
-    <div *ngIf="add" class="text-center">
-        <button class="btn btn-dark" (click)="addTravel()">
-            <i class="fa fa-plus"></i>
-            Add
-        </button>
-        <button class="btn btn-dark ml-5" (click)="form()">
-            <i class="fa fa-times"></i>
-            Cancel
         </button>  
     </div>
 </div>
