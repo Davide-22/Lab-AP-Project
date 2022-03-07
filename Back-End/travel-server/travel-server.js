@@ -62,6 +62,14 @@ app.get('/allExpenses', function(req,res) {
     })
 });
 
+app.post('/days', jsonParser, function (req,res) {
+    console.log("Post /days");
+    var travel_name = req.body.name;
+    db.query("SELECT date FROM expense WHERE expense.trip = $1", [travel_name]).then(result => {
+        res.send(result);
+    })
+});
+
 app.post('/addExpense', jsonParser, function(req,res){
     var name = req.body.name;
     var amount = req.body.amount;

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Travel, travels } from '../travels';
-import { days } from '../days';
+import { Travel } from '../models/travel.model';
+import { TravelService } from '../services/travel.service';
+import { Day } from "../models/day.model";
 
 @Component({
   selector: 'app-travel-page',
@@ -10,26 +11,38 @@ import { days } from '../days';
   styleUrls: ['./travel-page.component.css']
 })
 export class TravelPageComponent implements OnInit {
+  //toDelete
   //public days: string[] = ['Day One', 'Day Two', 'Day Three'];
-  days = days;
+  //days = days;
 
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
-  travel: Travel | undefined;
+  public days: Day[] = [];
+  public email: string;
+
   
-  constructor(private route: ActivatedRoute) { }
+  //travel: Travel | undefined;
+  travel: String;
+  
+  //toDelete
+  //public travels: Travel[] = [];
+
+  constructor(private readonly travelService: TravelService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  
+    
     this.buildForm();
+    
     // get the travel name from the current route.
     const routeParams = this.route.snapshot.paramMap;
     const travelNameFromRoute = String(routeParams.get('travelName'));
-
-    // Find the product that correspond with the id provided in route.
-    this.travel = travels.find(travel => travel.name === travelNameFromRoute);
-  
+    
+    //toDelete
+    // Find the travel that correspond with the name provided in route.
+    //this.travel = this.travels.find(travel => travel.name === travelNameFromRoute);
+    this.travel = travelNameFromRoute;
+    this.travelService.getTravelDays({name: travelNameFromRoute}).subscribe(result => this.days = result);
   }
 
   buildForm(): void {
