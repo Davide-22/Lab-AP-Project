@@ -81,7 +81,7 @@ app.get('/allExpenses', function(req,res) {
 app.post('/days', jsonParser, function (req,res) {
     console.log("Post /days");
     var travel_name = req.body.name;
-    db.query("SELECT date FROM expense WHERE expense.travel = $1", [travel_name]).then(result => {
+    db.query("SELECT DISTINCT date FROM expense WHERE expense.travel = $1", [travel_name]).then(result => {
         res.send(result);
     })
 });
@@ -106,7 +106,8 @@ app.post('/deleteExpense', jsonParser, function (req,res) {
 });
 
 
-app.get('/dayTravel', jsonParser, function(req,res) {
+app.post('/dayTravel', jsonParser, function(req,res) {
+    console.log("Post /days");
     var travel_name = req.body.name;
     var date = req.body.date;
     db.query("SELECT name FROM expense WHERE expense.trip = $1 AND expense.date = $2", [travel_name, date]).then(result => {
