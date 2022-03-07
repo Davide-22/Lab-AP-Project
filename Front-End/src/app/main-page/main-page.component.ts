@@ -20,6 +20,7 @@ export class MainPageComponent implements OnInit {
   public errorString: string='You must fill all the field';
   public email: string;
   public selected: boolean = false;
+  public token: string;
 
   public travel: string;
   public compares: boolean = false;
@@ -37,9 +38,12 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.email = sessionStorage.getItem('email');
+    var cookies = document.cookie;
+    var cookiearray = cookies.split(';');
+    var token = cookiearray[0].split('=')[1];
+    this.token = token;
     this.buildForm();
-    this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
+    this.travelService.getTravelsByUser({token: token}).subscribe(result => this.travels = result);
   }
 
   cancel(): void {
@@ -55,7 +59,7 @@ export class MainPageComponent implements OnInit {
       Travel.destination = this.destinations;
       this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
       this.add = !this.add;
-      this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
+      this.travelService.getTravelsByUser({token: this.token}).subscribe(result => this.travels = result);
     } else if (this.destinations.length == 0) {
       this.errorString = "Enter at least one destination";
       this.error = true;
@@ -79,7 +83,7 @@ export class MainPageComponent implements OnInit {
   deleteTravel(name: string): void {
     this.travelService.deleteTravel({name: name}).subscribe(result => console.log(result));
     this.displayStyle="none";
-    this.travelService.getTravelsByUser({email: this.email}).subscribe(result => this.travels = result);
+    this.travelService.getTravelsByUser({token: this.token}).subscribe(result => this.travels = result);
   }
 
   openPopUp(name: string): void {

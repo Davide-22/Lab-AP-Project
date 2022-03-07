@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import {map} from "rxjs/operators"
 import { Ack } from "../models/acks";
-import { Email } from "../models/email.model";
+import { Token } from "../models/token.model";
 import { Name } from "../models/name.model";
 import { Travel } from "../models/travel.model";
 import { Day } from "../models/day.model";
@@ -13,8 +13,8 @@ export class TravelService {
 
     constructor(private readonly http: HttpClient) {}
 
-    public getTravelsByUser(email: Email): Observable<Travel[]>{
-        return this.http.post<Travel[]>('http://localhost:3002/travels', Email.toJSON(email))
+    public getTravelsByUser(token: Token): Observable<Travel[]>{
+        return this.http.post<Travel[]>('http://localhost:3002/travels', Token.toJSON(token))
         .pipe(
             map(res => {
                 return res

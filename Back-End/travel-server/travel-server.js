@@ -1,6 +1,7 @@
 const expr = require('express');
 const pgp = require("pg-promise")();
 var bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 const cn = {
     host: 'localhost',
@@ -48,11 +49,18 @@ app.post('/completeTravel', jsonParser, function (req,res) {
 })
 
 app.post('/travels', jsonParser, function (req,res) {
-    var user = req.body.email;
+    token = req.body.token;
     console.log("Post /travels");
-    db.query("SELECT name FROM travel WHERE travel.user = $1", [user]).then(result => {
-        res.send(result);
-    })
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query("SELECT name FROM travel WHERE travel.user = $1", [email]).then(result => {
+            res.send(result);
+        })
+    }catch(error) {
+        console.log(error);
+        return res.send({status: false, msg:"error"});
+    }
 });
 
 //Ritorna tutte le expense di un travel (serve solo per testare)
