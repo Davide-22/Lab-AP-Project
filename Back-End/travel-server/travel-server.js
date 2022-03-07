@@ -92,16 +92,16 @@ app.post('/addExpense', jsonParser, function(req,res){
     var category = req.body.category;
     var place = req.body.place;
     var date = req.body.date;
-    var trip = req.body.trip;
-    db.query("INSERT INTO expense VALUES ($1,$2,$3,$4,$5,$6)", [name,amount,category,place,date,trip]).then(
+    var travel = req.body.travel;
+    db.query("INSERT INTO expense VALUES ($1,$2,$3,$4,$5,$6)", [name,amount,category,place,date,travel]).then(
         res.send('SUCCESS')
     )
 });
 
 app.post('/deleteExpense', jsonParser, function (req,res) {
-    var expense_name = req.body.expense_name;
-    var travel_name = req.body.travel_name;
-    db.query("DELETE FROM expense WHERE expense.name = $1 AND expense.trip = $2", [expense_name, travel_name]).then(
+    var expense_name = req.body.name;
+    var travel_name = req.body.travel;
+    db.query("DELETE FROM expense WHERE expense.name = $1 AND expense.travel = $2", [expense_name, travel_name]).then(
         res.send("SUCCESS"));
 });
 
@@ -110,7 +110,7 @@ app.post('/dayTravel', jsonParser, function(req,res) {
     console.log("Post /dayTravel");
     var travel_name = req.body.name;
     var date = req.body.date;
-    db.query("SELECT name FROM expense WHERE expense.trip = $1 AND expense.date = $2", [travel_name, date]).then(result => {
+    db.query("SELECT name FROM expense WHERE expense.travel = $1 AND expense.date = $2", [travel_name, date]).then(result => {
         res.send(result)
     })
 })
