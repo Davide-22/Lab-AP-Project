@@ -107,7 +107,7 @@ app.post('/deleteExpense', jsonParser, function (req,res) {
 
 
 app.post('/dayTravel', jsonParser, function(req,res) {
-    console.log("Post /days");
+    console.log("Post /dayTravel");
     var travel_name = req.body.name;
     var date = req.body.date;
     db.query("SELECT name FROM expense WHERE expense.trip = $1 AND expense.date = $2", [travel_name, date]).then(result => {

@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Day, days } from '../days';
-import { expenses } from '../expenses';
+import { ExpenseService } from '../services/expense.service';
+import { DailyExpense } from '../models/dailyexpense.model';
+import { Expense } from '../models/expense.model';
 
 @Component({
   selector: 'app-day-page',
@@ -13,17 +14,18 @@ export class DayPageComponent implements OnInit {
 
   @Input() public travel: string;
   @Input() public day: string;
-  expenses = expenses;
+  
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
-  
+  public expenses: Expense[] = [];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private readonly expenseService: ExpenseService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   
     this.buildForm();
+    this.expenseService.getDayExpenses({name: this.travel, date:this.day}).subscribe(result => this.expenses = result);
   }
 
   buildForm(): void {
