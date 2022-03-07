@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Travel } from '../models/travel.model';
@@ -15,15 +15,19 @@ export class TravelPageComponent implements OnInit {
   //public days: string[] = ['Day One', 'Day Two', 'Day Three'];
   //days = days;
 
+  @Input() public travel;
+  @Input() public user;
+
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
   public days: Day[] = [];
   public email: string;
+  public day: string;
+  public selected: boolean = false;
 
   
   //travel: Travel | undefined;
-  travel: String;
   
   //toDelete
   //public travels: Travel[] = [];
@@ -31,18 +35,12 @@ export class TravelPageComponent implements OnInit {
   constructor(private readonly travelService: TravelService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    
     this.buildForm();
-    
-    // get the travel name from the current route.
-    const routeParams = this.route.snapshot.paramMap;
-    const travelNameFromRoute = String(routeParams.get('travelName'));
     
     //toDelete
     // Find the travel that correspond with the name provided in route.
     //this.travel = this.travels.find(travel => travel.name === travelNameFromRoute);
-    this.travel = travelNameFromRoute;
-    this.travelService.getTravelDays({name: travelNameFromRoute}).subscribe(result => this.days = result);
+    this.travelService.getTravelDays({name: this.travel}).subscribe(result => this.days = result);
   }
 
   buildForm(): void {
@@ -73,6 +71,11 @@ export class TravelPageComponent implements OnInit {
 
   completeTravel(): void {
     window.location.href = "/main-page";
+  }
+
+  select(name: string): void {
+    this.selected = !this.selected;
+    this.day = name;
   }
 
 }

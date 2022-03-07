@@ -19,6 +19,7 @@ export class MainPageComponent implements OnInit {
   public error: boolean = false;
   public errorString: string='You must fill all the field';
   public email: string;
+  public selected: boolean = false;
 
   public travel: string;
   public compares: boolean = false;
@@ -92,6 +93,11 @@ export class MainPageComponent implements OnInit {
 
   compare(): void {
     this.compares=true;
+  }
+
+  select(name: string): void {
+    this.selected = ! this.selected;
+    this.travel = name;
   }
 
 }

@@ -14,10 +14,6 @@ const routes: Routes = [
   {path: 'main-page', component: MainPageComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'change-password', component: ChangePasswordComponent},
-  {path: 'travels/:travelName', component: TravelPageComponent},
-  {path: 'day-page', component: DayPageComponent},
-  {path: 'travel-page', component: TravelPageComponent},
-  {path: 'days/:dayName', component: DayPageComponent},
   {path: '', component: LoginPageComponent},
 ];
 

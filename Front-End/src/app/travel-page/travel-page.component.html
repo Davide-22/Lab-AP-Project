@@ -1,7 +1,7 @@
 &nbsp;
 &nbsp;
 
-<div class="row">
+<div class="row" *ngIf="!selected">
     <div class="column">
         <i class="fa fa-plane fa-2x"> 
             <div *ngIf="travel">
@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="!selected">
     <div class="column">
         <div *ngIf="add" class="pag card text-center mt-5">
             <div class="card-body mt-auto">
@@ -99,10 +99,8 @@
                                     <i class="fa fa-calendar" style="font-size:36px" ></i>
                                 </div>
                                 <div class="col-8">
-                                    <h2>
-                                        <a [routerLink]="['/days', day.date]" style="text-decoration: none; color: black">
+                                    <h2 (click)="select(day.date)">
                                             {{ day.date }}
-                                        </a>
                                     </h2>
                                 </div>
                             </div> 
@@ -130,5 +128,7 @@
     
     <div class="column"></div>
 </div>
+
+<app-day-page *ngIf="selected" [day]="day" [travel]="travel"></app-day-page>
 <br> <br> <br>
 

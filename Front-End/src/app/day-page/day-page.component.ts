@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Day, days } from '../days';
@@ -11,12 +11,12 @@ import { expenses } from '../expenses';
 })
 export class DayPageComponent implements OnInit {
 
+  @Input() public travel: string;
+  @Input() public day: string;
   expenses = expenses;
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
-  
-  day: Day | undefined;
   
 
   constructor(private route: ActivatedRoute) { }
@@ -24,13 +24,6 @@ export class DayPageComponent implements OnInit {
   ngOnInit(): void {
   
     this.buildForm();
-    // get the travel name from the current route.
-    const routeParams = this.route.snapshot.paramMap;
-    const dayNameFromRoute = String(routeParams.get('dayName'));
-
-    // Find the product that correspond with the id provided in route.
-    this.day = days.find(day => day.name === dayNameFromRoute);
-  
   }
 
   buildForm(): void {

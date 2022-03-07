@@ -38,7 +38,7 @@
     </div>
 </div>
 
-<div class="pag card text-center" *ngIf="!compares && travels.length > 0">
+<div class="pag card text-center" *ngIf="!compares && travels.length > 0 && !selected">
     <div class="card-body mt-auto">
         <div *ngFor="let travel of travels">
             <div class="travels card m-2">
@@ -48,10 +48,8 @@
                             <i class="fa fa-plane fa-3x"></i>
                         </div>
                         <div class="col-8">
-                            <h2>
-                                <a [routerLink]="['/travels', travel.name]" style="text-decoration: none; color: black">
+                            <h2 (click)="select(travel.name)">
                                 {{travel.name}}
-                                </a>
                             </h2>
                         </div>
                         <div class="col-3">
@@ -137,7 +135,7 @@
         </h3>
     </div>
 </div>
-<div class="m-5" *ngIf="!compares">
+<div class="m-5" *ngIf="!compares && !selected">
     <div *ngIf="!add" class="col-sm-12 text-center">
         <button class="btn btn-dark" (click)="cancel()">
             <i class="fa fa-plus"></i>
@@ -150,3 +148,5 @@
     </div>
 </div>
 <app-compare-page *ngIf="compares" [travels] = "travels"></app-compare-page>
+
+<app-travel-page *ngIf="selected" [travel]="travel" [user]="email"></app-travel-page>
