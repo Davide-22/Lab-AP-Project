@@ -15,8 +15,8 @@ export class TravelPageComponent implements OnInit {
   //public days: string[] = ['Day One', 'Day Two', 'Day Three'];
   //days = days;
 
-  @Input() public travel;
-  @Input() public user;
+  @Input() public travel: string;
+  @Input() public userToken: string;
 
   public Form: FormGroup;
   public displayStyle: any = "none";
@@ -70,6 +70,7 @@ export class TravelPageComponent implements OnInit {
   }
 
   completeTravel(): void {
+    this.travelService.completeTravel({userToken: this.userToken, travel: this.travel}).subscribe(result => console.log(result));
     window.location.href = "/main-page";
   }
 

@@ -7,6 +7,7 @@ import { Token } from "../models/token.model";
 import { Name } from "../models/name.model";
 import { Travel } from "../models/travel.model";
 import { Day } from "../models/day.model";
+import { Complete } from "../models/complete.model";
 
 @Injectable({providedIn: 'root' })
 export class TravelService {
@@ -42,6 +43,15 @@ export class TravelService {
 
     public getTravelDays(name: Name): Observable<Day[]>{
         return this.http.post<Day[]>('http://localhost:3002/days', Name.toJSON(name))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
+    }
+
+    public completeTravel(complete: Complete): Observable<Ack>{
+        return this.http.post<Ack>('http://localhost:3002/completeTravel', Complete.toJSON(complete))
         .pipe(
             map(res => {
                 return res

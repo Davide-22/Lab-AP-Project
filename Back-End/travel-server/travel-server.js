@@ -43,9 +43,17 @@ app.post('/deleteTravel', jsonParser, function (req,res) {
 
 app.post('/completeTravel', jsonParser, function (req,res) {
     console.log('Post /completeTravel');
-    var end_date = req.body.end_date;
-    var name = req.body.name;
-    db.query("UPDATE travel SET end_date=$1 WHERE name=$2", [end_date, name]).then(res.send({status: true, msg:"ok"}));
+    var name = req.body.travel;
+    var userToken = req.body.userToken;
+    try{
+        const decode = jwt.verify(userToken, 'testkey');
+        email = decode.email;
+        end_date = new Date();
+        db.query("UPDATE travel SET end_date=$1 WHERE name=$2 AND travel.user=$3", [end_date, name, email]).then(res.send({status: true, msg:"ok"}));
+    }catch(error) {
+        console.log(error);
+        return res.send({status: false, msg:"error"});
+    }
 })
 
 app.post('/travels', jsonParser, function (req,res) {
@@ -73,7 +81,7 @@ app.get('/allExpenses', function(req,res) {
 app.post('/days', jsonParser, function (req,res) {
     console.log("Post /days");
     var travel_name = req.body.name;
-    db.query("SELECT date FROM expense WHERE expense.trip = $1", [travel_name]).then(result => {
+    db.query("SELECT date FROM expense WHERE expense.travel = $1", [travel_name]).then(result => {
         res.send(result);
     })
 });
