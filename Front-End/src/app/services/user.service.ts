@@ -6,6 +6,8 @@ import {map} from "rxjs/operators"
 import { Ack } from "../models/acks";
 import { Login } from "../models/login.model";
 import { Passwords } from "../models/passwords.model";
+import { Token } from "../models/token.model";
+import { Account } from "../models/account.model";
 
 @Injectable({providedIn: 'root' })
 export class UserService {
@@ -33,6 +35,15 @@ export class UserService {
 
     public changePassword(passwords : Passwords): Observable<Ack> {
         return this.http.post<Ack>('http://localhost:3003/changepassword', Passwords.toJSON(passwords))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
+    }
+
+    public account(token: Token): Observable<Account> {
+        return this.http.post<Account>('http://localhost:3003/account', Token.toJSON(token))
         .pipe(
             map(res => {
                 return res

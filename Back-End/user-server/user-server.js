@@ -115,6 +115,39 @@ app.post('/changepassword',jsonParser, function (req, res) {
     }
 });
 
+app.post('/account',jsonParser,function(req,res) {
+    console.log("POST /account");
+    token = req.body.token;
+    var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        travels_done = 0;
+        days = 0;
+        db.query('SELECT * FROM travel WHERE travel.user=$1',[email])
+            .then(result => {
+                for (i in result) {
+                    if (result[i].end_date != null){
+                        travels_done++;
+                        a=result[i].start_date;
+                        b=result[i].end_date;
+                        var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                        var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+                        days += Math.floor((utc2 - utc1) / _MS_PER_DAY);
+                    }
+                }
+                db.query('SELECT username FROM users WHERE email=$1',[email])
+                    .then(result => {
+                        res.send({travels_done: travels_done, days: days, email: email, username: result[0].username});
+                    })
+            })
+    }catch(error) {
+        console.log(error);
+        return res.send({status: false, msg:"error"});
+    }
+});
+
 app.listen(3003, () => {
     console.log('Listening on port: ' + 3003);
 })

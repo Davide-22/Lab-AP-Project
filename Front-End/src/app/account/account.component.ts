@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-account',
@@ -7,11 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  public email: string;
-  constructor() { }
+  public travels_done: number = 0;
+  public days: number = 0;
+  public username: string = '';
+  public email: string = '';
+
+  constructor(private readonly userService: UserService) { }
 
   ngOnInit(): void {
-    this.email = sessionStorage.getItem('email');
+    var cookies = document.cookie;
+    var cookiearray = cookies.split(';');
+    var token = cookiearray[0].split('=')[1];
+    this.userService.account({token: token}).subscribe(result=> {
+      this.travels_done = result.travels_done;
+      this.days = result.days;
+      this.username = result.username;
+      this.email = result.email;
+    });
   }
 
   logout(): void {
