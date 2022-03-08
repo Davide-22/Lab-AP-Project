@@ -120,6 +120,7 @@ app.post('/days', jsonParser, function (req,res) {
 });
 
 app.post('/addExpense', jsonParser, function(req,res){
+    console.log("Post /addExpense");
     var name = req.body.name;
     var amount = req.body.amount;
     var category = req.body.category;

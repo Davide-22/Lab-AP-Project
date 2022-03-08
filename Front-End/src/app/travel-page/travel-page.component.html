@@ -15,32 +15,32 @@
     <div class="column">
         <div *ngIf="add" class="pag card text-center mt-5">
             <div class="card-body mt-auto">
-                <form [formGroup]="Form">
+                <form [formGroup]="Form" (submit)="addExpense()">
                     <div class="row">
                         <div class="col-sm">
-                             <label for="username" class="form-lable required">
+                             <label for="inputName" class="form-lable required">
                                  Expense Name
                              </label>
                              <div class="input-group">
-                                 <input class="form-control" formcontrolname="ExpenseName">
+                                <input type="string" id="inputName"class="form-control" formControlName="name">
                              </div>
                          </div>
                      </div>
                      <div class="row">
                          <div class="col-sm">
-                             <label for="username" class="form-lable required">
+                             <label for="number" class="form-lable">
                                  Amount
                              </label>
                              <div class="input-group">
-                                 <input class="form-control" formcontrolname="ExpenseAmount">
+                                <input type="number" id="inputAmount" class="form-control" formControlName="amount" min="1">
                              </div> 
                          </div>
                          <div class="col-sm">
-                            <label for="username" class="form-lable required">
+                            <label for="inputName" class="form-lable required">
                                 Category
                             </label>
                             <div class="input-group">
-                                <select class="form-control" formcontrolname="ExpenseCategory">
+                                <select type="string" id="inputCategory" class="form-control" formControlName="category">
                                     <option value="" disabled selected> Select category </option>
                                     <option value="accomodation">Accomodation</option>
                                     <option value="food">Food</option>
@@ -53,29 +53,34 @@
                      </div>
                      <div class="row">
                          <div class="col-8">
-                             <label for="username" class="form-lable required">
+                             <label for="inputName" class="form-lable required">
                                  Place
                              </label>
                              <div class="input-group">
-                                <input class="form-control" formcontrolname="ExpensePlace">
+                                <input type="string" id="inputPlace" class="form-control" formControlName="place">
                             </div> 
                          </div>
                      </div>
-                </form>
-                <br>
-                <button class="btn btn-dark" (click)="addExpense()">
-                    <i class="fa fa-plus"></i>
-                    Add expense
-                </button>
-                <button class="btn btn-dark ml-5" (click)="form()">
-                    <i class="fa fa-times"></i>
-                    Cancel
-                </button>  
+                     <br>
+                     <button type="submit" class="btn btn-dark">
+                        <i class="fa fa-plus"></i>
+                        Add expense
+                    </button>
+                    <button class="btn btn-dark ml-5" (click)="cancel()">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>  
+                </form> 
              </div>
+             <div class="error" *ngIf="error">
+                <h3>
+                    {{errorString}}
+                </h3>
+            </div>
          </div>
         <br>
         <div *ngIf="!add" class="text-center">
-            <button class="btn btn-dark" (click)="form()">
+            <button class="btn btn-dark" (click)="cancel()">
                 <i class="fa fa-plus"></i>
                 Add an expense
             </button>
