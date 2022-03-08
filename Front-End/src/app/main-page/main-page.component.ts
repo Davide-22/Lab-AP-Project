@@ -33,7 +33,7 @@ export class MainPageComponent implements OnInit {
       start_date: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
       end_date: new FormControl(null),
-      user: new FormControl(this.email)
+      user_token: new FormControl(this.token)
     });
   }
 
@@ -65,7 +65,7 @@ export class MainPageComponent implements OnInit {
       Travel.destination = this.destinations;
       this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
       this.add = !this.add;
-      this.travelService.getTravelsByUser({token: this.token}).subscribe(result => this.travels = result);
+      window.location.href="/main-page";
     } else if (this.destinations.length == 0) {
       this.errorString = "Enter at least one destination";
       this.error = true;
