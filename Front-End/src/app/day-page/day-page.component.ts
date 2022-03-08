@@ -2,9 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExpenseService } from '../services/expense.service';
-import { DailyExpense } from '../models/dailyexpense.model';
 import { Expense } from '../models/expense.model';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-day-page',
@@ -24,6 +22,7 @@ export class DayPageComponent implements OnInit {
   public selected: boolean = false;
 
   public expenses: Expense[] = [];
+  public expense: string;
 
   constructor(private readonly expenseService: ExpenseService, private route: ActivatedRoute) { }
 
@@ -51,7 +50,6 @@ export class DayPageComponent implements OnInit {
     if(this.Form.valid) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
-      //let currentDate = formatDate(this.day, 'MM-dd-yyyy', 'en-US');
       Expense.date = this.day;
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
       this.add = !this.add;
@@ -64,12 +62,15 @@ export class DayPageComponent implements OnInit {
     }
   }
 
-  deleteExpense(): void {
-    //chiamata back-end
+  deleteExpense(name: string): void {
+    this.expenseService.deleteExpense({name: name, travel: this.travel}).subscribe(result => console.log(result));
+    this.displayStyle="none";
+    //window.location.href="/main-page";
   }
 
-  openPopUp(): void {
+  openPopUp(name: string): void {
     this.displayStyle="block";
+    this.expense = name;
   }
 
   closePopUp(): void {

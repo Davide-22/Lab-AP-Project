@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center">Delete Expense</h4>
+                <h4 class="modal-title text-center">Delete Expense: {{expense}}</h4>
             </div>
             <div class="modal-body">
                 <p> Are you sure to delete the Expense? </p>
@@ -17,7 +17,7 @@
                         </button>
                     </div>
                     <div class="col-sm">
-                        <button type="button"class="btn btn-danger" (click)="deleteExpense()">
+                        <button type="button" class="btn btn-danger" (click)="deleteExpense(expense)">
                             YES
                         </button>
                     </div>
@@ -146,7 +146,7 @@
                                      &euro;
                                 </div>
                                 <div class="col-3">
-                                    <button class="but" (click)="openPopUp()">
+                                    <button class="but" (click)="openPopUp(expense.name)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
