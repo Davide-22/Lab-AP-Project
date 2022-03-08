@@ -145,7 +145,7 @@ app.post('/dayTravel', jsonParser, function(req,res) {
     console.log("Post /dayTravel");
     var travel_name = req.body.name;
     var date = req.body.date;
-    db.query("SELECT name FROM expense WHERE expense.travel = $1 AND expense.date = $2", [travel_name, date]).then(result => {
+    db.query("SELECT name, amount, category, place FROM expense WHERE expense.travel = $1 AND expense.date = $2", [travel_name, date]).then(result => {
         res.send(result)
     })
 })

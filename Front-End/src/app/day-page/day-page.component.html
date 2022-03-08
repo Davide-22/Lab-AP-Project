@@ -143,7 +143,15 @@
                                     <h2>
                                         {{ expense.name }}
                                     </h2>
-                                     &euro;
+                                    <div class="row">
+                                        Amount: {{ expense.amount }} &euro;
+                                    </div>
+                                    <div class="row">
+                                        Category: {{ expense.category }}
+                                    </div>
+                                    <div class="row">
+                                        Place: {{ expense.place }}
+                                    </div>
                                 </div>
                                 <div class="col-3">
                                     <button class="but" (click)="openPopUp(expense.name)">
@@ -165,7 +173,7 @@
             </div>
         </div>
         <br> <br>
-        <select name="graph" id="comparegraph" *ngIf="expenses.length == 0">
+        <select name="graph" id="comparegraph" *ngIf="expenses.length > 0">
             <option value="" disabled selected> Select category </option>
             <option value="accomodation">Accomodation</option>
             <option value="food">Food</option>
@@ -175,7 +183,7 @@
           </select>
           
         <!--placeholder, serve per far vedere dove andrà il graph chart più avanti-->
-        <svg width="600" height="250" *ngIf="expenses.length == 0">
+        <svg width="600" height="250" *ngIf="expenses.length > 0">
             <rect x="170" y="20" rx="20" ry="20" width="250" height="200"
             style="fill:white;stroke:black;stroke-width:5;opacity:0.5" />
         </svg>
