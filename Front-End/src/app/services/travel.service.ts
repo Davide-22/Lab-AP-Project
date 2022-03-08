@@ -8,6 +8,7 @@ import { Name } from "../models/name.model";
 import { Travel } from "../models/travel.model";
 import { Day } from "../models/day.model";
 import { Complete } from "../models/complete.model";
+import { Delete } from "../models/delete.model";
 
 @Injectable({providedIn: 'root' })
 export class TravelService {
@@ -32,8 +33,8 @@ export class TravelService {
         )
     }
 
-    public deleteTravel(name: Name): Observable<Ack>{
-        return this.http.post<Ack>('http://localhost:3002/deleteTravel', Name.toJSON(name))
+    public deleteTravel(del: Delete): Observable<Ack>{
+        return this.http.post<Ack>('http://localhost:3002/deleteTravel', Delete.toJSON(del))
         .pipe(
             map(res => {
                 return res

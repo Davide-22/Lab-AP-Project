@@ -87,9 +87,9 @@ export class MainPageComponent implements OnInit {
   }
 
   deleteTravel(name: string): void {
-    this.travelService.deleteTravel({name: name}).subscribe(result => console.log(result));
+    this.travelService.deleteTravel({name: name, token: this.token}).subscribe(result => console.log(result));
     this.displayStyle="none";
-    this.travelService.getTravelsByUser({token: this.token}).subscribe(result => this.travels = result);
+    window.location.href="/main-page";
   }
 
   openPopUp(name: string): void {

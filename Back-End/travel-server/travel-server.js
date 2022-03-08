@@ -38,7 +38,17 @@ app.post('/addTravel', jsonParser, function (req,res) {
 app.post('/deleteTravel', jsonParser, function (req,res) {
     console.log('Post /deleteTravel');
     var name = req.body.name;
-    db.query("DELETE FROM travel WHERE travel.name = $1", [name]).then(res.send({status: true, msg:"ok"}));
+    var token = req.body.token;
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query("DELETE FROM expense WHERE travel = $1", [name]).then(
+            db.query("DELETE FROM travel WHERE name = $1 AND travel.user = $2", [name,email]).then(res.send({status: true, msg:"ok"}))
+        )
+    }catch(error) {
+        console.log(error);
+        return res.send({status: false, msg:"error"});
+    }
 })
 
 app.post('/completeTravel', jsonParser, function (req,res) {
