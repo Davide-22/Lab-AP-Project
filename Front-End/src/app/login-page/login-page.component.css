@@ -23,6 +23,8 @@
 
 .icon{
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
     margin-bottom: 4%;
 }
 
@@ -31,3 +33,4 @@
     width: 22%;
     margin-top: 2%;
 }
+
