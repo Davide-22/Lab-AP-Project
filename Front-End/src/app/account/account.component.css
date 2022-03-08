@@ -2,7 +2,10 @@
     margin: 0 auto;
     margin-top: 6%;
     border-radius: 40px;
-    width: 30%;
+    width: 24%;
+}
+.popup{
+    margin-top: 12%;
 }
 
 .center {
@@ -14,4 +17,12 @@
     margin: 0 auto;
     width: 22%;
     margin-top: 2%;
+}
+
+.btngroup{
+    margin-top: 5%;
+}
+
+.info{
+    margin-top: 3%;
 }

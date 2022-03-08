@@ -1,11 +1,11 @@
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+<div class="modal popup" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title text-center">Delete account</h4>
             </div>
             <div class="modal-body">
-                <p> Are you sure to delete your account? </p>
+                <h4><p> Are you sure to delete your account? </p></h4>
             </div>
             <div class="modal-footer">
                 <div class="row">
@@ -27,42 +27,26 @@
 
 <div class="card account">
     <div class="card-body mt-auto">
-        <div class="row">
-            <div class="col-2">
+        <div class="row center">
+            <div>
                 <i class="fa fa-user-circle-o fa-3x"></i>
-            </div>
-            <div class="col-6">
-                <h2>My Account</h2>
-            </div>
-            <div class="col-4">
-                <button class="btn btn-dark" (click)="logout()">
-                    Logout
-                </button>
+                <h2>{{username}}</h2>
             </div>
         </div>
-        <div class="row center mt-3">
-            <h5>{{username}}</h5> 
-        </div>
-        <div class="row center mt-3">
-            <h5>{{email}}</h5>
-        </div>
-        <div class="row center mt-3">
-            <h5>{{travels_done}} Travels done</h5>
-        </div>
-        <div class="row center mt-3">
-            <h5>{{days}} days on travel</h5>
-        </div>
-        <div class="row mt-3">
-            <div class="col">
-                <button class="btn btn-dark" (click)="changePassword()">
-                    Change Password
-                </button>
+        <div class="info">
+            <div class="row center mt-3">
+                <h5>email: {{email}}</h5>
             </div>
-            <div class="col">
-                <button class="btn btn-danger ml-5" (click)="openPopUp()">
-                    Delete Account
-                </button>
-            </div> 
+            <div class="row center mt-3">
+                <h5>{{travels_done}} Travels done</h5>
+            </div>
+            <div class="row center mt-3">
+                <h5>{{days}} days on travel</h5>
+            </div>
+        </div>
+        <div class="btn-group btngroup" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-dark" (click)="changePassword()">Change Password</button>
+                <button type="button" class="btn btn-danger" (click)="openPopUp()">Delete Account</button>
         </div>
     </div>
 </div>
