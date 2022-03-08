@@ -50,5 +50,14 @@ export class UserService {
             })
         )
     }
+
+    public verifyCookie(token: Token): Observable<Ack> {
+        return this.http.post<Ack>('http://localhost:3003/verify', Token.toJSON(token))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
+    }
     
 }

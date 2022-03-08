@@ -76,6 +76,21 @@ app.post('/login',jsonParser, function (req, res) {
             })
 });
 
+app.post('/verify',jsonParser, function(req,res) {
+    console.log("POST /verify");
+    token = req.body.token;
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query('SELECT * FROM users WHERE email = $1', [email])
+            .then(result => {
+                return res.send({status: true, msg: "ok"});
+            })
+    }catch(error) {
+        return res.send({status: false, msg:"error"});
+    }
+})
+
 app.post('/changepassword',jsonParser, function (req, res) {
     console.log("POST /changepassword");
     oldpassword = req.body.oldpassword;

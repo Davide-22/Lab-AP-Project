@@ -21,6 +21,14 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var cookies = document.cookie;
+    var cookiearray = cookies.split(';');
+    var token = cookiearray[0].split('=')[1];
+    this.userService.verifyCookie({token: token}).subscribe(result => {
+      if(result.status == false) {
+        window.location.href="";
+      }
+    })
   }
 
   checkPassword() : boolean{

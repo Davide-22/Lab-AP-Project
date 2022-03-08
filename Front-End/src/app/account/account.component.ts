@@ -19,12 +19,18 @@ export class AccountComponent implements OnInit {
     var cookies = document.cookie;
     var cookiearray = cookies.split(';');
     var token = cookiearray[0].split('=')[1];
-    this.userService.account({token: token}).subscribe(result=> {
-      this.travels_done = result.travels_done;
-      this.days = result.days;
-      this.username = result.username;
-      this.email = result.email;
-    });
+    this.userService.verifyCookie({token: token}).subscribe(result => {
+      if(result.status == false) {
+        window.location.href="";
+      } else {
+          this.userService.account({token: token}).subscribe(result=> {
+          this.travels_done = result.travels_done;
+          this.days = result.days;
+          this.username = result.username;
+          this.email = result.email;
+        });
+      }
+    })
   }
 
   logout(): void {
