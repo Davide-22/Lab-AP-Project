@@ -24,6 +24,14 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var cookies = document.cookie;
+    var cookiearray = cookies.split(';');
+    var token = cookiearray[0].split('=')[1];
+    this.userService.verifyCookie({token: token}).subscribe(result => {
+      if(result.status == true) {
+        window.location.href = "/main-page";
+      }
+    })
   }
 
   checkPassword() : boolean{

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Email } from '../models/email.model';
 import { Travel } from '../models/travel.model';
 import { TravelService } from '../services/travel.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-main-page',
@@ -24,7 +24,7 @@ export class MainPageComponent implements OnInit {
 
   public travel: string;
   public compares: boolean = false;
-  constructor(private readonly travelService: TravelService) { }
+  constructor(private readonly travelService: TravelService, private readonly userService: UserService) { }
 
   buildForm(): void {
     this.Form = new FormGroup({
@@ -42,8 +42,14 @@ export class MainPageComponent implements OnInit {
     var cookiearray = cookies.split(';');
     var token = cookiearray[0].split('=')[1];
     this.token = token;
+    this.userService.verifyCookie({token: token}).subscribe(result => {
+      if(result.status == false) {
+        window.location.href="";
+      } else {
+        this.travelService.getTravelsByUser({token: this.token}).subscribe(result => this.travels = result);
+      }
+    })
     this.buildForm();
-    this.travelService.getTravelsByUser({token: token}).subscribe(result => this.travels = result);
   }
 
   cancel(): void {
@@ -81,9 +87,9 @@ export class MainPageComponent implements OnInit {
   }
 
   deleteTravel(name: string): void {
-    this.travelService.deleteTravel({name: name}).subscribe(result => console.log(result));
+    this.travelService.deleteTravel({name: name, token: this.token}).subscribe(result => console.log(result));
     this.displayStyle="none";
-    this.travelService.getTravelsByUser({token: this.token}).subscribe(result => this.travels = result);
+    window.location.href="/main-page";
   }
 
   openPopUp(name: string): void {

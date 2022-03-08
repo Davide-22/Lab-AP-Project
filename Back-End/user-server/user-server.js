@@ -72,6 +72,26 @@ app.post('/login',jsonParser, function (req, res) {
             })
 });
 
+app.post('/verify',jsonParser, function(req,res) {
+    console.log("POST /verify");
+    token = req.body.token;
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query('SELECT * FROM users WHERE email = $1', [email])
+            .then(result => {
+                if(result[0].email == email) return res.send({status: true, msg: "ok"});
+                else return res.send({status: false, msg: "email not in database"})
+            })
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg: "error"})
+            })
+    }catch(error) {
+        return res.send({status: false, msg:"error"});
+    }
+})
+
 app.post('/changepassword',jsonParser, function (req, res) {
     console.log("POST /changepassword");
     oldpassword = req.body.oldpassword;
@@ -137,6 +157,14 @@ app.post('/account',jsonParser,function(req,res) {
                     .then(result => {
                         res.send({travels_done: travels_done, days: days, email: email, username: result[0].username});
                     })
+                    .catch(err => {
+                        console.log(err);
+                        return res.send({status: false, msg: "error"})
+                    })
+            })
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg: "error"})
             })
     }catch(error) {
         console.log(error);
