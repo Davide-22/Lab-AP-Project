@@ -23,10 +23,6 @@ app.use(function(req, res, next) {
   });
 
 
-app.get('/', function (req, res) {
-    console.log("GET /");
-    res.send("CIAO");
-})
 
 app.post('/signup',jsonParser, function (req, res) {
     console.log("POST /signup");
@@ -142,6 +138,26 @@ app.post('/account',jsonParser,function(req,res) {
                         res.send({travels_done: travels_done, days: days, email: email, username: result[0].username});
                     })
             })
+    }catch(error) {
+        console.log(error);
+        return res.send({status: false, msg:"error"});
+    }
+});
+
+app.post('/deleteaccount',jsonParser, function (req, res) {
+    console.log("POST /deleteaccount");
+    token = req.body.token;
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query('DELETE FROM users WHERE email=$1', [email])
+                .then(result => {
+                    res.send({status: true, msg:"ok"});
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.send({status: false, msg:"error"});  
+                })
     }catch(error) {
         console.log(error);
         return res.send({status: false, msg:"error"});
