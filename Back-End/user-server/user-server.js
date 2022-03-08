@@ -140,7 +140,7 @@ app.post('/account',jsonParser,function(req,res) {
         email = decode.email;
         travels_done = 0;
         days = 0;
-        db.query('SELECT * FROM travel WHERE travel.user=$1',[email])
+        db.query('SELECT * FROM travels WHERE travels.user_email=$1',[email])
             .then(result => {
                 for (i in result) {
                     if (result[i].end_date != null){

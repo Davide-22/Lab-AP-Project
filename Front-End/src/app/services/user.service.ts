@@ -59,5 +59,14 @@ export class UserService {
             })
         )
     }
+
+    public deleteAccount(token: Token): Observable<Ack> {
+        return this.http.post<Ack>('http://localhost:3003/deleteaccount', Token.toJSON(token))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
+    }
     
 }

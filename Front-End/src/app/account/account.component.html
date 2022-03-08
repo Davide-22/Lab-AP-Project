@@ -1,3 +1,30 @@
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Delete account</h4>
+            </div>
+            <div class="modal-body">
+                <p> Are you sure to delete your account? </p>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-secondary" (click)="closePopUp()">
+                            NO
+                        </button>
+                    </div>
+                    <div class="col-sm">
+                        <button type="button"class="btn btn-danger" (click)="deleteAccount()">
+                            YES
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
 <div class="card account">
     <div class="card-body mt-auto">
         <div class="row">
@@ -32,10 +59,13 @@
                 </button>
             </div>
             <div class="col">
-                <button class="btn btn-danger ml-5" (click)="deleteAccount()">
+                <button class="btn btn-danger ml-5" (click)="openPopUp()">
                     Delete Account
                 </button>
             </div> 
         </div>
     </div>
+</div>
+<div class="alert alert-danger error" role="alert" *ngIf="error">
+    <h5>{{formError}}</h5>
 </div>

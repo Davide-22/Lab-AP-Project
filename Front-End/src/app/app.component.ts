@@ -33,4 +33,10 @@ export class AppComponent implements OnInit{
       }
     })
   }
+  logout(): void{
+    var now = new Date();
+    now.setTime(now.getTime());
+    document.cookie = "auth=; expires="+ now.toUTCString() +";";
+    window.location.href = "";
+  }
 }

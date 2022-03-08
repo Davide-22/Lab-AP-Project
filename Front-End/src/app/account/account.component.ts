@@ -1,3 +1,4 @@
+import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 
@@ -12,6 +13,9 @@ export class AccountComponent implements OnInit {
   public days: number = 0;
   public username: string = '';
   public email: string = '';
+  public formError : string; 
+  public error: boolean = false;
+  public displayStyle: any = "none";
 
   constructor(private readonly userService: UserService) { }
 
@@ -34,7 +38,9 @@ export class AccountComponent implements OnInit {
   }
 
   logout(): void {
-    sessionStorage.clear();
+    var now = new Date();
+    now.setTime(now.getTime());
+    document.cookie = "auth=; expires="+ now.toUTCString() +";";
     window.location.href = "";
   }
 
@@ -42,8 +48,30 @@ export class AccountComponent implements OnInit {
     window.location.href = "/change-password";
   }
 
+  openPopUp(): void {
+    this.displayStyle="block";
+  }
+
+  closePopUp(): void {
+    this.displayStyle="none";
+  }
+  
   deleteAccount(): void {
-    window.location.href = "/sign-up";
+    var cookies = document.cookie;
+    var cookiearray = cookies.split(';');
+    var token = cookiearray[0].split('=')[1];
+    this.userService.deleteAccount({token : token})
+    .subscribe(result => {
+      if(result.status){
+        var now = new Date();
+        now.setTime(now.getTime());
+        document.cookie = "auth=; expires="+ now.toUTCString() +";"; 
+        window.location.href="";
+      }else if(result.msg == "error"){
+        this.formError = "Error";
+        this.error = true;
+      }
+      });
   }
 
 }
