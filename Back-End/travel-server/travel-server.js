@@ -29,9 +29,12 @@ app.post('/addTravel', jsonParser, function (req,res) {
     var destination = req.body.destination;
     var description = req.body.description;
     var user = req.body.user;
-    db.query("INSERT INTO travel VALUES ($1,$2,$3,$4,$5,$6,$7)", [daily_budget,start_date,end_date,destination,description,user,name]).then(
-        res.send({status: true, msg:"ok"})
-    )
+    db.query("INSERT INTO travel VALUES ($1,$2,$3,$4,$5,$6,$7)", [daily_budget,start_date,end_date,destination,description,user,name])
+        .then(res.send({status: true, msg:"ok"}))
+        .catch(err => {
+            console.log(err);
+            return res.send({status: false, msg: "error"})
+        })
 });
 
 
@@ -42,9 +45,19 @@ app.post('/deleteTravel', jsonParser, function (req,res) {
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("DELETE FROM expense WHERE travel = $1", [name]).then(
-            db.query("DELETE FROM travel WHERE name = $1 AND travel.user = $2", [name,email]).then(res.send({status: true, msg:"ok"}))
-        )
+        db.query("DELETE FROM expense WHERE travel = $1", [name])
+            .then(
+                db.query("DELETE FROM travel WHERE name = $1 AND travel.user = $2", [name,email])
+                    .then(res.send({status: true, msg:"ok"}))
+                    .catch(err => {
+                        console.log(err);
+                        return res.send({status: false, msg: "error"})
+                    })
+            )
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg: "error"})
+            })
     }catch(error) {
         console.log(error);
         return res.send({status: false, msg:"error"});
@@ -59,7 +72,12 @@ app.post('/completeTravel', jsonParser, function (req,res) {
         const decode = jwt.verify(userToken, 'testkey');
         email = decode.email;
         end_date = new Date();
-        db.query("UPDATE travel SET end_date=$1 WHERE name=$2 AND travel.user=$3", [end_date, name, email]).then(res.send({status: true, msg:"ok"}));
+        db.query("UPDATE travel SET end_date=$1 WHERE name=$2 AND travel.user=$3", [end_date, name, email])
+            .then(res.send({status: true, msg:"ok"}))
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg: "error"})
+            });
     }catch(error) {
         console.log(error);
         return res.send({status: false, msg:"error"});
@@ -72,9 +90,14 @@ app.post('/travels', jsonParser, function (req,res) {
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("SELECT name FROM travel WHERE travel.user = $1", [email]).then(result => {
-            res.send(result);
-        })
+        db.query("SELECT name FROM travel WHERE travel.user = $1", [email])
+            .then(result => {
+                res.send(result);
+            })
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg: "error"})
+            })
     }catch(error) {
         console.log(error);
         return res.send({status: false, msg:"error"});

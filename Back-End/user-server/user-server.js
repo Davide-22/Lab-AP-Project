@@ -86,6 +86,10 @@ app.post('/verify',jsonParser, function(req,res) {
             .then(result => {
                 return res.send({status: true, msg: "ok"});
             })
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg: "error"})
+            })
     }catch(error) {
         return res.send({status: false, msg:"error"});
     }
@@ -156,6 +160,14 @@ app.post('/account',jsonParser,function(req,res) {
                     .then(result => {
                         res.send({travels_done: travels_done, days: days, email: email, username: result[0].username});
                     })
+                    .catch(err => {
+                        console.log(err);
+                        return res.send({status: false, msg: "error"})
+                    })
+            })
+            .catch(err => {
+                console.log(err);
+                return res.send({status: false, msg: "error"})
             })
     }catch(error) {
         console.log(error);
