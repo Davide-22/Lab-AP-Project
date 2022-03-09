@@ -19,6 +19,7 @@ export class TravelPageComponent implements OnInit {
   @Input() public travel: string;
   @Input() public daily_budget: number;
   @Input() public userToken: string;
+  @Input() public start_date: string;
 
   public Form: FormGroup;
   public displayStyle: any = "none";
@@ -39,7 +40,7 @@ export class TravelPageComponent implements OnInit {
 
   
   ngOnInit(): void {
-  
+    console.log(this.start_date);
     this.travelService.getTravelDays({travel: this.travel, token: this.userToken}).subscribe(result => this.days = result);
     this.buildForm();
   }
@@ -59,10 +60,10 @@ export class TravelPageComponent implements OnInit {
   }
 
   addExpense(): void {
-    if(this.Form.valid) {
+    let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
+    if(this.Form.valid && currentDate > this.start_date) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
-      let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
       Expense.date = currentDate;
       Expense.token = this.userToken;
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
@@ -70,6 +71,9 @@ export class TravelPageComponent implements OnInit {
       window.location.reload();
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
+      this.error = true;
+    } else if (currentDate < this.start_date){
+      this.errorString = 'You cannot add an expense to a travel not started yet';
       this.error = true;
     } else {
       this.errorString = 'You must fill all the field';

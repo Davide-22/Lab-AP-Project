@@ -48,7 +48,7 @@
                             <i class="fa fa-plane fa-3x"></i>
                         </div>
                         <div class="col-8">
-                            <h2 (click)="select(travel.name,travel.daily_budget)">
+                            <h2 (click)="select(travel.name,travel.daily_budget,travel.start_date)">
                                 {{travel.name}}
                             </h2>
                         </div>
@@ -149,4 +149,4 @@
 </div>
 <app-compare-page *ngIf="compares" [travels] = "travels"></app-compare-page>
 
-<app-travel-page *ngIf="selected" [travel]="travel" [userToken]="token" [daily_budget]="daily_budget"></app-travel-page>
+<app-travel-page *ngIf="selected" [travel]="travel" [userToken]="token" [daily_budget]="daily_budget" [start_date]="start_date"></app-travel-page>

@@ -3,8 +3,8 @@ export interface TravelJSON {
     user: string;
     description: string;
     destination: string[];
-    end_date: Date;
-    start_date: Date;
+    end_date: string;
+    start_date: string;
     daily_budget: number;
 }
 
@@ -13,8 +13,8 @@ export class Travel {
     public user: string;
     public description: string;
     public destination: string[];
-    public end_date: Date;
-    public start_date: Date;
+    public end_date: string;
+    public start_date: string;
     public daily_budget: number;
 
     public static toJSON(model: Travel): TravelJSON {

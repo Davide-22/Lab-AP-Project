@@ -24,6 +24,7 @@ export class MainPageComponent implements OnInit {
 
   public travel: string;
   public daily_budget: number;
+  public start_date: string;
   public compares: boolean = false;
   constructor(private readonly travelService: TravelService, private readonly userService: UserService) { }
 
@@ -106,10 +107,11 @@ export class MainPageComponent implements OnInit {
     this.compares=true;
   }
 
-  select(name: string, budget: number): void {
+  select(name: string, budget: number, startDate: string): void {
     this.selected = ! this.selected;
     this.travel = name;
     this.daily_budget = budget;
+    this.start_date = startDate;
   }
 
 }

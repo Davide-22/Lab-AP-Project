@@ -16,7 +16,8 @@ export class DayPageComponent implements OnInit {
   @Input() public userToken: string;
   @Output() public back: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() public daily_budget: number;
-  
+  @Input() public start_date: string;
+
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
@@ -50,7 +51,7 @@ export class DayPageComponent implements OnInit {
   }
 
   addExpense(): void {
-    if(this.Form.valid) {
+    if(this.Form.valid && this.day > this.start_date) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = this.day;
@@ -61,7 +62,10 @@ export class DayPageComponent implements OnInit {
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
       this.error = true;
-    } else {
+    } else if (this.day < this.start_date){
+      this.errorString = 'You cannot add an expense to a travel not started yet';
+      this.error = true;
+    }else {
       this.errorString = 'You must fill all the field';
       this.error = true;
     }
