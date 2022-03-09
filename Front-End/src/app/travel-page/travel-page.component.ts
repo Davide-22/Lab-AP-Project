@@ -93,4 +93,8 @@ export class TravelPageComponent implements OnInit {
     this.day = name;
   }
 
+  onBack(element: boolean): void {
+    this.selected = element;
+  }
+
 }

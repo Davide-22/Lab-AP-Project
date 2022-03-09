@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExpenseService } from '../services/expense.service';
@@ -14,6 +14,7 @@ export class DayPageComponent implements OnInit {
   @Input() public travel: string;
   @Input() public day: string;
   @Input() public userToken: string;
+  @Output() public back: EventEmitter<boolean> = new EventEmitter<boolean>();
   
   public Form: FormGroup;
   public displayStyle: any = "none";
@@ -77,6 +78,10 @@ export class DayPageComponent implements OnInit {
 
   closePopUp(): void {
     this.displayStyle="none";
+  }
+
+  backTravel(): void {
+    this.back.emit(false);
   }
 
 }

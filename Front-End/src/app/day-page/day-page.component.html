@@ -107,7 +107,11 @@
          </div>
         <br>
         <div *ngIf="!add" class="text-center">
-            <button class="btn btn-dark" (click)="cancel()">
+            <button class="btn btn-dark" (click)="backTravel()">
+                <i class="fa fa-plane"></i>
+                Back to Travel
+            </button>
+            <button class="btn btn-dark mt-4" (click)="cancel()">
                 <i class="fa fa-plus"></i>
                 Add an expense
             </button>
