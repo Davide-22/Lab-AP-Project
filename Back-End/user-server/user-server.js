@@ -104,7 +104,6 @@ app.post('/changepassword',jsonParser, function (req, res) {
         const hash = sha256.update(password).digest('base64');
         const sha256_2 = crypto.createHash('sha256');
         const hash2 = sha256_2.update(oldpassword).digest('base64');
-        console.log(hash2);
         db.query('SELECT password FROM users WHERE email = $1', [email])
             .then(result => {
                 if(result[0].password == hash2){
