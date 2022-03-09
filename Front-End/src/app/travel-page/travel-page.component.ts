@@ -61,8 +61,9 @@ export class TravelPageComponent implements OnInit {
     if(this.Form.valid) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
-      let currentDate = formatDate(this.current_date, 'MM-dd-yyyy', 'en-US');
+      let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
       Expense.date = currentDate;
+      Expense.token = this.userToken;
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
       this.add = !this.add;
     } else if (this.Form.get('amount').value < 1) {

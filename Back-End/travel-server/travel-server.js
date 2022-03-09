@@ -132,8 +132,11 @@ app.post('/addExpense', jsonParser, function(req,res){
     var place = req.body.place;
     var date = req.body.date;
     var travel = req.body.travel;
+    token = req.body.token;
     try{
-        db.query("INSERT INTO expense VALUES ($1,$2,$3,$4,$5,$6)", [name,amount,category,place,date,travel]).then(
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query("INSERT INTO expenses VALUES ($1,$2,$3,$4,$5,$6,$7)", [email, travel, name, amount, category, date, place]).then(
             res.send({status: true, msg:"ok"})
         )
         .catch(err => {

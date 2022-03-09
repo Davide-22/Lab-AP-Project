@@ -52,6 +52,7 @@ export class DayPageComponent implements OnInit {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = this.day;
+      Expense.token = this.userToken;
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
       this.add = !this.add;
     } else if (this.Form.get('amount').value < 1) {
