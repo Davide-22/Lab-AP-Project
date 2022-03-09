@@ -151,10 +151,13 @@ app.post('/addExpense', jsonParser, function(req,res){
 
 app.post('/deleteExpense', jsonParser, function (req,res) {
     console.log("Post /deleteExpense");
-    var expense_name = req.body.name;
-    var travel_name = req.body.travel;
+    var name = req.body.name;
+    var travel = req.body.travel;
+    token = req.body.token;
     try{
-        db.query("DELETE FROM expense WHERE expense.name = $1 AND expense.travel = $2", [expense_name, travel_name]).then(
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query("DELETE FROM expenses WHERE user_email = $1 AND travel = $2 and name = $3", [email, travel, name]).then(
             res.send({status: true, msg:"ok"})
         )
         .catch(err => {

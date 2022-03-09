@@ -65,7 +65,7 @@ export class DayPageComponent implements OnInit {
   }
 
   deleteExpense(name: string): void {
-    this.expenseService.deleteExpense({name: name, travel: this.travel}).subscribe(result => console.log(result));
+    this.expenseService.deleteExpense({token: this.userToken, travel: this.travel, name: name}).subscribe(result => console.log(result));
     this.displayStyle="none";
     //window.location.href="/main-page";
   }
