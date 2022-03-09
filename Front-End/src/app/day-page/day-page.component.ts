@@ -51,7 +51,7 @@ export class DayPageComponent implements OnInit {
   }
 
   addExpense(): void {
-    if(this.Form.valid && this.day > this.start_date) {
+    if(this.Form.valid && this.day >= this.start_date) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = this.day;

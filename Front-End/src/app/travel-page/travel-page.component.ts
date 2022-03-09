@@ -40,7 +40,7 @@ export class TravelPageComponent implements OnInit {
 
   
   ngOnInit(): void {
-    console.log(this.start_date);
+    
     this.travelService.getTravelDays({travel: this.travel, token: this.userToken}).subscribe(result => this.days = result);
     this.buildForm();
   }
@@ -61,7 +61,7 @@ export class TravelPageComponent implements OnInit {
 
   addExpense(): void {
     let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
-    if(this.Form.valid && currentDate > this.start_date) {
+    if(this.Form.valid && currentDate >= this.start_date) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = currentDate;
