@@ -39,7 +39,7 @@ export class TravelPageComponent implements OnInit {
   
   ngOnInit(): void {
   
-    this.travelService.getTravelDays({name: this.travel}).subscribe(result => this.days = result);
+    this.travelService.getTravelDays({travel: this.travel, token: this.userToken}).subscribe(result => this.days = result);
     this.buildForm();
   }
 

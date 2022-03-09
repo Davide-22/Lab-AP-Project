@@ -9,6 +9,7 @@ import { Travel } from "../models/travel.model";
 import { Day } from "../models/day.model";
 import { Complete } from "../models/complete.model";
 import { Delete } from "../models/delete.model";
+import { GetDays } from "../models/getdays.model";
 
 @Injectable({providedIn: 'root' })
 export class TravelService {
@@ -42,8 +43,8 @@ export class TravelService {
         )
     }
 
-    public getTravelDays(name: Name): Observable<Day[]>{
-        return this.http.post<Day[]>('http://localhost:3002/days', Name.toJSON(name))
+    public getTravelDays(getDays: GetDays): Observable<Day[]>{
+        return this.http.post<Day[]>('http://localhost:3002/days', GetDays.toJSON(getDays))
         .pipe(
             map(res => {
                 return res

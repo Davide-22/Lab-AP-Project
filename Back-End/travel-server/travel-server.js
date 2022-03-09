@@ -106,9 +106,12 @@ app.post('/travels', jsonParser, function (req,res) {
 
 app.post('/days', jsonParser, function (req,res) {
     console.log("Post /days");
-    var travel_name = req.body.name;
+    var travel = req.body.travel;
+    token = req.body.token;
     try{
-        db.query("SELECT DISTINCT date FROM expense WHERE expense.travel = $1", [travel_name]).then(result => {
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query("SELECT DISTINCT date FROM expenses WHERE user_email = $1 AND travel = $2 order by date ASC", [email, travel]).then(result => {
             res.send(result);
         })
         .catch(err => {
