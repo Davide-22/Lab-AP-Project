@@ -14,6 +14,7 @@ export class DayPageComponent implements OnInit {
   @Input() public travel: string;
   @Input() public day: string;
   @Input() public userToken: string;
+  @Input() public daily_budget: number;
   
   public Form: FormGroup;
   public displayStyle: any = "none";

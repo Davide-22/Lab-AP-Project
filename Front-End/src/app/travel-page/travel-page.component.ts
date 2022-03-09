@@ -17,6 +17,7 @@ export class TravelPageComponent implements OnInit {
   
 
   @Input() public travel: string;
+  @Input() public daily_budget: number;
   @Input() public userToken: string;
 
   public Form: FormGroup;

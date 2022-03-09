@@ -90,7 +90,7 @@ app.post('/travels', jsonParser, function (req,res) {
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("SELECT name FROM travels WHERE user_email = $1", [email])
+        db.query("SELECT name, daily_budget FROM travels WHERE user_email = $1", [email])
             .then(result => {
                 res.send(result);
             })
