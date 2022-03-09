@@ -67,6 +67,7 @@ export class TravelPageComponent implements OnInit {
       Expense.token = this.userToken;
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
       this.add = !this.add;
+      window.location.reload();
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
       this.error = true;
