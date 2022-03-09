@@ -165,12 +165,15 @@ app.post('/deleteExpense', jsonParser, function (req,res) {
 });
 
 
-app.post('/dayTravel', jsonParser, function(req,res) {
-    console.log("Post /dayTravel");
-    var travel_name = req.body.name;
+app.post('/getExpenses', jsonParser, function(req,res) {
+    console.log("Post /getExpenses");
+    var travel = req.body.travel;
     var date = req.body.date;
+    token = req.body.token;
     try{
-        db.query("SELECT name, amount, category, place FROM expense WHERE expense.travel = $1 AND expense.date = $2", [travel_name, date]).then(result => {
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query("SELECT name, amount, category, place FROM expenses WHERE user_email = $1 AND travel = $2 AND date = $3", [email, travel, date]).then(result => {
             res.send(result);
         })
         .catch(err => {

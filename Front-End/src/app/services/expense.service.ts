@@ -12,8 +12,8 @@ export class ExpenseService {
 
     constructor(private readonly http: HttpClient) {}
 
-    public getDayExpenses(dailyExpense: DailyExpense): Observable<Expense[]>{
-        return this.http.post<Expense[]>('http://localhost:3002/dayTravel', DailyExpense.toJSON(dailyExpense))
+    public getExpenses(dailyExpense: DailyExpense): Observable<Expense[]>{
+        return this.http.post<Expense[]>('http://localhost:3002/getExpenses', DailyExpense.toJSON(dailyExpense))
         .pipe(
             map(res => {
                 return res

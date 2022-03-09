@@ -13,6 +13,7 @@ export class DayPageComponent implements OnInit {
 
   @Input() public travel: string;
   @Input() public day: string;
+  @Input() public userToken: string;
   
   public Form: FormGroup;
   public displayStyle: any = "none";
@@ -29,7 +30,7 @@ export class DayPageComponent implements OnInit {
   ngOnInit(): void {
   
     this.buildForm();
-    this.expenseService.getDayExpenses({name: this.travel, date:this.day}).subscribe(result => this.expenses = result);
+    this.expenseService.getExpenses({travel: this.travel, token: this.userToken, date:this.day}).subscribe(result => this.expenses = result);
   }
 
   buildForm(): void {
