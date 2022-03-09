@@ -85,6 +85,9 @@ export class MainPageComponent implements OnInit {
   }
 
   minus(): void {
+    if(this.destinations.length == this.indexDestination.length) {
+      this.destinations.pop();
+    }
     this.indexDestination.pop();
   }
 
