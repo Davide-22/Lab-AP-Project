@@ -18,13 +18,10 @@ export class MainPageComponent implements OnInit {
   public travels: Travel[] = [];
   public error: boolean = false;
   public errorString: string='You must fill all the field';
-  public email: string;
   public selected: boolean = false;
   public token: string;
 
-  public travel: string;
-  public daily_budget: number;
-  public start_date: string;
+  public Travel: Travel;
   public compares: boolean = false;
   constructor(private readonly travelService: TravelService, private readonly userService: UserService) { }
 
@@ -65,9 +62,13 @@ export class MainPageComponent implements OnInit {
       this.error = false;
       let Travel: Travel = this.Form.value as Travel;
       Travel.destination = this.destinations;
-      this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => console.log(result));
-      this.add = !this.add;
-      window.location.href="/main-page";
+      Travel.user=this.token;
+      this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => {
+        if(result.status){
+          this.travels.push(Travel);
+          this.add=!this.add;
+        }
+      });
     } else if (this.destinations.length == 0) {
       this.errorString = "Enter at least one destination";
       this.error = true;
@@ -91,15 +92,18 @@ export class MainPageComponent implements OnInit {
     this.indexDestination.pop();
   }
 
-  deleteTravel(name: string): void {
-    this.travelService.deleteTravel({name: name, token: this.token}).subscribe(result => console.log(result));
-    this.displayStyle="none";
-    window.location.href="/main-page";
+  deleteTravel(travel: Travel): void {
+    this.travelService.deleteTravel({name: travel.name, token: this.token}).subscribe(result => {
+      if(result.status){
+        this.travels.splice(this.travels.indexOf(travel),1);
+        this.displayStyle="none";
+      }
+    });
   }
 
-  openPopUp(name: string): void {
+  openPopUp(travel: Travel): void {
     this.displayStyle="block";
-    this.travel = name;
+    this.Travel = travel;
   }
 
   closePopUp(): void {
@@ -110,11 +114,9 @@ export class MainPageComponent implements OnInit {
     this.compares=true;
   }
 
-  select(name: string, budget: number, startDate: string): void {
+  select(travel: Travel): void {
     this.selected = ! this.selected;
-    this.travel = name;
-    this.daily_budget = budget;
-    this.start_date = startDate;
+    this.Travel=travel;
   }
 
 }

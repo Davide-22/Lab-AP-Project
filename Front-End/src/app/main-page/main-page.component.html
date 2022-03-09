@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center">Delete Travel: {{travel}}</h4>
+                <h4 class="modal-title text-center">Delete Travel: {{Travel}}</h4>
             </div>
             <div class="modal-body">
                 <h4><p> Are you sure to delete the Travel? </p></h4>
@@ -15,7 +15,7 @@
                         </button>
                     </div>
                     <div class="col-sm">
-                        <button type="button"class="btn btn-danger" (click)="deleteTravel(travel)">
+                        <button type="button"class="btn btn-danger" (click)="deleteTravel(Travel)">
                             YES
                         </button>
                     </div>
@@ -48,12 +48,12 @@
                             <i class="fa fa-plane fa-3x"></i>
                         </div>
                         <div class="col-8">
-                            <h2 (click)="select(travel.name,travel.daily_budget,travel.start_date)">
+                            <h2 (click)="select(travel)">
                                 {{travel.name}}
                             </h2>
                         </div>
                         <div class="col-3">
-                            <button class="but" (click)="openPopUp(travel.name)">
+                            <button class="but" (click)="openPopUp(travel)">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
@@ -149,4 +149,4 @@
 </div>
 <app-compare-page *ngIf="compares" [travels] = "travels"></app-compare-page>
 
-<app-travel-page *ngIf="selected" [travel]="travel" [userToken]="token" [daily_budget]="daily_budget" [start_date]="start_date"></app-travel-page>
+<app-travel-page *ngIf="selected" [travel]="Travel.name" [userToken]="token" [daily_budget]="Travel.daily_budget" [start_date]="Travel.start_date"></app-travel-page>
