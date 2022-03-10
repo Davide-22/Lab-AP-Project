@@ -68,10 +68,10 @@ app.post('/completeTravel', jsonParser, function (req,res) {
     console.log('Post /completeTravel');
     var name = req.body.travel;
     var userToken = req.body.userToken;
+    var end_date = req.body.date;
     try{
         const decode = jwt.verify(userToken, 'testkey');
         email = decode.email;
-        end_date = new Date();
         db.query("UPDATE travels SET end_date=$1 WHERE name=$2 AND user_email=$3", [end_date, name, email])
             .then(res.send({status: true, msg:"ok"}))
             .catch(err => {

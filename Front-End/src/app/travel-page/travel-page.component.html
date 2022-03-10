@@ -41,6 +41,9 @@
 
 <div class="row" *ngIf="!selected">
     <div class="column">
+        <p *ngIf="travel_not_started">Travel has not started yet!</p>
+        <p *ngIf="travel_ended">Travel is ended!</p>
+        <p *ngIf="travel_not_started">Travel will start on {{ Travel.start_date }}</p>
         <div *ngIf="add" class="pag card text-center mt-5">
             <div class="card-body mt-auto">
                 <form [formGroup]="Form" (submit)="addExpense()">
@@ -108,12 +111,12 @@
          </div>
         <br>
         <div *ngIf="!add" class="text-center">
-            <button *ngIf="!travel_ended" class="btn btn-dark" (click)="cancel()">
+            <button *ngIf="!travel_ended && !travel_not_started" class="btn btn-dark" (click)="cancel()">
                 <i class="fa fa-plus"></i>
                 Add an expense
             </button>
             <br> <br>
-            <button *ngIf="!travel_ended" class="btn btn-dark" (click)="openPopUp()">
+            <button *ngIf="!travel_ended && !travel_not_started" class="btn btn-dark" (click)="openPopUp()">
                 Complete Travel
             </button>
         </div>

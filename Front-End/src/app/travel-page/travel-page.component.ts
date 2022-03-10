@@ -24,7 +24,8 @@ export class TravelPageComponent implements OnInit {
   public error: boolean = false;
   public errorString: string='You must fill all the field';
   public travel_ended: boolean = false;
-  
+  public travel_not_started: boolean = false;
+
   public days: Day[] = [];
   public email: string;
   public day: string;
@@ -42,6 +43,7 @@ export class TravelPageComponent implements OnInit {
     this.travelService.getTravelDays({travel: this.Travel.name, token: this.userToken}).subscribe(result => this.days = result);
     this.buildForm();
     this.travelEnded();
+    this.travelNotStarted();
   }
 
   buildForm(): void {
@@ -89,7 +91,8 @@ export class TravelPageComponent implements OnInit {
   }
 
   completeTravel(): void {
-    this.travelService.completeTravel({userToken: this.userToken, travel: this.Travel.name}).subscribe(result => console.log(result));
+    let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
+    this.travelService.completeTravel({userToken: this.userToken, travel: this.Travel.name, date:currentDate}).subscribe(result => console.log(result));
     window.location.href = "/main-page";
   }
 
@@ -102,9 +105,16 @@ export class TravelPageComponent implements OnInit {
     this.selected = element;
   }
 
-  travelEnded(): void{
+  travelEnded(): void {
     if(this.Travel.end_date != null){
       this.travel_ended = true;
+    }
+  }
+
+  travelNotStarted(): void {
+    let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
+    if( currentDate < this.Travel.start_date){
+      this.travel_not_started = true;
     }
   }
 
