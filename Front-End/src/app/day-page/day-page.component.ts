@@ -17,6 +17,7 @@ export class DayPageComponent implements OnInit {
   @Output() public back: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() public daily_budget: number;
   @Input() public start_date: string;
+  @Input() public end_date: string;
 
   public Form: FormGroup;
   public displayStyle: any = "none";
@@ -24,6 +25,7 @@ export class DayPageComponent implements OnInit {
   public error: boolean = false;
   public errorString: string='You must fill all the field';
   public selected: boolean = false;
+  public travel_ended: boolean = false;
 
   public expenses: Expense[] = [];
   public expense: string;
@@ -37,16 +39,7 @@ export class DayPageComponent implements OnInit {
       this.expenses = result;
       this.budgetLeft();
     });
-    
-  }
-
-  budgetLeft():void{
-    var sum_amounts: number = 0;
-    for (let i = 0; i < this.expenses.length; i++) {
-      sum_amounts += this.expenses[i].amount; 
-    }
-    var BudgetLeft: number = this.daily_budget - sum_amounts;
-    this.budget_left = BudgetLeft;
+    this.travelEnded();
   }
 
   buildForm(): void {
@@ -101,6 +94,21 @@ export class DayPageComponent implements OnInit {
 
   backTravel(): void {
     this.back.emit(false);
+  }
+  
+  budgetLeft():void{
+    var sum_amounts: number = 0;
+    for (let i = 0; i < this.expenses.length; i++) {
+      sum_amounts += this.expenses[i].amount; 
+    }
+    var BudgetLeft: number = this.daily_budget - sum_amounts;
+    this.budget_left = BudgetLeft;
+  }
+
+  travelEnded(): void{
+    if(this.end_date != null){
+      this.travel_ended = true;
+    }
   }
 
 }

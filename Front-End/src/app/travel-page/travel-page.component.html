@@ -80,16 +80,15 @@
          </div>
         <br>
         <div *ngIf="!add" class="text-center">
-            <button class="btn btn-dark" (click)="cancel()">
+            <button *ngIf="!travel_ended" class="btn btn-dark" (click)="cancel()">
                 <i class="fa fa-plus"></i>
                 Add an expense
             </button>
             <br> <br>
-            <button class="btn btn-dark" (click)="completeTravel()">
+            <button *ngIf="!travel_ended" class="btn btn-dark" (click)="completeTravel()">
                 Complete Travel
             </button>
         </div>
-        
     </div>
     
     
@@ -149,6 +148,6 @@
 </div>
 
 
-<app-day-page *ngIf="selected" [day]="day" [travel]="travel" [userToken]="userToken" [daily_budget]="daily_budget" [start_date]="start_date" (back)="onBack($event)"></app-day-page>
+<app-day-page *ngIf="selected" [day]="day" [travel]="travel" [userToken]="userToken" [daily_budget]="daily_budget" [start_date]="start_date" [end_date]="end_date" (back)="onBack($event)"></app-day-page>
 <br> <br> <br>
 

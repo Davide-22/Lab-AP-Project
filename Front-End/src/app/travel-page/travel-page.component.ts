@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Travel } from '../models/travel.model';
 import { TravelService } from '../services/travel.service';
 import { Day } from "../models/day.model";
 import { ExpenseService } from '../services/expense.service';
@@ -20,12 +19,14 @@ export class TravelPageComponent implements OnInit {
   @Input() public daily_budget: number;
   @Input() public userToken: string;
   @Input() public start_date: string;
+  @Input() public end_date: string;
 
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
   public error: boolean = false;
   public errorString: string='You must fill all the field';
+  public travel_ended: boolean = false;
   
   public days: Day[] = [];
   public email: string;
@@ -43,6 +44,7 @@ export class TravelPageComponent implements OnInit {
     
     this.travelService.getTravelDays({travel: this.travel, token: this.userToken}).subscribe(result => this.days = result);
     this.buildForm();
+    this.travelEnded();
   }
 
   buildForm(): void {
@@ -101,6 +103,12 @@ export class TravelPageComponent implements OnInit {
 
   onBack(element: boolean): void {
     this.selected = element;
+  }
+
+  travelEnded(): void{
+    if(this.end_date != null){
+      this.travel_ended = true;
+    }
   }
 
 }

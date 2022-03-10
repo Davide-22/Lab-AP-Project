@@ -112,10 +112,12 @@
                 Back to Travel
             </button>
             <br> <br>
-            <button class="btn btn-dark mt-4" (click)="cancel()">
+            
+            <button *ngIf="!travel_ended" class="btn btn-dark mt-4" (click)="cancel()">
                 <i class="fa fa-plus"></i>
                 Add an expense
             </button>
+            
         </div>
         
     </div>
@@ -159,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <button class="but" (click)="openPopUp(expense.name)">
+                                    <button *ngIf="!travel_ended" class="but" (click)="openPopUp(expense.name)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
