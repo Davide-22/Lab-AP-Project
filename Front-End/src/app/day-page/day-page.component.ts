@@ -27,13 +27,26 @@ export class DayPageComponent implements OnInit {
 
   public expenses: Expense[] = [];
   public expense: string;
+  public budget_left: number;
 
   constructor(private readonly expenseService: ExpenseService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  
     this.buildForm();
-    this.expenseService.getExpenses({travel: this.travel, token: this.userToken, date:this.day}).subscribe(result => this.expenses = result);
+    this.expenseService.getExpenses({travel: this.travel, token: this.userToken, date:this.day}).subscribe((result) => {
+      this.expenses = result;
+      this.budgetLeft();
+    });
+    
+  }
+
+  budgetLeft():void{
+    var sum_amounts: number = 0;
+    for (let i = 0; i < this.expenses.length; i++) {
+      sum_amounts += this.expenses[i].amount; 
+    }
+    var BudgetLeft: number = this.daily_budget - sum_amounts;
+    this.budget_left = BudgetLeft;
   }
 
   buildForm(): void {
