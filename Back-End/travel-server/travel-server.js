@@ -33,10 +33,12 @@ app.post('/addTravel', jsonParser, function (req,res) {
         const decode = jwt.verify(user_token, 'testkey');
         email = decode.email;
         db.query("INSERT INTO travels VALUES ($1,$2,$3,$4,$5,$6,$7)", [name,email,daily_budget,start_date,end_date,destination,description])
-            .then(res.send({status: true, msg:"ok"}))
+            .then(result => {
+                res.send({status: true, msg:"ok"})
+            })
             .catch(err => {
                 console.log(err);
-                return res.send({status: false, msg: "error"})
+                res.send({status: false, msg: "error"})
             })
     }catch(error) {
         console.log(error);

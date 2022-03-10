@@ -40,7 +40,6 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.today);
     var cookies = document.cookie;
     var cookiearray = cookies.split(';');
     var token = cookiearray[0].split('=')[1];
@@ -71,6 +70,9 @@ export class MainPageComponent implements OnInit {
         if(result.status){
           this.travels.push(Travel);
           this.add=!this.add;
+        } else {
+          this.errorString= "Impossible to have two travels with the same name. Try again";
+          this.error = true;
         }
       });
     } else if (this.destinations.length == 0) {
