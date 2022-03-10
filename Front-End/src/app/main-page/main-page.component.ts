@@ -20,6 +20,9 @@ export class MainPageComponent implements OnInit {
   public errorString: string='You must fill all the field';
   public selected: boolean = false;
   public token: string;
+  public month = ((new Date().getMonth()+1) < 10)? '0'+((new Date().getMonth()+1)):((new Date().getMonth()+1));
+  public day = ((new Date().getDate()) < 10)? '0'+((new Date().getDate())):((new Date().getDate())); 
+  public today: string = (new Date()).getFullYear()+'-'+this.month+'-'+this.day;
 
   public Travel: Travel;
   public compares: boolean = false;
@@ -37,6 +40,7 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.today);
     var cookies = document.cookie;
     var cookiearray = cookies.split(';');
     var token = cookiearray[0].split('=')[1];
