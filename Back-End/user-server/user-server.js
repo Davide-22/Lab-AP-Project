@@ -146,8 +146,8 @@ app.post('/account',jsonParser,function(req,res) {
                         travels_done++;
                         a=result[i].start_date;
                         b=result[i].end_date;
-                        var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-                        var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+                        var utc1 = Date.UTC(a.substring(0,4), a.substring(5,7), a.substring(8,10));
+                        var utc2 = Date.UTC(b.substring(0,4), b.substring(5,7), b.substring(8,10));
 
                         days += Math.floor((utc2 - utc1) / _MS_PER_DAY);
                     }
