@@ -149,4 +149,4 @@
 </div>
 <app-compare-page *ngIf="compares" [travels] = "travels"></app-compare-page>
 
-<app-travel-page *ngIf="selected" [travel]="Travel.name" [userToken]="token" [daily_budget]="Travel.daily_budget" [start_date]="Travel.start_date" [end_date]="Travel.end_date"></app-travel-page>
+<app-travel-page *ngIf="selected" [Travel]="Travel" [userToken]="token"></app-travel-page>

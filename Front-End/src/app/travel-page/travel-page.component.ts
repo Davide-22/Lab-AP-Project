@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TravelService } from '../services/travel.service';
 import { Day } from "../models/day.model";
+import { Travel } from '../models/travel.model';
 import { ExpenseService } from '../services/expense.service';
 import { Expense } from "../models/expense.model";
 import { formatDate } from '@angular/common';
@@ -14,13 +15,9 @@ import { formatDate } from '@angular/common';
 })
 export class TravelPageComponent implements OnInit {
   
-
-  @Input() public travel: string;
-  @Input() public daily_budget: number;
+  @Input() public Travel: Travel;
   @Input() public userToken: string;
-  @Input() public start_date: string;
-  @Input() public end_date: string;
-
+  
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
@@ -42,7 +39,7 @@ export class TravelPageComponent implements OnInit {
   
   ngOnInit(): void {
     
-    this.travelService.getTravelDays({travel: this.travel, token: this.userToken}).subscribe(result => this.days = result);
+    this.travelService.getTravelDays({travel: this.Travel.name, token: this.userToken}).subscribe(result => this.days = result);
     this.buildForm();
     this.travelEnded();
   }
@@ -53,7 +50,7 @@ export class TravelPageComponent implements OnInit {
       amount: new FormControl(null, Validators.min(1)),
       category: new FormControl(null, Validators.required),
       place: new FormControl(null, Validators.required),
-      travel: new FormControl(this.travel)
+      travel: new FormControl(this.Travel.name)
     });
   }
 
@@ -63,7 +60,7 @@ export class TravelPageComponent implements OnInit {
 
   addExpense(): void {
     let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
-    if(this.Form.valid && currentDate >= this.start_date) {
+    if(this.Form.valid && currentDate >= this.Travel.start_date) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = currentDate;
@@ -74,7 +71,7 @@ export class TravelPageComponent implements OnInit {
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
       this.error = true;
-    } else if (currentDate < this.start_date){
+    } else if (currentDate < this.Travel.start_date){
       this.errorString = 'You cannot add an expense to a travel not started yet';
       this.error = true;
     } else {
@@ -92,7 +89,7 @@ export class TravelPageComponent implements OnInit {
   }
 
   completeTravel(): void {
-    this.travelService.completeTravel({userToken: this.userToken, travel: this.travel}).subscribe(result => console.log(result));
+    this.travelService.completeTravel({userToken: this.userToken, travel: this.Travel.name}).subscribe(result => console.log(result));
     window.location.href = "/main-page";
   }
 
@@ -106,7 +103,7 @@ export class TravelPageComponent implements OnInit {
   }
 
   travelEnded(): void{
-    if(this.end_date != null){
+    if(this.Travel.end_date != null){
       this.travel_ended = true;
     }
   }

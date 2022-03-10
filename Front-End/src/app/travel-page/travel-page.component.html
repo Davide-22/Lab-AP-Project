@@ -1,11 +1,39 @@
 &nbsp;
 &nbsp;
 
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Complete Travel: {{Travel.name}}</h4>
+            </div>
+            <div class="modal-body">
+                <h4><p> Are you sure to complete the Travel? </p></h4>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-secondary" (click)="closePopUp()">
+                            NO
+                        </button>
+                    </div>
+                    <div class="col-sm">
+                        <button type="button"class="btn btn-danger" (click)="completeTravel()">
+                            YES
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
 <div class="row" *ngIf="!selected">
     <div class="column">
         <i class="fa fa-plane fa-2x"> 
-            <div *ngIf="travel">
-                <p>{{ travel }}</p>
+            <div *ngIf="Travel">
+                <p>{{ Travel.name }}</p>
               </div>
         </i>
     </div>
@@ -85,7 +113,7 @@
                 Add an expense
             </button>
             <br> <br>
-            <button *ngIf="!travel_ended" class="btn btn-dark" (click)="completeTravel()">
+            <button *ngIf="!travel_ended" class="btn btn-dark" (click)="openPopUp()">
                 Complete Travel
             </button>
         </div>
@@ -148,6 +176,6 @@
 </div>
 
 
-<app-day-page *ngIf="selected" [day]="day" [travel]="travel" [userToken]="userToken" [daily_budget]="daily_budget" [start_date]="start_date" [end_date]="end_date" (back)="onBack($event)"></app-day-page>
+<app-day-page *ngIf="selected" [day]="day" [Travel]="Travel" [userToken]="userToken" (back)="onBack($event)"></app-day-page>
 <br> <br> <br>
 

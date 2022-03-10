@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExpenseService } from '../services/expense.service';
 import { Expense } from '../models/expense.model';
+import { Travel } from '../models/travel.model';
 
 @Component({
   selector: 'app-day-page',
@@ -11,13 +12,10 @@ import { Expense } from '../models/expense.model';
 })
 export class DayPageComponent implements OnInit {
 
-  @Input() public travel: string;
+  @Input() public Travel: Travel;
   @Input() public day: string;
   @Input() public userToken: string;
   @Output() public back: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() public daily_budget: number;
-  @Input() public start_date: string;
-  @Input() public end_date: string;
 
   public Form: FormGroup;
   public displayStyle: any = "none";
@@ -35,7 +33,7 @@ export class DayPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-    this.expenseService.getExpenses({travel: this.travel, token: this.userToken, date:this.day}).subscribe((result) => {
+    this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date:this.day}).subscribe((result) => {
       this.expenses = result;
       this.budgetLeft();
     });
@@ -48,7 +46,7 @@ export class DayPageComponent implements OnInit {
       amount: new FormControl(null, Validators.min(1)),
       category: new FormControl(null, Validators.required),
       place: new FormControl(null, Validators.required),
-      travel: new FormControl(this.travel)
+      travel: new FormControl(this.Travel.name)
     });
   }
 
@@ -57,7 +55,7 @@ export class DayPageComponent implements OnInit {
   }
 
   addExpense(): void {
-    if(this.Form.valid && this.day >= this.start_date) {
+    if(this.Form.valid && this.day >= this.Travel.start_date) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = this.day;
@@ -68,7 +66,7 @@ export class DayPageComponent implements OnInit {
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
       this.error = true;
-    } else if (this.day < this.start_date){
+    } else if (this.day < this.Travel.start_date){
       this.errorString = 'You cannot add an expense to a travel not started yet';
       this.error = true;
     }else {
@@ -78,7 +76,7 @@ export class DayPageComponent implements OnInit {
   }
 
   deleteExpense(name: string): void {
-    this.expenseService.deleteExpense({token: this.userToken, travel: this.travel, name: name}).subscribe(result => console.log(result));
+    this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: name}).subscribe(result => console.log(result));
     this.displayStyle="none";
     window.location.reload();
   }
@@ -101,12 +99,12 @@ export class DayPageComponent implements OnInit {
     for (let i = 0; i < this.expenses.length; i++) {
       sum_amounts += this.expenses[i].amount; 
     }
-    var BudgetLeft: number = this.daily_budget - sum_amounts;
+    var BudgetLeft: number = this.Travel.daily_budget - sum_amounts;
     this.budget_left = BudgetLeft;
   }
 
   travelEnded(): void{
-    if(this.end_date != null){
+    if(this.Travel.end_date != null){
       this.travel_ended = true;
     }
   }
