@@ -132,11 +132,11 @@
             </button>
        </form>
     </div>
-    <div class="error" *ngIf="error">
-        <h3>
-            {{errorString}}
-        </h3>
-    </div>
+</div>
+<div class="error alert alert-danger" *ngIf="error" >
+    <h3>
+        {{errorString}}
+    </h3>
 </div>
 <div class="m-5" *ngIf="!compares && !selected">
     <div *ngIf="!add" class="col-sm-12 text-center">
