@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 const cn = {
     host: 'localhost',
     port: 5432,
-    database: '',
+    database: 'LAPdb',
     user: 'postgres',
-    password: ''
+    password: 'secPWD78'
 };
 const db = pgp(cn);
 const app = expr();

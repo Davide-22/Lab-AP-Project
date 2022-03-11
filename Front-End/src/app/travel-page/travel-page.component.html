@@ -47,7 +47,7 @@
         <div *ngIf="add" class="pag card text-center mt-5">
             <div class="card-body mt-auto">
                 <form [formGroup]="Form" (submit)="addExpense()">
-                    <div class="row">
+                    <div class="row formrow">
                         <div class="col-sm">
                              <label for="inputName" class="form-lable required">
                                  Expense Name
@@ -57,7 +57,7 @@
                              </div>
                          </div>
                      </div>
-                     <div class="row">
+                     <div class="row formrow">
                          <div class="col-sm">
                              <label for="number" class="form-lable">
                                  Amount
@@ -82,7 +82,7 @@
                             </div> 
                          </div>  
                      </div>
-                     <div class="row">
+                     <div class="row formrow">
                          <div class="col-8">
                              <label for="inputName" class="form-lable required">
                                  Place
