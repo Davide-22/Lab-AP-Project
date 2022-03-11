@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center">Delete Expense: {{expense}}</h4>
+                <h4 *ngIf="Expense" class="modal-title text-center">Delete Expense: {{Expense.name}}</h4>
             </div>
             <div class="modal-body">
                 <h4><p> Are you sure to delete the Expense? </p></h4>
@@ -17,7 +17,7 @@
                         </button>
                     </div>
                     <div class="col-sm">
-                        <button type="button" class="btn btn-danger" (click)="deleteExpense(expense)">
+                        <button type="button" class="btn btn-danger" (click)="deleteExpense(Expense)">
                             YES
                         </button>
                     </div>
@@ -161,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <button *ngIf="!travel_ended" class="but" (click)="openPopUp(expense.name)">
+                                    <button *ngIf="!travel_ended" class="but" (click)="openPopUp(expense)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>

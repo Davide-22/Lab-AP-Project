@@ -26,7 +26,7 @@ export class DayPageComponent implements OnInit {
   public travel_ended: boolean = false;
 
   public expenses: Expense[] = [];
-  public expense: string;
+  public Expense: Expense;
   public budget_left: number;
   public db_date: string;
 
@@ -64,9 +64,16 @@ export class DayPageComponent implements OnInit {
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = this.db_date;
       Expense.token = this.userToken;
-      this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
-      this.add = !this.add;
-      window.location.reload();
+      this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => {
+        if(result.status){
+          this.expenses.push(Expense);
+          this.budgetLeft();
+          this.add=!this.add;
+        } else {
+          this.errorString= "Error in adding an expense";
+          this.error = true;
+        }
+      });
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
       this.error = true;
@@ -79,15 +86,19 @@ export class DayPageComponent implements OnInit {
     }
   }
 
-  deleteExpense(name: string): void {
-    this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: name}).subscribe(result => console.log(result));
-    this.displayStyle="none";
-    window.location.reload();
+  deleteExpense(expense: Expense): void {
+    this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: expense.name}).subscribe(result => {
+      if(result.status){
+        this.expenses.splice(this.expenses.indexOf(expense),1);
+        this.budgetLeft();
+        this.displayStyle="none";
+      }
+    });
   }
 
-  openPopUp(name: string): void {
+  openPopUp(expense: Expense): void {
     this.displayStyle="block";
-    this.expense = name;
+    this.Expense = expense;
   }
 
   closePopUp(): void {

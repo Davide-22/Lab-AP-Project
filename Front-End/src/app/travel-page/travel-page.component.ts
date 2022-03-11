@@ -2,11 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TravelService } from '../services/travel.service';
-import { Day } from "../models/day.model";
 import { Travel } from '../models/travel.model';
 import { ExpenseService } from '../services/expense.service';
 import { Expense } from "../models/expense.model";
-import { formatDate } from '@angular/common';
+
 
 @Component({
   selector: 'app-travel-page',
@@ -70,7 +69,6 @@ export class TravelPageComponent implements OnInit {
       Expense.token = this.userToken;
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
       this.add = !this.add;
-      window.location.reload();
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
       this.error = true;
