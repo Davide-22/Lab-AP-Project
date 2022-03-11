@@ -23,15 +23,17 @@ export class TravelPageComponent implements OnInit {
   public add: boolean = false;
   public error: boolean = false;
   public errorString: string='You must fill all the field';
+  public selected: boolean = false;
   public travel_ended: boolean = false;
   public travel_not_started: boolean = false;
 
-  public days: Day[] = [];
+  public days: string[] = [];
   public email: string;
   public day: string;
-  public selected: boolean = false;
+  public start_date_to_display: string;
 
-  current_date = new Date();
+  current_date = (new Date()).toISOString().slice(0, 10);
+  public p: number = 1;
 
   constructor(private readonly travelService: TravelService, private readonly expenseService: ExpenseService,
     private route: ActivatedRoute) {
@@ -39,11 +41,11 @@ export class TravelPageComponent implements OnInit {
 
   
   ngOnInit(): void {
-    
-    this.travelService.getTravelDays({travel: this.Travel.name, token: this.userToken}).subscribe(result => this.days = result);
+    this.start_date_to_display = this.convertDate(this.Travel.start_date);
     this.buildForm();
     this.travelEnded();
     this.travelNotStarted();
+    this.visualizeTravelDays();
   }
 
   buildForm(): void {
@@ -61,11 +63,10 @@ export class TravelPageComponent implements OnInit {
   }
 
   addExpense(): void {
-    let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
-    if(this.Form.valid && currentDate >= this.Travel.start_date) {
+    if(this.Form.valid && this.current_date >= this.Travel.start_date) {
       this.error = false;
       let Expense: Expense = this.Form.value as Expense;
-      Expense.date = currentDate;
+      Expense.date = this.current_date;
       Expense.token = this.userToken;
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
       this.add = !this.add;
@@ -73,7 +74,7 @@ export class TravelPageComponent implements OnInit {
     } else if (this.Form.get('amount').value < 1) {
       this.errorString = 'Enter an amount >= 1';
       this.error = true;
-    } else if (currentDate < this.Travel.start_date){
+    } else if (this.current_date < this.Travel.start_date){
       this.errorString = 'You cannot add an expense to a travel not started yet';
       this.error = true;
     } else {
@@ -91,8 +92,7 @@ export class TravelPageComponent implements OnInit {
   }
 
   completeTravel(): void {
-    let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
-    this.travelService.completeTravel({userToken: this.userToken, travel: this.Travel.name, date:currentDate}).subscribe(result => console.log(result));
+    this.travelService.completeTravel({userToken: this.userToken, travel: this.Travel.name, date: this.current_date}).subscribe(result => console.log(result));
     window.location.href = "/main-page";
   }
 
@@ -112,10 +112,50 @@ export class TravelPageComponent implements OnInit {
   }
 
   travelNotStarted(): void {
-    let currentDate = formatDate(this.current_date, 'yyyy-MM-dd', 'en-US');
-    if( currentDate < this.Travel.start_date){
+    if( this.current_date < this.Travel.start_date){
       this.travel_not_started = true;
     }
   }
 
+  convertDate(date: string): string {
+    var splitted = date.split("-");
+    var recombined: string = splitted[2] + "/" +splitted[1] + "/" + splitted[0];
+    return recombined;
+  }
+
+  convertDates(dates: string[]): void {
+    for(let i=0; i<dates.length; i++){
+      let dateToAdd = this.convertDate(dates[i]);
+      this.days.push(dateToAdd);
+    }
+  }
+  
+  getDatesBetweenDates(startDate: string, endDate:string){
+    let dates = []
+    const theDate = new Date(startDate)
+    while (theDate < new Date(endDate)) {
+      let toAdd = (new Date(theDate)).toISOString().slice(0, 10);
+      dates = [...dates, toAdd];
+      theDate.setDate(theDate.getDate() + 1);
+    }
+    let end = (new Date(endDate)).toISOString().slice(0, 10);
+    dates = [...dates, end];
+    return dates;
+  } 
+
+  visualizeTravelDays(): void {
+    if(this.travel_not_started){
+      return;
+    }
+    else if(this.travel_ended){
+      let dates = this.getDatesBetweenDates(this.Travel.start_date,this.Travel.end_date);
+      this.convertDates(dates);
+
+    }
+    else{
+      let dates = this.getDatesBetweenDates(this.Travel.start_date,this.current_date);
+      this.convertDates(dates);
+    }
+  }
+  
 }

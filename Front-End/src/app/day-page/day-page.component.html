@@ -127,10 +127,10 @@
         <div class="pag card text-center" *ngIf="expenses.length == 0">
             <div class="card-body mt-auto">
                 <div class="row">
-                    <div class="col-1">
+                    <div class="col-3">
                         <i class="fa fa-exclamation-circle fa-4x"></i>
                     </div>
-                    <div class="col-8">
+                    <div class="col-9">
                         <h2> No Expenses in this day</h2>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
         
         <div class="pag card text-center" *ngIf="expenses.length > 0">
             <div class="card-body mt-auto">
-                <div *ngFor="let expense of expenses">
+                <div *ngFor="let expense of expenses | paginate: {itemsPerPage: 5, currentPage: p}">
                     <div class="card m-2">
                         <div class="card-body">
                             <div class="row">
@@ -168,6 +168,9 @@
                             </div> 
                         </div>
                     </div>
+                </div>
+                <div class="row justify-content-center m-2" >
+                    <pagination-controls class="page" (pageChange)="p = $event"></pagination-controls>
                 </div>
             </div>
             <div class="row">

@@ -41,9 +41,7 @@
 
 <div class="row" *ngIf="!selected">
     <div class="column">
-        <p *ngIf="travel_not_started">Travel has not started yet!</p>
         <p *ngIf="travel_ended">Travel is ended!</p>
-        <p *ngIf="travel_not_started">Travel will start on {{ Travel.start_date }}</p>
         <div *ngIf="add" class="pag card text-center mt-5">
             <div class="card-body mt-auto">
                 <form [formGroup]="Form" (submit)="addExpense()">
@@ -127,11 +125,14 @@
         <div class="pag card text-center" *ngIf="days.length == 0">
             <div class="card-body mt-auto">
                 <div class="row">
-                    <div class="col-1">
+                    <div class="col-3">
                         <i class="fa fa-exclamation-circle fa-4x"></i>
                     </div>
-                    <div class="col-8">
-                        <h2> No Day</h2>
+                    <div class="col-9">
+                        <h2> 
+                            <p *ngIf="travel_not_started">Travel has not started yet!</p>
+                            <p *ngIf="travel_not_started">Travel will start on {{ start_date_to_display }}</p>
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -140,7 +141,7 @@
         
         <div class="pag card text-center" *ngIf="days.length > 0">
             <div class="card-body mt-auto">
-                <div *ngFor="let day of days">
+                <div *ngFor="let day of days | paginate: {itemsPerPage: 5, currentPage: p}">
                     <div class="card m-2">
                         <div class="card-body">
                             <div class="row">
@@ -148,13 +149,16 @@
                                     <i class="fa fa-calendar" style="font-size:36px" ></i>
                                 </div>
                                 <div class="col-8">
-                                    <h2 (click)="select(day.date)">
-                                            {{ day.date }}
+                                    <h2 (click)="select(day)">
+                                            {{ day }}
                                     </h2>
                                 </div>
                             </div> 
                         </div>
                     </div>
+                </div>
+                <div class="row justify-content-center m-2" >
+                    <pagination-controls class="page" (pageChange)="p = $event"></pagination-controls>
                 </div>
             </div>
         </div>
