@@ -14,6 +14,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ComparePageComponent } from './compare-page/compare-page.component';
 import { HttpClientModule } from '@angular/common/http'
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

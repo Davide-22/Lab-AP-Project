@@ -10,6 +10,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
+  public p: number = 1;
   public Form: FormGroup;
   public destinations: string[] = [];
   public indexDestination: number[] = [1];

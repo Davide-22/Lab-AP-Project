@@ -40,7 +40,7 @@
 
 <div class="pag card text-center" *ngIf="!compares && travels.length > 0 && !selected">
     <div class="card-body mt-auto">
-        <div *ngFor="let travel of travels">
+        <div *ngFor="let travel of travels | paginate: {itemsPerPage: 5, currentPage: p}">
             <div class="travels card m-2">
                 <div class="card-body">
                     <div class="row">
@@ -60,6 +60,9 @@
                     </div> 
                 </div>
             </div>
+        </div>
+        <div class="row justify-content-center m-2">
+            <pagination-controls class="page" (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
 </div>
