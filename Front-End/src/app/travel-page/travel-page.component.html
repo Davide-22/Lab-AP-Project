@@ -41,7 +41,7 @@
 
 <div class="row" *ngIf="!selected">
     <div class="column">
-        <p *ngIf="travel_ended">Travel is ended!</p>
+        <p *ngIf="travel_ended">Thr travel is ended!</p>
         <div *ngIf="add" class="pag card text-center mt-5">
             <div class="card-body mt-auto">
                 <form [formGroup]="Form" (submit)="addExpense()">
@@ -130,8 +130,8 @@
                     </div>
                     <div class="col-9">
                         <h2> 
-                            <p *ngIf="travel_not_started">Travel has not started yet!</p>
-                            <p *ngIf="travel_not_started">Travel will start on {{ start_date_to_display }}</p>
+                            <p *ngIf="travel_not_started">The travel has not started yet!</p>
+                            <p *ngIf="travel_not_started">It will start on {{ start_date_to_display }}</p>
                         </h2>
                     </div>
                 </div>
