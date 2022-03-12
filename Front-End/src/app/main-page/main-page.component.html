@@ -61,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center m-2">
+        <div class="row justify-content-center m-2" >
             <pagination-controls class="page" (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
@@ -70,7 +70,7 @@
 <div *ngIf="add" class="pag card text-center mt-5">
    <div class="card-body mt-auto">
        <form [formGroup]="Form" (submit)="addTravel()">
-           <div class="row">
+           <div class="row formrow">
                <div class="col-sm">
                     <label for="inputName" class="form-lable">Travel Name</label>
                     <div class="input-group">
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row formrow">
                 <div class="col-sm">
                     <label for="number" class="form-lable">
                         Daily Budget
@@ -96,12 +96,12 @@
                     </div>
                 </div>  
             </div>
-            <div class="row">
+            <div class="row formrow">
                 <div class="col-8">
                     <label for="destination" class="form-lable required">
                         Destination
                     </label>
-                    <div class="input-group m-2" *ngFor="let d of indexDestination; let i = index">
+                    <div class="input-group" *ngFor="let d of indexDestination; let i = index">
                         <input class="form-control" id="destination" [(ngModel)]="destinations[i]" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
@@ -132,11 +132,11 @@
             </button>
        </form>
     </div>
-    <div class="error" *ngIf="error">
-        <h3>
-            {{errorString}}
-        </h3>
-    </div>
+</div>
+<div class="error alert alert-danger" *ngIf="error" >
+    <h3>
+        {{errorString}}
+    </h3>
 </div>
 <div class="m-5" *ngIf="!compares && !selected">
     <div *ngIf="!add" class="col-sm-12 text-center">

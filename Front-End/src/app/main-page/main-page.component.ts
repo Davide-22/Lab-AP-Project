@@ -61,6 +61,7 @@ export class MainPageComponent implements OnInit {
     this.add = !this.add;
     this.destinations = [];
     this.indexDestination = [1];
+    this.error = false;
   }
 
   addTravel(): void {

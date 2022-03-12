@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center">Delete Expense: {{expense}}</h4>
+                <h4 *ngIf="Expense" class="modal-title text-center">Delete Expense: {{Expense.name}}</h4>
             </div>
             <div class="modal-body">
                 <h4><p> Are you sure to delete the Expense? </p></h4>
@@ -17,7 +17,7 @@
                         </button>
                     </div>
                     <div class="col-sm">
-                        <button type="button" class="btn btn-danger" (click)="deleteExpense(expense)">
+                        <button type="button" class="btn btn-danger" (click)="deleteExpense(Expense)">
                             YES
                         </button>
                     </div>
@@ -127,10 +127,10 @@
         <div class="pag card text-center" *ngIf="expenses.length == 0">
             <div class="card-body mt-auto">
                 <div class="row">
-                    <div class="col-1">
+                    <div class="col-3">
                         <i class="fa fa-exclamation-circle fa-4x"></i>
                     </div>
-                    <div class="col-8">
+                    <div class="col-9">
                         <h2> No Expenses in this day</h2>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
         
         <div class="pag card text-center" *ngIf="expenses.length > 0">
             <div class="card-body mt-auto">
-                <div *ngFor="let expense of expenses">
+                <div *ngFor="let expense of expenses | paginate: {itemsPerPage: 5, currentPage: p}">
                     <div class="card m-2">
                         <div class="card-body">
                             <div class="row">
@@ -161,13 +161,16 @@
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <button *ngIf="!travel_ended" class="but" (click)="openPopUp(expense.name)">
+                                    <button *ngIf="!travel_ended" class="but" (click)="openPopUp(expense)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
                             </div> 
                         </div>
                     </div>
+                </div>
+                <div class="row justify-content-center m-2" >
+                    <pagination-controls class="page" (pageChange)="p = $event"></pagination-controls>
                 </div>
             </div>
             <div class="row">
