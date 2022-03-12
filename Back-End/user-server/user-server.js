@@ -79,8 +79,8 @@ app.post('/verify',jsonParser, function(req,res) {
         email = decode.email;
         db.query('SELECT * FROM users WHERE email = $1', [email])
             .then(result => {
-                if(result[0].email == email) return res.send({status: true, msg: "ok"});
-                else return res.send({status: false, msg: "email not in database"})
+                if(result.length > 0) return res.send({status: true, msg: "ok"});
+                else res.send({status: false, msg: "email not in database"})
             })
             .catch(err => {
                 console.log(err);
