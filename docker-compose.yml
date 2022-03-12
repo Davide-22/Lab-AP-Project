@@ -1,7 +1,8 @@
 version: "3.8"
 services:
     postgres:
-        build: ./db
+        build: 
+            context: ./db
         restart: unless-stopped
         image: postgres
         container_name: 'postgres'
@@ -12,7 +13,7 @@ services:
         ports:
             - 5433:5433  
         volumes:
-           - db-data:/var/lib/postgresql/data
+           - db-data:/var/lib/postgresql/data 
 volumes:
     db-data:
         driver: local
