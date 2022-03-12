@@ -57,3 +57,8 @@
     width: 22%;
     margin-top: 2%;
 }
+
+.travel:hover{
+    color: rgb(100, 100, 100);
+    cursor: pointer;
+}

@@ -3,7 +3,6 @@ const crypto = require('crypto');
 var bodyParser = require('body-parser');
 const pgp = require("pg-promise")();
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
 
 const app = expr();
 const cn = {
