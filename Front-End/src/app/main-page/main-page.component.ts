@@ -21,9 +21,10 @@ export class MainPageComponent implements OnInit {
   public errorString: string='You must fill all the field';
   public selected: boolean = false;
   public token: string;
-  public month = ((new Date().getMonth()+1) < 10)? '0'+((new Date().getMonth()+1)):((new Date().getMonth()+1));
-  public day = ((new Date().getDate()) < 10)? '0'+((new Date().getDate())):((new Date().getDate())); 
-  public today: string = (new Date()).getFullYear()+'-'+this.month+'-'+this.day;
+  public today: Date = new Date();
+  public month = (this.today.getMonth() +1 <10)? '0'+(this.today.getMonth()+1):this.today.getMonth()+1;
+  public day = (this.today.getDate() <10)? '0'+this.today.getDate():this.today.getDate();
+  public start = this.today.getFullYear().toString()+'-'+this.month+'-'+this.day;
 
   public Travel: Travel;
   public compares: boolean = false;
@@ -33,7 +34,7 @@ export class MainPageComponent implements OnInit {
     this.Form = new FormGroup({
       name: new FormControl(null, Validators.required),
       daily_budget: new FormControl(null, Validators.min(1)),
-      start_date: new FormControl(null, Validators.required),
+      start_date: new FormControl(this.start, Validators.required),
       description: new FormControl(null, Validators.required),
       end_date: new FormControl(null),
       user_token: new FormControl(this.token)
@@ -41,6 +42,7 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.start);
     var cookies = document.cookie;
     var cookiearray = cookies.split(';');
     var token = cookiearray[0].split('=')[1];
