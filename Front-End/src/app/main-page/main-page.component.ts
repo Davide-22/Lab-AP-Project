@@ -42,7 +42,6 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.start);
     var cookies = document.cookie;
     var cookiearray = cookies.split(';');
     var token = cookiearray[0].split('=')[1];
@@ -62,6 +61,7 @@ export class MainPageComponent implements OnInit {
     this.destinations = [];
     this.indexDestination = [1];
     this.error = false;
+    this.buildForm();
   }
 
   addTravel(): void {
@@ -69,11 +69,11 @@ export class MainPageComponent implements OnInit {
       this.error = false;
       let Travel: Travel = this.Form.value as Travel;
       Travel.destination = this.destinations;
-      Travel.user=this.token;
-      this.travelService.addTravelToUser(this.Form.value as Travel).subscribe(result => {
+      this.travelService.addTravelToUser(Travel).subscribe(result => {
         if(result.status){
           this.travels.push(Travel);
           this.add=!this.add;
+          this.buildForm();
         } else {
           this.errorString= "Impossible to have two travels with the same name. Try again";
           this.error = true;

@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="pag card text-center" *ngIf="travels.length == 0">
+<div class="pag card text-center" *ngIf="travels.length == 0 && !compares">
     <div class="card-body mt-auto">
         <div class="row">
             <div class="col-3">
@@ -126,7 +126,7 @@
                 <i class="fa fa-plus"></i>
                 Add
             </button>
-            <button class="btn btn-dark ml-5" (click)="cancel()">
+            <button type="button" class="btn btn-dark ml-5" (click)="cancel()">
                 <i class="fa fa-times"></i>
                 Cancel
             </button>
@@ -140,7 +140,7 @@
 </div>
 <div class="m-5" *ngIf="!compares && !selected">
     <div *ngIf="!add" class="col-sm-12 text-center">
-        <button class="btn btn-dark" (click)="cancel()">
+        <button type="button" class="btn btn-dark" (click)="add = !add">
             <i class="fa fa-plus"></i>
             Add a travel
         </button>

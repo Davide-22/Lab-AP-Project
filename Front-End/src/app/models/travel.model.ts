@@ -1,6 +1,6 @@
 export interface TravelJSON {
     name: string;
-    user: string;
+    user_token: string;
     description: string;
     destination: string[];
     end_date: string;
@@ -10,7 +10,7 @@ export interface TravelJSON {
 
 export class Travel {
     public name: string;
-    public user: string;
+    public user_token: string;
     public description: string;
     public destination: string[];
     public end_date: string;
