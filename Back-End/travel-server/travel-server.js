@@ -4,11 +4,11 @@ var bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
 const cn = {
-    host: 'localhost',
+    host: 'postgres',
     port: 5432,
     database: 'LAPdb',
     user: 'postgres',
-    password: 'secPWD78'
+    password: 'postgres'
 };
 const db = pgp(cn);
 const app = expr();

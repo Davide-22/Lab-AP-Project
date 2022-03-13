@@ -11,9 +11,38 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
         ports:
-            - 5433:5433  
+            - "5432:5432"  
         volumes:
-           - db-data:/var/lib/postgresql/data 
+           - db-data:/var/lib/postgresql/data
+    app:
+        build:
+            context: ./Front-End
+        restart: unless-stopped
+        
+    user-server:
+        build:
+            context: ./Back-End
+            dockerfile: Dockerfile
+        container_name: 'user-server'
+        ports:
+            - "3003:3003"
+        volumes:
+            - .:/usr/src/app
+        depends_on:
+            - postgres
+        command: " node user-server/user-server.js"
+    travel-server:
+        build:
+            context: ./Back-End
+            dockerfile: 1.Dockerfile
+        container_name: 'travel-server'
+        ports:
+            - "3002:3002"
+        volumes:
+            - .:/usr/src/app
+        depends_on:
+            - postgres
+        command: " node travel-server/travel-server.js"
 volumes:
     db-data:
         driver: local
