@@ -14,6 +14,28 @@ services:
             - "5432:5432"  
         volumes:
            - db-data:/var/lib/postgresql/data
+    rabbitmq:
+        restart: unless-stopped
+        image: rabbitmq:3-management-alpine
+        container_name: 'rabbitmq'
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    logger:
+        restart: unless-stopped
+        build:
+            context: ./Back-End/logger
+        container_name: 'logger'
+        ports:
+            - "3004:3004"
+        volumes:
+            - "./log:/usr/src/app/log"
+        depends_on:
+            - rabbitmq
+        command: "npm run start"
     user-server:
         build:
             context: ./Back-End/user-server
@@ -24,7 +46,7 @@ services:
             - .:/usr/src/app
         depends_on:
             - postgres
-        command: " node user-server.js"
+        command: "node user-server.js"
     travel-server:
         build:
             context: ./Back-End/travel-server
@@ -35,7 +57,19 @@ services:
             - .:/usr/src/app
         depends_on:
             - postgres
-        command: " node travel-server.js"
+        command: "node travel-server.js"
+    angular:
+        restart: unless-stopped
+        build:
+            context: ./Front-End
+        container_name: 'angular'
+        ports:
+            - "4200:4200"
+        volumes:
+            - .:/usr/src/app
+        depends_on:
+            - postgres
+        command: "ng serve"
 volumes:
     db-data:
         driver: local
