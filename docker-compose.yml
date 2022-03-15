@@ -35,7 +35,7 @@ services:
             - "./log:/usr/src/app/log"
         depends_on:
             - rabbitmq
-        command: "npm run start"
+        command: "./wait-for-it.sh -t 60 rabbitmq:15672 -- npm run start"
     user-server:
         build:
             context: ./Back-End/user-server
