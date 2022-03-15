@@ -87,7 +87,7 @@ export class DayPageComponent implements OnInit {
   }
 
   deleteExpense(expense: Expense): void {
-    this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: expense.name}).subscribe(result => {
+    this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: expense.name, _id:expense._id}).subscribe(result => {
       if(result.status){
         this.expenses.splice(this.expenses.indexOf(expense),1);
         this.budgetLeft();

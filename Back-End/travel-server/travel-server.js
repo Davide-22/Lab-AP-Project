@@ -156,10 +156,11 @@ app.post('/deleteExpense', jsonParser, function (req,res) {
     var name = req.body.name;
     var travel = req.body.travel;
     token = req.body.token;
+    var id = req.body._id
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("DELETE FROM expenses WHERE user_email = $1 AND travel = $2 and name = $3", [email, travel, name]).then(
+        db.query("DELETE FROM expenses WHERE user_email = $1 AND travel = $2 and name = $3 and _id = $4", [email, travel, name, id]).then(
             res.send({status: true, msg:"ok"})
         )
         .catch(err => {
@@ -181,7 +182,7 @@ app.post('/getExpenses', jsonParser, function(req,res) {
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("SELECT name, amount, category, place FROM expenses WHERE user_email = $1 AND travel = $2 AND date = $3", [email, travel, date]).then(result => {
+        db.query("SELECT * FROM expenses WHERE user_email = $1 AND travel = $2 AND date = $3", [email, travel, date]).then(result => {
             res.send(result);
         })
         .catch(err => {

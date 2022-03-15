@@ -6,7 +6,7 @@ export interface ExpenseJSON {
     category: string;
     date: string;
     place: string;
-    
+    _id: number;
 }
 
 export class Expense {
@@ -17,6 +17,7 @@ export class Expense {
     public category: string;
     public date: string;
     public place: string;
+    public _id: number;
 
     public static toJSON(model: Expense): ExpenseJSON {
         return model as ExpenseJSON;
