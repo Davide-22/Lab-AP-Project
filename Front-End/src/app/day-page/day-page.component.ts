@@ -67,7 +67,10 @@ export class DayPageComponent implements OnInit {
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => {
         if(result.status){
           this.expenses.push(Expense);
-          this.budgetLeft();
+          this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date:this.db_date}).subscribe((result1) => {
+            this.expenses = result1;
+            this.budgetLeft();
+          });
           this.add=!this.add;
         } else {
           this.errorString= "Error in adding an expense";
@@ -87,7 +90,7 @@ export class DayPageComponent implements OnInit {
   }
 
   deleteExpense(expense: Expense): void {
-    this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: expense.name}).subscribe(result => {
+    this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: expense.name, _id:expense._id}).subscribe(result => {
       if(result.status){
         this.expenses.splice(this.expenses.indexOf(expense),1);
         this.budgetLeft();
