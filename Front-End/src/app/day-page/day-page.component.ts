@@ -67,7 +67,10 @@ export class DayPageComponent implements OnInit {
       this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => {
         if(result.status){
           this.expenses.push(Expense);
-          this.budgetLeft();
+          this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date:this.db_date}).subscribe((result1) => {
+            this.expenses = result1;
+            this.budgetLeft();
+          });
           this.add=!this.add;
         } else {
           this.errorString= "Error in adding an expense";
