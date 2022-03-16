@@ -29,6 +29,7 @@ export class DayPageComponent implements OnInit {
   public Expense: Expense;
   public budget_left: number;
   public db_date: string;
+  public destinations: string[] = [];
 
   public p: number = 1; 
 
@@ -42,6 +43,7 @@ export class DayPageComponent implements OnInit {
       this.budgetLeft();
     });
     this.travelEnded();
+    this.suggestedDestinations(this.Travel.destination);
   }
 
   buildForm(): void {
@@ -136,5 +138,15 @@ export class DayPageComponent implements OnInit {
     var splitted = day.split("/");
     var recombined: string = splitted[2] + "-" + splitted[1] + "-" + splitted[0];
     this.db_date = recombined;
+  }
+
+  suggestedDestinations(destinations: string[]): void {
+    if(destinations[0] == '{'){
+      let a: string[] = destinations.slice(1,destinations.length-1).toString().split(",");
+      this.destinations = a;
+    } else{
+      let b: string = destinations.toString();
+      this.destinations.push(b);
+    }
   }
 }
