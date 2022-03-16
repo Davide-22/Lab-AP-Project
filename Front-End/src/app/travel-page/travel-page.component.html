@@ -86,7 +86,10 @@
                                  Place
                              </label>
                              <div class="input-group">
-                                <input type="string" id="inputPlace" class="form-control" formControlName="place">
+                                <input type="string" id="inputPlace" class="form-control" formControlName="place" list="suggested">
+                                <datalist id="suggested">
+                                    <option *ngFor="let destination of destinations" [value]="destination">{{destination}}</option>
+                                </datalist>
                             </div> 
                          </div>
                      </div>
