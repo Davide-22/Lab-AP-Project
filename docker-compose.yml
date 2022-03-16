@@ -64,12 +64,10 @@ services:
             context: ./Front-End
         container_name: 'angular'
         ports:
-            - "4200:4200"
-        volumes:
-            - .:/usr/src/app
+            - "4200:80"
         depends_on:
-            - postgres
-        command: "ng serve"
+            - user-server
+            - travel-server
 volumes:
     db-data:
         driver: local
