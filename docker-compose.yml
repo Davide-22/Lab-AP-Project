@@ -46,7 +46,7 @@ services:
             - .:/usr/src/app
         depends_on:
             - postgres
-        command: "node user-server.js"
+        command: "./wait-for-it.sh -t 60 rabbitmq:15672 -- node user-server.js"
     travel-server:
         build:
             context: ./Back-End/travel-server
@@ -57,7 +57,7 @@ services:
             - .:/usr/src/app
         depends_on:
             - postgres
-        command: "node travel-server.js"
+        command: "./wait-for-it.sh -t 60 rabbitmq:15672 -- node travel-server.js"
     #angular:
      #   restart: unless-stopped
       #  build:
