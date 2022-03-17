@@ -2,6 +2,7 @@ const expr = require('express');
 const pgp = require("pg-promise")();
 var bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const amqp = require('amqplib/callback_api');
 
 const cn = {
     host: 'postgres',
@@ -20,8 +21,34 @@ app.use(function(req, res, next) {
     next();
   });
 
+  function sendLog(message) {
+    console.log(message)
+    amqp.connect('amqp://rabbitmq', function (error0, connection) {
+        if (error0) {
+            throw error0;
+        }
+        connection.createChannel(function (error1, channel) {
+            if (error1) {
+                throw error1;
+            }
+            var exchange = 'logs';
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            channel.assertExchange(exchange, 'fanout', {
+                durable: false
+            });
+            channel.publish(exchange, '', Buffer.from('[travel-server] [' + h + ":" + m + ":" + s + '] ' + message));
+        });
+        setTimeout(function () {
+            connection.close();
+        }, 500);
+    })
+}
+
 app.post('/addTravel', jsonParser, function (req,res) {
-    console.log('Post /addTravel');
+    sendLog('Post /addTravel' + req.body.name);
     var name = req.body.name;
     var daily_budget = req.body.daily_budget;
     var start_date = req.body.start_date;
@@ -32,23 +59,24 @@ app.post('/addTravel', jsonParser, function (req,res) {
     try {
         const decode = jwt.verify(user_token, 'testkey');
         email = decode.email;
+        sendLog('To' + email);
         db.query("INSERT INTO travels VALUES ($1,$2,$3,$4,$5,$6,$7)", [name,email,daily_budget,start_date,end_date,destination,description])
             .then(result => {
                 res.send({status: true, msg:"ok"})
             })
             .catch(err => {
-                console.log(err);
+                sendLog(err);
                 res.send({status: false, msg: "error"})
             })
     }catch(error) {
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     }
 });
 
 
 app.post('/deleteTravel', jsonParser, function (req,res) {
-    console.log('Post /deleteTravel');
+    sendLog('Post /deleteTravel'+ req.body.name);
     var name = req.body.name;
     var token = req.body.token;
     try{
@@ -57,17 +85,17 @@ app.post('/deleteTravel', jsonParser, function (req,res) {
             db.query("DELETE FROM travels WHERE name = $1 AND user_email = $2", [name,email])
                     .then(res.send({status: true, msg:"ok"}))
                     .catch(err => {
-                        console.log(err);
+                        sendLog(err);
                         return res.send({status: false, msg: "error"})
                     })
     }catch(error) {
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     }
 })
 
 app.post('/completeTravel', jsonParser, function (req,res) {
-    console.log('Post /completeTravel');
+    sendLog('Post /completeTravel'+req.body.travel);
     var name = req.body.travel;
     var userToken = req.body.userToken;
     var end_date = req.body.date;
@@ -77,18 +105,18 @@ app.post('/completeTravel', jsonParser, function (req,res) {
         db.query("UPDATE travels SET end_date=$1 WHERE name=$2 AND user_email=$3", [end_date, name, email])
             .then(res.send({status: true, msg:"ok"}))
             .catch(err => {
-                console.log(err);
+                sendLog(err);
                 return res.send({status: false, msg: "error"})
             });
     }catch(error) {
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     }
 })
 
 app.post('/travels', jsonParser, function (req,res) {
     token = req.body.token;
-    console.log("Post /travels");
+    sendLog("Post /travels");
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
@@ -97,17 +125,17 @@ app.post('/travels', jsonParser, function (req,res) {
                 res.send(result);
             })
             .catch(err => {
-                console.log(err);
+                sendLog(err);
                 return res.send({status: false, msg: "error"})
             })
     }catch(error) {
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     }
 });
 
 app.post('/days', jsonParser, function (req,res) {
-    console.log("Post /days");
+    sendLog("Post /days");
     var travel = req.body.travel;
     token = req.body.token;
     try{
@@ -117,17 +145,17 @@ app.post('/days', jsonParser, function (req,res) {
             res.send(result);
         })
         .catch(err => {
-            console.log(err);
+            sendLog(err);
             return res.send({status: false, msg: "error"})
         })
     }catch(error){
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     }    
 });
 
 app.post('/addExpense', jsonParser, function(req,res){
-    console.log("Post /addExpense");
+    sendLog("Post /addExpense");
     var name = req.body.name;
     var amount = req.body.amount;
     var category = req.body.category;
@@ -142,58 +170,59 @@ app.post('/addExpense', jsonParser, function(req,res){
             res.send({status: true, msg:"ok"})
         )
         .catch(err => {
-            console.log(err);
+            sendLog(err);
             return res.send({status: false, msg: "error"})
         })
     }catch(error){
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     } 
 });
 
 app.post('/deleteExpense', jsonParser, function (req,res) {
-    console.log("Post /deleteExpense");
+    sendLog("Post /deleteExpense");
     var name = req.body.name;
     var travel = req.body.travel;
     token = req.body.token;
+    var id = req.body._id
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("DELETE FROM expenses WHERE user_email = $1 AND travel = $2 and name = $3", [email, travel, name]).then(
+        db.query("DELETE FROM expenses WHERE user_email = $1 AND travel = $2 and name = $3 and _id = $4", [email, travel, name, id]).then(
             res.send({status: true, msg:"ok"})
         )
         .catch(err => {
-            console.log(err);
+            sendLog(err);
             return res.send({status: false, msg: "error"})
         })
     }catch(error){
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     } 
 });
 
 
 app.post('/getExpenses', jsonParser, function(req,res) {
-    console.log("Post /getExpenses");
+    sendLog("Post /getExpenses");
     var travel = req.body.travel;
     var date = req.body.date;
     token = req.body.token;
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("SELECT name, amount, category, place FROM expenses WHERE user_email = $1 AND travel = $2 AND date = $3", [email, travel, date]).then(result => {
+        db.query("SELECT * FROM expenses WHERE user_email = $1 AND travel = $2 AND date = $3", [email, travel, date]).then(result => {
             res.send(result);
         })
         .catch(err => {
-            console.log(err);
+            sendLog(err);
             return res.send({status: false, msg: "error"})
         })
     }catch(error){
-        console.log(error);
+        sendLog(error);
         return res.send({status: false, msg:"error"});
     } 
 })
 
 app.listen(3002, () => {
-    console.log('Listening on port: ' + 3002);
+    sendLog('Listening on port: ' + 3002);
 });

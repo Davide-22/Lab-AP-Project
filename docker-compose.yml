@@ -35,7 +35,7 @@ services:
             - "./log:/usr/src/app/log"
         depends_on:
             - rabbitmq
-        command: "npm run start"
+        command: "./wait-for-it.sh -t 60 rabbitmq:15672 -- npm run start"
     user-server:
         build:
             context: ./Back-End/user-server
@@ -58,18 +58,16 @@ services:
         depends_on:
             - postgres
         command: "node travel-server.js"
-    angular:
-        restart: unless-stopped
-        build:
-            context: ./Front-End
-        container_name: 'angular'
-        ports:
-            - "4200:4200"
-        volumes:
-            - .:/usr/src/app
-        depends_on:
-            - postgres
-        command: "ng serve"
+    #angular:
+     #   restart: unless-stopped
+      #  build:
+       #     context: ./Front-End
+        #container_name: 'angular'
+        #ports:
+        #    - "4200:80"
+        #depends_on:
+        #    - user-server
+        #    - travel-server
 volumes:
     db-data:
         driver: local

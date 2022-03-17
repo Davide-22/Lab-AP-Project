@@ -30,5 +30,6 @@ CREATE TABLE expenses (
     category varchar(255),
     date varchar(255),
     place varchar(255),
+    _id serial PRIMARY KEY,
     CONSTRAINT fk_expense FOREIGN KEY(user_email,travel) REFERENCES travels(user_email,name) ON DELETE CASCADE   
 );
