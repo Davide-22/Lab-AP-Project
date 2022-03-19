@@ -58,16 +58,16 @@ services:
         depends_on:
             - postgres
         command: "./wait-for-it.sh -t 60 rabbitmq:15672 -- node travel-server.js"
-    #angular:
-     #   restart: unless-stopped
-      #  build:
-       #     context: ./Front-End
-        #container_name: 'angular'
-        #ports:
-        #    - "4200:80"
-        #depends_on:
-        #    - user-server
-        #    - travel-server
+    angular:
+        restart: unless-stopped
+        build:
+            context: ./Front-End
+        container_name: 'angular'
+        ports:
+            - "4200:80"
+        depends_on:
+            - user-server
+            - travel-server
 volumes:
     db-data:
         driver: local

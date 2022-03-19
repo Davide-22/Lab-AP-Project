@@ -48,7 +48,7 @@ app.use(function(req, res, next) {
 }
 
 app.post('/addTravel', jsonParser, function (req,res) {
-    sendLog('Post /addTravel' + req.body.name);
+    sendLog('POST /addTravel' + req.body.name);
     var name = req.body.name;
     var daily_budget = req.body.daily_budget;
     var start_date = req.body.start_date;
@@ -76,7 +76,7 @@ app.post('/addTravel', jsonParser, function (req,res) {
 
 
 app.post('/deleteTravel', jsonParser, function (req,res) {
-    sendLog('Post /deleteTravel'+ req.body.name);
+    sendLog('POST /deleteTravel'+ req.body.name);
     var name = req.body.name;
     var token = req.body.token;
     try{
@@ -95,7 +95,7 @@ app.post('/deleteTravel', jsonParser, function (req,res) {
 })
 
 app.post('/completeTravel', jsonParser, function (req,res) {
-    sendLog('Post /completeTravel'+req.body.travel);
+    sendLog('POST /completeTravel'+req.body.travel);
     var name = req.body.travel;
     var userToken = req.body.userToken;
     var end_date = req.body.date;
@@ -116,7 +116,7 @@ app.post('/completeTravel', jsonParser, function (req,res) {
 
 app.post('/travels', jsonParser, function (req,res) {
     token = req.body.token;
-    sendLog("Post /travels");
+    sendLog("POST /travels");
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
@@ -135,7 +135,7 @@ app.post('/travels', jsonParser, function (req,res) {
 });
 
 app.post('/days', jsonParser, function (req,res) {
-    sendLog("Post /days");
+    sendLog("POST /days");
     var travel = req.body.travel;
     token = req.body.token;
     try{
@@ -155,7 +155,7 @@ app.post('/days', jsonParser, function (req,res) {
 });
 
 app.post('/addExpense', jsonParser, function(req,res){
-    sendLog("Post /addExpense");
+    sendLog("POST /addExpense");
     var name = req.body.name;
     var amount = req.body.amount;
     var category = req.body.category;
@@ -180,7 +180,7 @@ app.post('/addExpense', jsonParser, function(req,res){
 });
 
 app.post('/deleteExpense', jsonParser, function (req,res) {
-    sendLog("Post /deleteExpense");
+    sendLog("POST /deleteExpense");
     var name = req.body.name;
     var travel = req.body.travel;
     token = req.body.token;
@@ -203,7 +203,7 @@ app.post('/deleteExpense', jsonParser, function (req,res) {
 
 
 app.post('/getExpenses', jsonParser, function(req,res) {
-    sendLog("Post /getExpenses");
+    sendLog("POST /getExpenses");
     var travel = req.body.travel;
     var date = req.body.date;
     token = req.body.token;
