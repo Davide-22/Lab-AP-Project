@@ -15,6 +15,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ComparePageComponent } from './compare-page/compare-page.component';
 import { HttpClientModule } from '@angular/common/http'
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
