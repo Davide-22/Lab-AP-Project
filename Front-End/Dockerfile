@@ -1,15 +1,10 @@
-FROM node:alpine as build-stage
-RUN mkdir -p /app
+FROM node:16 as node
 WORKDIR /app
-ENV PATH node_modules/.bin:$PATH
-RUN npm install -g @angular/cli@9.1.15
-COPY package.json ./
+COPY . .
 RUN npm install
-COPY . /app
-CMD npm run build --prod
-
+RUN npm run build --prod
+#stage 2
 FROM nginx:alpine
-COPY --from=build-stage /app/dist/src /usr/share/nginx/html/
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 4200
+COPY --from=node /app/dist/Front-End /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/

@@ -63,8 +63,10 @@ services:
         build:
             context: ./Front-End
         container_name: 'angular'
+        volumes:
+            - './Front-End:/usr/src/app'
         ports:
-            - "4200:80"
+            - "80:80"
         depends_on:
             - user-server
             - travel-server
