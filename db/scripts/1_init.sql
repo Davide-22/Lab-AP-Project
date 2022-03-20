@@ -16,7 +16,7 @@ CREATE TABLE travels (
     daily_budget int,
     start_date varchar(255),
     end_date varchar(255),
-    destination varchar(255),
+    destination varchar(255)[],
     description varchar(255),
     PRIMARY KEY (name, user_email),
     CONSTRAINT fk_travel FOREIGN KEY(user_email) REFERENCES users(email) ON DELETE CASCADE    

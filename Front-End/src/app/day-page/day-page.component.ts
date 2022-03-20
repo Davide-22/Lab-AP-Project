@@ -106,7 +106,7 @@ export class DayPageComponent implements OnInit {
       this.budgetLeft();
     });
     this.travelEnded();
-    this.suggestedDestinations(this.Travel.destination);
+    this.destinations = this.Travel.destination;
   }
 
   buildForm(): void {
@@ -206,13 +206,4 @@ export class DayPageComponent implements OnInit {
     this.db_date = recombined;
   }
 
-  suggestedDestinations(destinations: string[]): void {
-    if(destinations[0] == '{'){
-      let a: string[] = destinations.slice(1,destinations.length-1).toString().split(",");
-      this.destinations = a;
-    } else{
-      let b: string = destinations.toString();
-      this.destinations.push(b);
-    }
-  }
 }

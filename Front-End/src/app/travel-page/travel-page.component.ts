@@ -46,7 +46,8 @@ export class TravelPageComponent implements OnInit {
     this.travelEnded();
     this.travelNotStarted();
     this.visualizeTravelDays();
-    this.suggestedDestinations(this.Travel.destination);
+    this.destinations = this.Travel.destination;
+    
   }
 
   buildForm(): void {
@@ -164,14 +165,5 @@ export class TravelPageComponent implements OnInit {
     }
   }
   
-  suggestedDestinations(destinations: string[]): void {
-    if(destinations[0] == '{'){
-      let a: string[] = destinations.slice(1,destinations.length-1).toString().split(",");
-      this.destinations = a;
-    } else{
-      let b: string = destinations.toString();
-      this.destinations.push(b);
-    }
-  }
 
 }
