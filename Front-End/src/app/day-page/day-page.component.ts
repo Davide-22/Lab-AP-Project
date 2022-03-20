@@ -121,6 +121,8 @@ export class DayPageComponent implements OnInit {
 
   cancel(): void {
     this.add = !this.add;
+    this.error = false;
+    this.buildForm();
   }
 
   addExpense(): void {
@@ -137,13 +139,14 @@ export class DayPageComponent implements OnInit {
             this.budgetLeft();
           });
           this.add=!this.add;
+          this.buildForm();
         } else {
           this.errorString= "Error in adding an expense";
           this.error = true;
         }
       });
     } else if (this.Form.get('amount').value < 1) {
-      this.errorString = 'Enter an amount >= 1';
+      this.errorString = 'Enter an amount greater or equal than 1';
       this.error = true;
     } else if (this.db_date < this.Travel.start_date){
       this.errorString = 'You cannot add an expense to a travel not started yet';

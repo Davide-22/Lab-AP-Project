@@ -30,3 +30,9 @@
     display: table;
     clear: both;
   }
+
+  .error{
+    margin: 0 auto;
+    width: 44%;
+    margin-top: 2%;
+}

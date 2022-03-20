@@ -104,12 +104,12 @@
                     </button>  
                 </form> 
              </div>
-             <div class="error" *ngIf="error">
-                <h3>
-                    {{errorString}}
-                </h3>
-            </div>
          </div>
+         <div class="error alert alert-danger" *ngIf="error" >
+            <h3>
+                {{errorString}}
+            </h3>
+        </div>
         <br>
         <div *ngIf="!add" class="text-center">
             <button *ngIf="!travel_ended && !travel_not_started" class="btn btn-dark" (click)="cancel()">
@@ -122,7 +122,6 @@
             </button>
         </div>
     </div>
-    
     
     <div class="column">
         <div class="pag card text-center" *ngIf="days.length == 0">

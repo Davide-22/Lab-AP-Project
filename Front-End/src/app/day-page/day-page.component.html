@@ -102,12 +102,12 @@
                     </button>  
                 </form> 
              </div>
-             <div class="error" *ngIf="error">
-                <h3>
-                    {{errorString}}
-                </h3>
-            </div>
          </div>
+         <div class="error alert alert-danger" *ngIf="error" >
+            <h3>
+                {{errorString}}
+            </h3>
+        </div>
         <br>
         <div *ngIf="!add" class="text-center">
             <button class="btn btn-dark mt-4" (click)="backTravel()">

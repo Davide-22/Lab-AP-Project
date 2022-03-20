@@ -42,3 +42,9 @@
     color: rgb(100, 100, 100);
     cursor: pointer;
 }
+
+.error{
+    margin: 0 auto;
+    width: 44%;
+    margin-top: 2%;
+}

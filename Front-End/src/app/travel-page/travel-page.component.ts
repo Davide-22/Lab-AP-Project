@@ -61,6 +61,8 @@ export class TravelPageComponent implements OnInit {
 
   cancel(): void {
     this.add = !this.add;
+    this.error = false;
+    this.buildForm();
   }
 
   addExpense(): void {
@@ -69,10 +71,14 @@ export class TravelPageComponent implements OnInit {
       let Expense: Expense = this.Form.value as Expense;
       Expense.date = this.current_date;
       Expense.token = this.userToken;
-      this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => console.log(result));
-      this.add = !this.add;
+      this.expenseService.addExpense(this.Form.value as Expense).subscribe(result => {
+        if(result.status){
+          this.add=!this.add;
+          this.buildForm();
+        }
+      });
     } else if (this.Form.get('amount').value < 1) {
-      this.errorString = 'Enter an amount >= 1';
+      this.errorString = 'Enter an amount greater or equal than 1';
       this.error = true;
     } else if (this.current_date < this.Travel.start_date){
       this.errorString = 'You cannot add an expense to a travel not started yet';
