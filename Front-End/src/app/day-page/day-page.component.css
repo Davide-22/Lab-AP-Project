@@ -19,10 +19,14 @@
     border-radius: 10px 10px 10px 10px;
 }
 
+._chart{
+    height: 700px;
+}
+
 .column {
     float: left;
     width: 33.33%;
-  }
+}
   
   
 .row:after {
@@ -31,7 +35,7 @@
     clear: both;
   }
 
-  .error{
+.error{
     margin: 0 auto;
     width: 44%;
     margin-top: 2%;

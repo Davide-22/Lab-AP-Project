@@ -6,8 +6,7 @@ import { Expense } from '../models/expense.model';
 import { Travel } from '../models/travel.model';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-
-import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 
 
 @Component({
@@ -36,64 +35,47 @@ export class DayPageComponent implements OnInit {
   public db_date: string;
   public destinations: string[] = [];
 
+  public chart_categories:string[] = []
+  public chart_amounts: number[] = [];
   public p: number = 1; 
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {},
-      y: {
-        min: 10
+  
+    @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  
+    // Pie
+    public pieChartOptions: ChartConfiguration['options'] = {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        datalabels: {
+          formatter: (value, ctx) => {
+            if (ctx.chart.data.labels) {
+              return ctx.chart.data.labels[ctx.dataIndex];
+            }
+          },
+        },
       }
-    },
-    plugins: {
-      legend: {
-        display: true,
-      },
-      datalabels: {
-        anchor: 'end',
-        align: 'end'
-      }
+    };
+    public pieChartData: ChartData<'pie', number[], string | string[]> = {
+      labels: this.chart_categories,
+      datasets: [ {
+        data: this.chart_amounts
+      } ]
+    };
+    public pieChartType: ChartType = 'pie';
+    public pieChartPlugins = [ DatalabelsPlugin ];
+  
+    // events
+    public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
+      console.log(event, active);
     }
-  };
-  public barChartType: ChartType = 'bar';
-  public barChartPlugins = [
-    DataLabelsPlugin
-  ];
-
-  public barChartData: ChartData<'bar'> = {
-    labels: [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ],
-    datasets: [
-      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Series A' },
-      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Series B' }
-    ]
-  };
-
-  // events
-  public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public randomize(): void {
-    // Only Change 3 values
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      Math.round(Math.random() * 100),
-      56,
-      Math.round(Math.random() * 100),
-      40 ];
-
-    this.chart?.update();
-  }
+  
+    public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+      console.log(event, active);
+    }
 
 
   constructor(private readonly expenseService: ExpenseService, private route: ActivatedRoute) { }
@@ -104,6 +86,7 @@ export class DayPageComponent implements OnInit {
     this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date:this.db_date}).subscribe((result) => {
       this.expenses = result;
       this.budgetLeft();
+      this.chartDataElaboration(this.expenses);
     });
     this.travelEnded();
     this.destinations = this.Travel.destination;
@@ -204,6 +187,45 @@ export class DayPageComponent implements OnInit {
     var splitted = day.split("/");
     var recombined: string = splitted[2] + "-" + splitted[1] + "-" + splitted[0];
     this.db_date = recombined;
+  }
+
+  chartDataElaboration(expenses: Expense[]): void{
+    for(let i=0; i<expenses.length; i++){
+      if(!this.chart_categories.includes(expenses[i].category)){
+        this.chart_categories.push(expenses[i].category);
+        this.chart_amounts.push(expenses[i].amount);
+      } else {
+        let j = this.chart_categories.indexOf(expenses[i].category);
+        this.chart_amounts[j] += expenses[i].amount;
+      }
+    }
+  }
+
+  total(): void {
+    if (this.pieChartData.labels) {
+      this.pieChartData.labels = this.chart_categories;
+    }
+
+    this.pieChartData.datasets[0].data = this.chart_amounts;
+
+    this.chart?.update();
+  }
+
+  food(): void {
+    if (this.pieChartData.labels) {
+      var food_expenses: string[] = [];
+      var food_amounts: number[] = [];
+      for(let i=0; i<this.expenses.length; i++){
+        if(this.expenses[i].category == "food"){
+          food_expenses.push(this.expenses[i].name);
+          food_amounts.push(this.expenses[i].amount);
+        }
+      }
+      this.pieChartData.labels = food_expenses;
+    }
+    this.pieChartData.datasets[0].data = food_amounts;
+
+    this.chart?.update();
   }
 
 }
