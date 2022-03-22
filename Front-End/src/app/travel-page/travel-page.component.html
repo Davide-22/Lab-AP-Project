@@ -165,17 +165,9 @@
             </div>
         </div>
         <br> <br>
-        <select name="graph" id="comparegraph" *ngIf="days.length > 0">
-            <option value="" disabled selected> Select category </option>
-            <option value="accomodation">Accomodation</option>
-            <option value="food">Food</option>
-            <option value="event">Event</option>
-            <option value="cultural place">Cultural place</option>
-            <option value="transport">Transport</option>
-        </select>
         
-        <div>
-            <div>
+        <div *ngIf="days.length > 0">
+            <div class="card _chart">
               <div style="display: block">
                 <canvas baseChart
                   [data]="barChartData"

@@ -43,11 +43,10 @@ export class TravelPageComponent implements OnInit {
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
     scales: {
       x: {},
       y: {
-        min: 10
+        min: 0
       }
     },
     plugins: {
@@ -66,13 +65,16 @@ export class TravelPageComponent implements OnInit {
   ];
 
   public barChartData: ChartData<'bar'> = {
-    labels: [ '2006', '2007', '2008', '2009', '2010', '2011', '2012' ],
+    labels: this.days,
     datasets: [
-      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Series A' },
-      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Series B' }
+      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Accomodation' },
+      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Food' },
+      { data: [ 49, 3, 4, 9, 8, 7, 9 ], label: 'Event' },
+      { data: [ 8, 8, 0, 1, 6, 2, 0 ], label: 'Cultural Place' },
+      { data: [ 2, 4, 34, 15, 54, 87, 38 ], label: 'Transport' }
     ]
   };
-
+  
   // events
   public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
     console.log(event, active);
@@ -93,8 +95,8 @@ export class TravelPageComponent implements OnInit {
     this.travelEnded();
     this.travelNotStarted();
     this.visualizeTravelDays();
+    this.chartDataElaboration();
     this.destinations = this.Travel.destination;
-    
   }
 
   buildForm(): void {
@@ -212,5 +214,8 @@ export class TravelPageComponent implements OnInit {
     }
   }
   
+  chartDataElaboration(): void{
+    //toDo
+  }
 
 }
