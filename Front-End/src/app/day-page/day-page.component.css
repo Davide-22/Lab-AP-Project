@@ -20,7 +20,7 @@
 }
 
 ._chart{
-    height: 700px;
+    height: 430px;
 }
 
 .column {
@@ -33,7 +33,11 @@
     content: "";
     display: table;
     clear: both;
-  }
+}
+
+.selectmenu{
+    padding-top: 200px;
+}
 
 .error{
     margin: 0 auto;
