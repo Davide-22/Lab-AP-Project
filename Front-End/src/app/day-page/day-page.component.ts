@@ -120,6 +120,8 @@ export class DayPageComponent implements OnInit {
           this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date:this.db_date}).subscribe((result1) => {
             this.expenses = result1;
             this.budgetLeft();
+            this.chartDataElaboration(this.expenses);
+            this.chart?.update();
           });
           this.add=!this.add;
           this.buildForm();
@@ -145,6 +147,8 @@ export class DayPageComponent implements OnInit {
       if(result.status){
         this.expenses.splice(this.expenses.indexOf(expense),1);
         this.budgetLeft();
+        this.chartDataElaboration(this.expenses); //toFix
+        this.chart?.update(); //toFix
         this.displayStyle="none";
       }
     });
@@ -201,29 +205,91 @@ export class DayPageComponent implements OnInit {
     }
   }
 
-  total(): void {
-    if (this.pieChartData.labels) {
-      this.pieChartData.labels = this.chart_categories;
-    }
-
-    this.pieChartData.datasets[0].data = this.chart_amounts;
-
-    this.chart?.update();
-  }
-
-  food(): void {
-    if (this.pieChartData.labels) {
-      var food_expenses: string[] = [];
-      var food_amounts: number[] = [];
-      for(let i=0; i<this.expenses.length; i++){
-        if(this.expenses[i].category == "food"){
-          food_expenses.push(this.expenses[i].name);
-          food_amounts.push(this.expenses[i].amount);
+  selectCategory(category): void {
+    var names: string[] = [];
+    var amounts: number[] = [];
+    
+    switch(category){
+      case 'all':
+        if (this.pieChartData.labels) {
+          this.pieChartData.labels = this.chart_categories;
         }
-      }
-      this.pieChartData.labels = food_expenses;
+        this.pieChartData.datasets[0].data = this.chart_amounts;
+      break;
+      
+      case 'accomodation':
+        if (this.pieChartData.labels) {
+          for(let i=0; i<this.expenses.length; i++){
+            if(this.expenses[i].category == "accomodation"){
+              names.push(this.expenses[i].name);
+              amounts.push(this.expenses[i].amount);
+            }
+          }
+          this.pieChartData.labels = names;
+        }
+        this.pieChartData.datasets[0].data = amounts;
+      break;
+      
+      case 'food':
+        if (this.pieChartData.labels) {
+          var names: string[] = [];
+          var amounts: number[] = [];
+          for(let i=0; i<this.expenses.length; i++){
+            if(this.expenses[i].category == "food"){
+              names.push(this.expenses[i].name);
+              amounts.push(this.expenses[i].amount);
+            }
+          }
+          this.pieChartData.labels = names;
+        }
+        this.pieChartData.datasets[0].data = amounts;
+      break;
+
+      case 'event':
+        if (this.pieChartData.labels) {
+          var names: string[] = [];
+          var amounts: number[] = [];
+          for(let i=0; i<this.expenses.length; i++){
+            if(this.expenses[i].category == "event"){
+              names.push(this.expenses[i].name);
+              amounts.push(this.expenses[i].amount);
+            }
+          }
+          this.pieChartData.labels = names;
+        }
+        this.pieChartData.datasets[0].data = amounts;
+      break;
+
+      case 'cultural place':
+        if (this.pieChartData.labels) {
+          var names: string[] = [];
+          var amounts: number[] = [];
+          for(let i=0; i<this.expenses.length; i++){
+            if(this.expenses[i].category == "cultural place"){
+              names.push(this.expenses[i].name);
+              amounts.push(this.expenses[i].amount);
+            }
+          }
+          this.pieChartData.labels = names;
+        }
+        this.pieChartData.datasets[0].data = amounts;
+      break;
+          
+      case 'transport':
+        if (this.pieChartData.labels) {
+          var names: string[] = [];
+          var amounts: number[] = [];
+          for(let i=0; i<this.expenses.length; i++){
+            if(this.expenses[i].category == "transport"){
+              names.push(this.expenses[i].name);
+              amounts.push(this.expenses[i].amount);
+            }
+          }
+          this.pieChartData.labels = names;
+        }
+        this.pieChartData.datasets[0].data = amounts;
+      break;
     }
-    this.pieChartData.datasets[0].data = food_amounts;
 
     this.chart?.update();
   }

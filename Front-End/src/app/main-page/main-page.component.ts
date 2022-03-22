@@ -51,6 +51,7 @@ export class MainPageComponent implements OnInit {
         window.location.href="";
       } else {
         this.travelService.getTravelsByUser({token: this.token}).subscribe(result => this.travels = result);
+
       }
     })
     this.buildForm();
@@ -71,7 +72,8 @@ export class MainPageComponent implements OnInit {
       Travel.destination = this.destinations;
       this.travelService.addTravelToUser(Travel).subscribe(result => {
         if(result.status){
-          this.travels.push(Travel);
+          this.travels = [Travel, ...this.travels]
+          //this.travels.push(Travel);
           this.add=!this.add;
           this.buildForm();
         } else {
