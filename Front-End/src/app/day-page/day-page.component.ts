@@ -120,8 +120,7 @@ export class DayPageComponent implements OnInit {
           this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date:this.db_date}).subscribe((result1) => {
             this.expenses = result1;
             this.budgetLeft();
-            this.chartDataElaboration(this.expenses);
-            this.chart?.update();
+            this.addExpenseToChart(Expense);
           });
           this.add=!this.add;
           this.buildForm();
@@ -147,8 +146,7 @@ export class DayPageComponent implements OnInit {
       if(result.status){
         this.expenses.splice(this.expenses.indexOf(expense),1);
         this.budgetLeft();
-        this.chartDataElaboration(this.expenses); //toFix
-        this.chart?.update(); //toFix
+        this.deleteExpenseFromChart(expense);
         this.displayStyle="none";
       }
     });
@@ -294,4 +292,25 @@ export class DayPageComponent implements OnInit {
     this.chart?.update();
   }
 
+  addExpenseToChart(expense: Expense):void {
+    if(this.chart_categories.includes(expense.category)){
+      let j = this.chart_categories.indexOf(expense.category);
+      this.chart_amounts[j] += expense.amount;
+    } else{
+      this.chart_categories.push(expense.category);
+      this.chart_amounts.push(expense.amount);
+    }
+    this.chart?.update();
+  }
+
+  deleteExpenseFromChart(expense: Expense): void {
+    let j = this.chart_categories.indexOf(expense.category);
+    this.chart_amounts[j] -= expense.amount;
+
+    if(this.chart_amounts[j] == 0){
+      this.chart_categories.splice(j,1);
+      this.chart_amounts.splice(j,1);
+    }
+    this.chart?.update();
+  }
 }
