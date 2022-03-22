@@ -67,3 +67,15 @@
 .center{
     padding-top: 2%;
 }
+
+.icon-travel-done {
+    color: black;
+}
+
+.icon-travel-started {
+    color: green;
+}
+
+.icon-travel-not-started {
+    color: orange;
+}
