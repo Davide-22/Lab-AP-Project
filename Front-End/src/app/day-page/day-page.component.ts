@@ -21,7 +21,7 @@ export class DayPageComponent implements OnInit {
   @Input() public day: string;
   @Input() public userToken: string;
   @Output() public back: EventEmitter<boolean> = new EventEmitter<boolean>();
-  title: string | null = "null";
+  public title: string | null = null;
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;

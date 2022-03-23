@@ -1,32 +1,34 @@
 &nbsp;
 &nbsp;
 
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title text-center">Complete Travel: {{Travel.name}}</h4>
-            </div>
-            <div class="modal-body">
-                <h4><p> Are you sure to complete the Travel? </p></h4>
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-secondary" (click)="closePopUp()">
-                            NO
-                        </button>
-                    </div>
-                    <div class="col-sm">
-                        <button type="button"class="btn btn-danger" (click)="completeTravel()">
-                            YES
-                        </button>
-                    </div>
-                </div>
-            </div> 
-        </div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Complete Travel : {{title}} </h4>
     </div>
-</div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <div class="modal-body">
+              <h4><p> Are you sure to complete the Travel? </p></h4>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+          <div class="col-sm">
+              <button type="button" class="btn btn-secondary" (click)="modal.dismiss('N')">
+                  NO
+              </button>
+          </div>
+          <div class="col-sm">
+              <button type="button" class="btn btn-danger" (click)="modal.dismiss(''); completeTravel()">
+                  YES
+              </button>
+          </div>
+      </div>
+    </div>
+  </ng-template>
 
 
 <div class="row" *ngIf="!selected">
@@ -41,7 +43,7 @@
 
 <div class="row" *ngIf="!selected">
     <div class="column">
-        <p *ngIf="travel_ended">Thr travel is ended!</p>
+        <p *ngIf="travel_ended">The travel is over!</p>
         <div *ngIf="add" class="pag card text-center mt-5">
             <div class="card-body mt-auto">
                 <form [formGroup]="Form" (submit)="addExpense()">
@@ -117,7 +119,7 @@
                 Add an expense
             </button>
             <br> <br>
-            <button *ngIf="!travel_ended && !travel_not_started" class="btn btn-dark" (click)="openPopUp()">
+            <button *ngIf="!travel_ended && !travel_not_started" class="btn btn-dark" (click)="open(content,Travel)">
                 Complete Travel
             </button>
         </div>

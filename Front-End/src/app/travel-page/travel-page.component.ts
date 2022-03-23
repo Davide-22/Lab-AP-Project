@@ -7,6 +7,7 @@ import { ExpenseService } from '../services/expense.service';
 import { Expense } from "../models/expense.model";
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
@@ -29,6 +30,7 @@ export class TravelPageComponent implements OnInit {
   public selected: boolean = false;
   public travel_ended: boolean = false;
   public travel_not_started: boolean = false;
+  public title: string | null = null;
 
   public days: string[] = [];
   public email: string;
@@ -85,7 +87,7 @@ export class TravelPageComponent implements OnInit {
   }
 
   constructor(private readonly travelService: TravelService, private readonly expenseService: ExpenseService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private modalService: NgbModal) {
     }
 
   
@@ -139,12 +141,11 @@ export class TravelPageComponent implements OnInit {
     }
   }
 
-  openPopUp(): void {
-    this.displayStyle="block";
-  }
 
-  closePopUp(): void {
-    this.displayStyle="none";
+  open(content, travel: Travel) {
+    this.title = travel.name;
+    this.Travel = travel;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
   }
 
   completeTravel(): void {
