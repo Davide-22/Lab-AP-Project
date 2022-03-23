@@ -1,6 +1,7 @@
 import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-account',
@@ -17,7 +18,7 @@ export class AccountComponent implements OnInit {
   public error: boolean = false;
   public displayStyle: any = "none";
 
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     var cookies = document.cookie;
@@ -47,14 +48,17 @@ export class AccountComponent implements OnInit {
   changePassword(): void {
     window.location.href = "/change-password";
   }
-
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  }
+  /*
   openPopUp(): void {
     this.displayStyle="block";
   }
 
   closePopUp(): void {
     this.displayStyle="none";
-  }
+  }*/
   
   deleteAccount(): void {
     var cookies = document.cookie;
