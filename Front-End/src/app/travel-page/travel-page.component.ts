@@ -1,10 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TravelService } from '../services/travel.service';
 import { Travel } from '../models/travel.model';
 import { ExpenseService } from '../services/expense.service';
 import { Expense } from "../models/expense.model";
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+
+import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 
 @Component({
@@ -35,6 +39,51 @@ export class TravelPageComponent implements OnInit {
   current_date = (new Date()).toISOString().slice(0, 10);
   public p: number = 1;
 
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    scales: {
+      x: {},
+      y: {
+        min: 0
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+      datalabels: {
+        anchor: 'end',
+        align: 'end'
+      }
+    }
+  };
+  public barChartType: ChartType = 'bar';
+  public barChartPlugins = [
+    DataLabelsPlugin
+  ];
+
+  public barChartData: ChartData<'bar'> = {
+    labels: this.days,
+    datasets: [
+      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Accomodation' },
+      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Food' },
+      { data: [ 49, 3, 4, 9, 8, 7, 9 ], label: 'Event' },
+      { data: [ 8, 8, 0, 1, 6, 2, 0 ], label: 'Cultural Place' },
+      { data: [ 2, 4, 34, 15, 54, 87, 38 ], label: 'Transport' }
+    ]
+  };
+  
+  // events
+  public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
+    console.log(event, active);
+  }
+
+  public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
+    console.log(event, active);
+  }
+
   constructor(private readonly travelService: TravelService, private readonly expenseService: ExpenseService,
     private route: ActivatedRoute) {
     }
@@ -46,8 +95,8 @@ export class TravelPageComponent implements OnInit {
     this.travelEnded();
     this.travelNotStarted();
     this.visualizeTravelDays();
+    this.chartDataElaboration();
     this.destinations = this.Travel.destination;
-    
   }
 
   buildForm(): void {
@@ -165,5 +214,8 @@ export class TravelPageComponent implements OnInit {
     }
   }
   
+  chartDataElaboration(): void{
+    //toDo
+  }
 
 }

@@ -46,7 +46,7 @@
                     <div class="row">
                         <div class="col-1">
                             <i class="fa fa-plane fa-3x icon-travel-done" *ngIf="travel.end_date != null"></i>
-                            <i class="fa fa-plane fa-3x icon-travel-started" *ngIf="travel.end_date == null && travel.start_date < start"></i>
+                            <i class="fa fa-plane fa-3x icon-travel-started" *ngIf="travel.end_date == null && travel.start_date <= start"></i>
                             <i class="fa fa-plane fa-3x icon-travel-not-started" *ngIf="travel.end_date == null && travel.start_date > start"></i>
                         </div>
                         <div class="col-8" style="padding-top: 1.2%">
