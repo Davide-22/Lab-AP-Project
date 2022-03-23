@@ -67,11 +67,11 @@ export class TravelPageComponent implements OnInit {
   public barChartData: ChartData<'bar'> = {
     labels: this.days,
     datasets: [
-      { data: [ 65, 59, 80, 81, 56, 55, 40 ], label: 'Accomodation' },
-      { data: [ 28, 48, 40, 19, 86, 27, 90 ], label: 'Food' },
-      { data: [ 49, 3, 4, 9, 8, 7, 9 ], label: 'Event' },
-      { data: [ 8, 8, 0, 1, 6, 2, 0 ], label: 'Cultural Place' },
-      { data: [ 2, 4, 34, 15, 54, 87, 38 ], label: 'Transport' }
+      { data: [], label: 'Accomodation' },
+      { data: [], label: 'Food' },
+      { data: [], label: 'Event' },
+      { data: [], label: 'Cultural Place' },
+      { data: [], label: 'Transport' }
     ]
   };
   
@@ -79,7 +79,7 @@ export class TravelPageComponent implements OnInit {
   public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
     console.log(event, active);
   }
-
+  
   public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
     console.log(event, active);
   }
@@ -125,6 +125,7 @@ export class TravelPageComponent implements OnInit {
         if(result.status){
           this.add=!this.add;
           this.buildForm();
+          this.addExpenseToChart(Expense);
         }
       });
     } else if (this.Form.get('amount').value < 1) {
@@ -215,7 +216,56 @@ export class TravelPageComponent implements OnInit {
   }
   
   chartDataElaboration(): void{
-    //toDo
+    var expenses: Expense[] = [];
+    
+    for(let i=0; i<this.days.length; i++){
+      for(let j=0; j<this.barChartData.datasets.length; j++){
+        this.barChartData.datasets[j].data.push(0);
+      }
+    }
+    
+    for(let i=0; i<this.days.length; i++){
+      var splitted = this.days[i].split("/");
+      var day: string = splitted[2] + "-" +splitted[1] + "-" + splitted[0];
+      
+      this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date: day}).subscribe((result) => {
+        expenses = result;
+
+        for(let j=0; j<expenses.length; j++){
+          if(expenses[j].category == 'accomodation'){
+            this.barChartData.datasets[0].data[i] += expenses[j].amount;
+          } else if(expenses[j].category == 'food'){
+            this.barChartData.datasets[1].data[i] += expenses[j].amount;
+          } else if(expenses[j].category == 'event'){
+            this.barChartData.datasets[2].data[i] += expenses[j].amount;
+          } else if(expenses[j].category == 'cultural place'){
+            this.barChartData.datasets[3].data[i] += expenses[j].amount;
+          } else if(expenses[j].category == 'transport'){
+            this.barChartData.datasets[4].data[i] += expenses[j].amount;
+          }
+        }
+        this.chart?.update();
+      });
+    }
+    
+  }
+
+  addExpenseToChart(expense: Expense):void {
+    let i = this.barChartData.datasets[0].data.length-1;
+    console.log(this.barChartData.datasets[0].data);
+    console.log(i);
+    if(expense.category == 'accomodation'){
+      this.barChartData.datasets[0].data[i] += expense.amount;
+    } else if(expense.category == 'food'){
+      this.barChartData.datasets[1].data[i] += expense.amount;
+    } else if(expense.category == 'event'){
+      this.barChartData.datasets[2].data[i] += expense.amount;
+    } else if(expense.category == 'cultural place'){
+      this.barChartData.datasets[3].data[i] += expense.amount;
+    } else if(expense.category == 'transport'){
+      this.barChartData.datasets[4].data[i] += expense.amount;
+    }
+    this.chart?.update();
   }
 
 }
