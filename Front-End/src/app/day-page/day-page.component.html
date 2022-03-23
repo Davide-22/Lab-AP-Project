@@ -1,6 +1,37 @@
 &nbsp;
 &nbsp;
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Expense: {{title}} </h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <div class="modal-body">
+            <h4><p> Are you sure to delete the Expense? </p></h4>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+        <div class="col-sm">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss('N')">
+                NO
+            </button>
+        </div>
+        <div class="col-sm">
+            <button type="button" class="btn btn-danger" (click)="modal.dismiss(''); deleteExpense(Expense)">
+                YES
+            </button>
+        </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<!--<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -25,7 +56,8 @@
             </div> 
         </div>
     </div>
-</div>
+</div>-->
+
 
 
 <div class="row">
@@ -164,7 +196,7 @@
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <button *ngIf="!travel_ended" class="but" (click)="openPopUp(expense)">
+                                    <button *ngIf="!travel_ended" class="but" (click)="open(content,expense)">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>

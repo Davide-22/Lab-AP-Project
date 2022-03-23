@@ -1,29 +1,31 @@
-<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 *ngIf="Travel" class="modal-title text-center">Delete Travel: {{Travel.name}}</h4>
-            </div>
-            <div class="modal-body">
-                <h4><p> Are you sure to delete the Travel? </p></h4>
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-secondary" (click)="closePopUp()">
-                            NO
-                        </button>
-                    </div>
-                    <div class="col-sm">
-                        <button type="button"class="btn btn-danger" (click)="deleteTravel(Travel)">
-                            YES
-                        </button>
-                    </div>
-                </div>
-            </div> 
-        </div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Travel : {{title}} </h4>
     </div>
-</div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <div class="modal-body">
+              <h4><p> Are you sure to delete the Travel? </p></h4>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+          <div class="col-sm">
+              <button type="button" class="btn btn-secondary" (click)="modal.dismiss('N')">
+                  NO
+              </button>
+          </div>
+          <div class="col-sm">
+              <button type="button" class="btn btn-danger" (click)="modal.dismiss(''); deleteTravel(Travel)">
+                  YES
+              </button>
+          </div>
+      </div>
+    </div>
+  </ng-template>
 
 <div class="pag card text-center" *ngIf="travels.length == 0 && !compares">
     <div class="card-body mt-auto ">
@@ -55,7 +57,7 @@
                             </h2>
                         </div>
                         <div class="col-3">
-                            <button class="but" (click)="openPopUp(travel)">
+                            <button class="but" (click)="open(content, travel)">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>

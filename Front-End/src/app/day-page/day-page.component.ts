@@ -7,6 +7,7 @@ import { Travel } from '../models/travel.model';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import DatalabelsPlugin from 'chartjs-plugin-datalabels';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class DayPageComponent implements OnInit {
   @Input() public day: string;
   @Input() public userToken: string;
   @Output() public back: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  public title: string | null = null;
   public Form: FormGroup;
   public displayStyle: any = "none";
   public add: boolean = false;
@@ -78,7 +79,7 @@ export class DayPageComponent implements OnInit {
     }
 
 
-  constructor(private readonly expenseService: ExpenseService, private route: ActivatedRoute) { }
+  constructor(private readonly expenseService: ExpenseService, private route: ActivatedRoute, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -151,7 +152,14 @@ export class DayPageComponent implements OnInit {
       }
     });
   }
+  //popup
+  open(content, expense: Expense) {
+    this.title = expense.name;
+    this.Expense = expense;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  }
 
+  /*
   openPopUp(expense: Expense): void {
     this.displayStyle="block";
     this.Expense = expense;
@@ -159,7 +167,7 @@ export class DayPageComponent implements OnInit {
 
   closePopUp(): void {
     this.displayStyle="none";
-  }
+  }*/
 
   backTravel(): void {
     this.back.emit(false);

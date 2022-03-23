@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Travel } from '../models/travel.model';
 import { TravelService } from '../services/travel.service';
 import { UserService } from '../services/user.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-main-page',
@@ -25,10 +26,11 @@ export class MainPageComponent implements OnInit {
   public month = (this.today.getMonth() +1 <10)? '0'+(this.today.getMonth()+1):this.today.getMonth()+1;
   public day = (this.today.getDate() <10)? '0'+this.today.getDate():this.today.getDate();
   public start = this.today.getFullYear().toString()+'-'+this.month+'-'+this.day;
+  public title: string | null = null;
 
   public Travel: Travel;
   public compares: boolean = false;
-  constructor(private readonly travelService: TravelService, private readonly userService: UserService) { }
+  constructor(private readonly travelService: TravelService, private readonly userService: UserService,  private modalService: NgbModal) { }
 
   buildForm(): void {
     this.Form = new FormGroup({
@@ -113,13 +115,10 @@ export class MainPageComponent implements OnInit {
     });
   }
 
-  openPopUp(travel: Travel): void {
-    this.displayStyle="block";
+  open(content, travel: Travel) {
+    this.title = travel.name;
     this.Travel = travel;
-  }
-
-  closePopUp(): void {
-    this.displayStyle="none";
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
   }
 
   compare(): void {

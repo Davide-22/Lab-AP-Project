@@ -1,29 +1,34 @@
-<div class="modal popup" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title text-center">Delete account</h4>
-            </div>
-            <div class="modal-body">
-                <h4><p> Are you sure to delete your account? </p></h4>
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-secondary" (click)="closePopUp()">
-                            NO
-                        </button>
-                    </div>
-                    <div class="col-sm">
-                        <button type="button"class="btn btn-danger" (click)="deleteAccount()">
-                            YES
-                        </button>
-                    </div>
-                </div>
-            </div> 
-        </div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Account</h4>
     </div>
-</div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <div class="modal-body">
+              <h4><p> Are you sure to delete the Account? </p></h4>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+          <div class="col-sm">
+              <button type="button" class="btn btn-secondary" (click)="modal.dismiss('N')">
+                  NO
+              </button>
+          </div>
+          <div class="col-sm">
+              <button type="button" class="btn btn-danger" (click)="modal.dismiss(''); deleteAccount()">
+                  YES
+              </button>
+          </div>
+      </div>
+    </div>
+</ng-template>
+  
 
 <div class="card account">
     <div class="card-body mt-auto">
@@ -46,7 +51,7 @@
         </div>
         <div class="row center mt-3">
             <button type="button" class="btn btn-dark btn1" (click)="changePassword()">Change Password</button>
-            <button type="button" class="btn btn-danger btn2" (click)="openPopUp()">Delete Account</button>
+            <button type="button" class="btn btn-danger btn2" (click)="open(content)">Delete Account</button>
         </div>
     </div>
 </div>
