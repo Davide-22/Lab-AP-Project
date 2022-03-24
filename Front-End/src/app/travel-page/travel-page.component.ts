@@ -8,7 +8,6 @@ import { Expense } from "../models/expense.model";
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 
@@ -67,13 +66,13 @@ export class TravelPageComponent implements OnInit {
   ];
 
   public barChartData: ChartData<'bar'> = {
-    labels: this.days,
+    labels: [],
     datasets: [
       { data: [], label: 'Accomodation' },
       { data: [], label: 'Food' },
       { data: [], label: 'Event' },
-      { data: [], label: 'Cultural Place' },
-      { data: [], label: 'Transport' }
+      { data: [], label: 'Cultural Place', backgroundColor: '#b39ddb' },
+      { data: [], label: 'Transport', backgroundColor: '#a5d6a7' }
     ]
   };
   
@@ -97,7 +96,7 @@ export class TravelPageComponent implements OnInit {
     this.travelEnded();
     this.travelNotStarted();
     this.visualizeTravelDays();
-    this.chartDataElaboration();
+    this.chartInitialization();
     this.destinations = this.Travel.destination;
   }
 
@@ -127,7 +126,7 @@ export class TravelPageComponent implements OnInit {
         if(result.status){
           this.add=!this.add;
           this.buildForm();
-          this.addExpenseToChart(Expense);
+          this.chartInitialization();
         }
       });
     } else if (this.Form.get('amount').value < 1) {
@@ -161,6 +160,7 @@ export class TravelPageComponent implements OnInit {
 
   onBack(element: boolean): void {
     this.selected = element;
+    this.chartInitialization();
   }
 
   travelEnded(): void {
@@ -216,16 +216,23 @@ export class TravelPageComponent implements OnInit {
     }
   }
   
-  chartDataElaboration(): void{
+  chartInitialization(): void{
     var expenses: Expense[] = [];
+    this.barChartData.labels = this.days;
+
+    var accomodation_amounts: number[] = [];
+    var food_amounts: number[] = [];
+    var event_amounts: number[] = [];
+    var culturalplace_amounts: number[] = [];
+    var transport_amounts: number[] = [];
     
     for(let i=0; i<this.days.length; i++){
-      for(let j=0; j<this.barChartData.datasets.length; j++){
-        this.barChartData.datasets[j].data.push(0);
-      }
-    }
-    
-    for(let i=0; i<this.days.length; i++){
+      accomodation_amounts.push(0);
+      food_amounts.push(0);
+      event_amounts.push(0);
+      culturalplace_amounts.push(0);
+      transport_amounts.push(0);
+      
       var splitted = this.days[i].split("/");
       var day: string = splitted[2] + "-" +splitted[1] + "-" + splitted[0];
       
@@ -234,39 +241,26 @@ export class TravelPageComponent implements OnInit {
 
         for(let j=0; j<expenses.length; j++){
           if(expenses[j].category == 'accomodation'){
-            this.barChartData.datasets[0].data[i] += expenses[j].amount;
+            accomodation_amounts[i] += expenses[j].amount;
           } else if(expenses[j].category == 'food'){
-            this.barChartData.datasets[1].data[i] += expenses[j].amount;
+            food_amounts[i] += expenses[j].amount;
           } else if(expenses[j].category == 'event'){
-            this.barChartData.datasets[2].data[i] += expenses[j].amount;
+            event_amounts[i] += expenses[j].amount;
           } else if(expenses[j].category == 'cultural place'){
-            this.barChartData.datasets[3].data[i] += expenses[j].amount;
+            culturalplace_amounts[i] += expenses[j].amount;
           } else if(expenses[j].category == 'transport'){
-            this.barChartData.datasets[4].data[i] += expenses[j].amount;
+            transport_amounts[i] += expenses[j].amount;
           }
         }
+        this.barChartData.datasets[0].data = accomodation_amounts;
+        this.barChartData.datasets[1].data = food_amounts;
+        this.barChartData.datasets[2].data = event_amounts;
+        this.barChartData.datasets[3].data = culturalplace_amounts;
+        this.barChartData.datasets[4].data = transport_amounts;
         this.chart?.update();
       });
     }
     
-  }
-
-  addExpenseToChart(expense: Expense):void {
-    let i = this.barChartData.datasets[0].data.length-1;
-    console.log(this.barChartData.datasets[0].data);
-    console.log(i);
-    if(expense.category == 'accomodation'){
-      this.barChartData.datasets[0].data[i] += expense.amount;
-    } else if(expense.category == 'food'){
-      this.barChartData.datasets[1].data[i] += expense.amount;
-    } else if(expense.category == 'event'){
-      this.barChartData.datasets[2].data[i] += expense.amount;
-    } else if(expense.category == 'cultural place'){
-      this.barChartData.datasets[3].data[i] += expense.amount;
-    } else if(expense.category == 'transport'){
-      this.barChartData.datasets[4].data[i] += expense.amount;
-    }
-    this.chart?.update();
   }
 
 }
