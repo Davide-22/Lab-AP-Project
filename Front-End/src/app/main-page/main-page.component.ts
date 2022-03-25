@@ -83,6 +83,8 @@ export class MainPageComponent implements OnInit {
           this.error = true;
         }
       });
+      this.destinations = [];
+      this.indexDestination = [1];
     } else if (this.destinations.length == 0) {
       this.errorString = "Enter at least one destination";
       this.error = true;

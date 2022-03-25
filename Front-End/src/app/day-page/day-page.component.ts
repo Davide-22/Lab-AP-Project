@@ -39,6 +39,7 @@ export class DayPageComponent implements OnInit {
   public chart_categories:string[] = []
   public chart_amounts: number[] = [];
   public p: number = 1; 
+  public cat: string;
 
   
     @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
@@ -125,6 +126,7 @@ export class DayPageComponent implements OnInit {
           });
           this.add=!this.add;
           this.buildForm();
+          this.selectCategory(this.cat);
         } else {
           this.errorString= "Error in adding an expense";
           this.error = true;
@@ -143,12 +145,14 @@ export class DayPageComponent implements OnInit {
   }
 
   deleteExpense(expense: Expense): void {
+    console.log(expense);
     this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: expense.name, _id:expense._id}).subscribe(result => {
       if(result.status){
         this.expenses.splice(this.expenses.indexOf(expense),1);
         this.budgetLeft();
         this.deleteExpenseFromChart(expense);
         this.displayStyle="none";
+        this.selectCategory(this.cat);
       }
     });
   }
@@ -214,7 +218,7 @@ export class DayPageComponent implements OnInit {
   selectCategory(category): void {
     var names: string[] = [];
     var amounts: number[] = [];
-    
+    this.cat = category;
     switch(category){
       case 'all':
         if (this.pieChartData.labels) {

@@ -62,7 +62,7 @@ app.post('/signup',jsonParser, function (req, res) {
                 res.send({status: true, msg:"ok"});
             })
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 if(err.code == '23505'){
                     return res.send({status: false, msg:"keyerror"});
                 }else{
@@ -92,7 +92,7 @@ app.post('/login',jsonParser, function (req, res) {
                 }
             })
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 return res.send({status: false, msg:"error"});
                 
             })
@@ -110,10 +110,11 @@ app.post('/verify',jsonParser, function(req,res) {
                 else res.send({status: false, msg: "email not in database"})
             })
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 return res.send({status: false, msg: "error"})
             })
     }catch(error) {
+        sendLog(error.toString())
         return res.send({status: false, msg:"error"});
     }
 })
@@ -138,7 +139,7 @@ app.post('/changepassword',jsonParser, function (req, res) {
                         return res.send({status: true, msg: "ok"});
                     })
                     .catch(err1 => {
-                        sendLog(err1);
+                        sendLog(err1.toString());
                         return res.send({status: false, msg:"error"});    
                     })
                 }else{
@@ -146,12 +147,12 @@ app.post('/changepassword',jsonParser, function (req, res) {
                 }
             })
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 return res.send({status: false, msg:"error"});    
             })
 
     }catch(error){
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }
 });
@@ -183,16 +184,16 @@ app.post('/account',jsonParser,function(req,res) {
                         res.send({travels_done: travels_done, days: days, email: email, username: result[0].username});
                     })
                     .catch(err => {
-                        sendLog(err);
+                        sendLog(err.toString());
                         return res.send({status: false, msg: "error"})
                     })
             })
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 return res.send({status: false, msg: "error"})
             })
     }catch(error) {
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }
 });
@@ -208,11 +209,11 @@ app.post('/deleteaccount',jsonParser, function (req, res) {
                     res.send({status: true, msg:"ok"});
                 })
                 .catch(err => {
-                    sendLog(err);
+                    sendLog(err.toString());
                     return res.send({status: false, msg:"error"});  
                 })
     }catch(error) {
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }
 });

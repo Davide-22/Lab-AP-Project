@@ -65,11 +65,11 @@ app.post('/addTravel', jsonParser, function (req,res) {
                 res.send({status: true, msg:"ok"})
             })
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 res.send({status: false, msg: "error"})
             })
     }catch(error) {
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }
 });
@@ -85,11 +85,11 @@ app.post('/deleteTravel', jsonParser, function (req,res) {
             db.query("DELETE FROM travels WHERE name = $1 AND user_email = $2", [name,email])
                     .then(res.send({status: true, msg:"ok"}))
                     .catch(err => {
-                        sendLog(err);
+                        sendLog(err.toString());
                         return res.send({status: false, msg: "error"})
                     })
     }catch(error) {
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }
 })
@@ -105,11 +105,11 @@ app.post('/completeTravel', jsonParser, function (req,res) {
         db.query("UPDATE travels SET end_date=$1 WHERE name=$2 AND user_email=$3", [end_date, name, email])
             .then(res.send({status: true, msg:"ok"}))
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 return res.send({status: false, msg: "error"})
             });
     }catch(error) {
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }
 })
@@ -125,11 +125,11 @@ app.post('/travels', jsonParser, function (req,res) {
                 res.send(result);
             })
             .catch(err => {
-                sendLog(err);
+                sendLog(err.toString());
                 return res.send({status: false, msg: "error"})
             })
     }catch(error) {
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }
 });
@@ -145,11 +145,11 @@ app.post('/days', jsonParser, function (req,res) {
             res.send(result);
         })
         .catch(err => {
-            sendLog(err);
+            sendLog(err.toString());
             return res.send({status: false, msg: "error"})
         })
     }catch(error){
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     }    
 });
@@ -170,11 +170,11 @@ app.post('/addExpense', jsonParser, function(req,res){
             res.send({status: true, msg:"ok"})
         )
         .catch(err => {
-            sendLog(err);
+            sendLog(err.toString());
             return res.send({status: false, msg: "error"})
         })
     }catch(error){
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     } 
 });
@@ -188,17 +188,17 @@ app.post('/deleteExpense', jsonParser, function (req,res) {
     try{
         const decode = jwt.verify(token, 'testkey');
         email = decode.email;
-        db.query("DELETE FROM expenses WHERE user_email = $1 AND travel = $2 and name = $3 and _id = $4", [email, travel, name, id]).then(
-            res.send({status: true, msg:"ok"})
-        )
-        .catch(err => {
-            sendLog(err);
-            return res.send({status: false, msg: "error"})
-        })
     }catch(error){
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     } 
+    db.query("DELETE FROM expenses WHERE user_email = $1 AND travel = $2 and name = $3 and _id = $4", [email, travel, name, id]).then(
+        res.send({status: true, msg:"ok"})
+    )
+    .catch(err => {
+        sendLog(err.toString());
+        return res.send({status: false, msg: "error"})
+    })
 });
 
 
@@ -214,11 +214,11 @@ app.post('/getExpenses', jsonParser, function(req,res) {
             res.send(result);
         })
         .catch(err => {
-            sendLog(err);
+            sendLog(err.toString());
             return res.send({status: false, msg: "error"})
         })
     }catch(error){
-        sendLog(error);
+        sendLog(error.toString());
         return res.send({status: false, msg:"error"});
     } 
 })
