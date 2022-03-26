@@ -223,6 +223,28 @@ app.post('/getExpenses', jsonParser, function(req,res) {
     } 
 })
 
+app.post('/Expenses', jsonParser, function(req,res) {
+    sendLog("POST /Expenses");
+    var token = req.body.token;
+    category = ['accomodation','food','event','cultural place','transport'];
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+    }catch(error){
+        sendLog(error.toString());
+        return res.send({statu: false, msg:"error"});
+    }
+    prova = [];
+    db.query("SELECT travels.name,avg(amount),sum(amount),category FROM travels INNER JOIN expenses ON travels.name=expenses.travel GROUP BY travels.name,category",[email]).then(result => {
+        res.send(result);
+    })
+    .catch(error => {
+        sendLog(error.toString());
+        return res.send({status: false, msg: "error"});
+    })
+    
+})
+
 app.listen(3002, () => {
     sendLog('Listening on port: ' + 3002);
 });
