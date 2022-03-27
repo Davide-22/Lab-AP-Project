@@ -44,15 +44,19 @@ export class TravelPageComponent implements OnInit {
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    layout:{
+      padding: 60
+    },
     scales: {
       x: {},
       y: {
-        min: 0
+        min: 0,
       }
     },
     plugins: {
       legend: {
         display: true,
+        position: 'right'
       },
       datalabels: {
         anchor: 'end',
@@ -257,6 +261,11 @@ export class TravelPageComponent implements OnInit {
         this.barChartData.datasets[2].data = event_amounts;
         this.barChartData.datasets[3].data = culturalplace_amounts;
         this.barChartData.datasets[4].data = transport_amounts;
+
+        /*let max_amount = Math.max(...accomodation_amounts, ...food_amounts, ...event_amounts, ...culturalplace_amounts, ...transport_amounts);
+        this.barChartOptions.scales.y.max = max_amount;
+        console.log(this.barChartOptions.scales.y.max )*/
+
         this.chart?.update();
       });
     }

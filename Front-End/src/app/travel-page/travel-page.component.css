@@ -20,13 +20,6 @@
     border-radius: 10px 10px 10px 10px;
 }
 
-._chart{
-    height: auto;
-    width: auto;
-    padding: 35px;
-}
-
-
 .column {
     float: left;
     width: 33.33%;

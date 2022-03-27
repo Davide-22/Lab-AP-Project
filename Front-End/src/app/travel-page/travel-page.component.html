@@ -166,10 +166,16 @@
                 </div>
             </div>
         </div>
-        <br> <br>
-        
+    </div>
+    
+    <div class="column"></div>
+
+</div>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-9">
         <div *ngIf="days.length > 0">
-            <div class="card _chart">
+            <div class="card">
               <div style="display: block">
                 <canvas baseChart
                   [data]="barChartData"
@@ -183,8 +189,7 @@
             </div>
         </div>
     </div>
-    
-    <div class="column"></div>
+    <div class="col-1"></div>
 </div>
 
 
