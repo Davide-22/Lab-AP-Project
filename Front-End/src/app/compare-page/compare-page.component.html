@@ -23,8 +23,15 @@
         </div>
     </div>
     <div class="mt-5">
-        <div class="card _chart">
-            <div style="display: block">
+        <div>
+            <select name="chart" id="chart" (change)="selectChart($event.target.value)">
+                <option value="" disabled selected> Select Charts</option>
+                <option value="barChart"> Bar Chart </option>
+                <option value="pieChart"> Pie Chart </option>
+            </select>
+        </div>
+        <div class="card _chart" *ngIf="chartType">
+            <div style="display: block" *ngIf="chartType=='barChart'">
               <canvas baseChart
                 [data]="barChartData"
                 [options]="barChartOptions"
@@ -32,7 +39,29 @@
                 [type]="barChartType">
               </canvas>
             </div>
-          </div>
+            <div class="row">
+                <div class="col">
+                    <div class="chart" *ngIf="chartType=='pieChart'">
+                        <canvas baseChart
+                            [data]="pieChartData1"
+                            [type]="pieChartType"
+                            [options]="pieChartOptions"
+                            [plugins]="pieChartPlugins">
+                        </canvas>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="chart" *ngIf="chartType=='pieChart'">
+                        <canvas baseChart
+                            [data]="pieChartData2"
+                            [type]="pieChartType"
+                            [options]="pieChartOptions"
+                            [plugins]="pieChartPlugins">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

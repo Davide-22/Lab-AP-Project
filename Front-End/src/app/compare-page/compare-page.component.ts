@@ -20,6 +20,7 @@ export class ComparePageComponent implements OnInit {
   public compares: string[] = ['accomodation','food','transport','cultural place','event'];
   public travel1: string="";
   public travel2: string="";
+  public chartType: string;
 
   constructor(private readonly expenseService: ExpenseService) { }
 
@@ -65,7 +66,8 @@ export class ComparePageComponent implements OnInit {
           if(this.expenses[j].name == this.travel1){
             test1 = true;
             this.barChartData.datasets[0].data.push(this.expenses[j].avg);
-          }else if(this.expenses[j].name == this.travel2){
+          }
+          if(this.expenses[j].name == this.travel2){
             test2 = true;
             this.barChartData.datasets[1].data.push(this.expenses[j].avg);
           }
@@ -84,9 +86,95 @@ export class ComparePageComponent implements OnInit {
   selectTravel(travel:string,id:number): void {
     if(id == 1){
       this.travel1 = travel;
+      if(this.chartType=="pieChart"){
+        this.chartDataElaboration(1);
+      }
     }else {
       this.travel2 = travel;
+      console.log("select Travel 2");
+      if(this.chartType=="pieChart"){
+        console.log("chartType pieChart travel 2")
+        this.chartDataElaboration(2);
+      }
     }
-    this.chartInitialization();
+    if(this.chartType=="barChart"){
+      this.chartInitialization();
+    }
   }
+
+  selectChart(chart:string): void{
+    this.chartType=chart;
+    if(this.chartType=="barChart"){
+      this.chartInitialization();
+    }else{
+      this.chartDataElaboration(1);
+      this.chartDataElaboration(2);
+    }
+  }
+
+  @ViewChild(BaseChartDirective) chart2: BaseChartDirective | undefined;
+
+  public pieChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      datalabels: {
+        formatter: (value, ctx) => {
+          if (ctx.chart.data.labels) {
+            return ctx.chart.data.labels[ctx.dataIndex];
+          }
+        },
+      },
+    }
+  };
+  public pieChartData1: ChartData<'pie', number[], string | string[]> = {
+    labels: [],
+    datasets: [ {
+      data: []
+    } ]
+  };
+  public pieChartType: ChartType = 'pie';
+  public pieChartPlugins = [ DataLabelsPlugin ];
+
+  public pieChartData2: ChartData<'pie', number[], string | string[]> = {
+    labels: [],
+    datasets: [ {
+      data: []
+    } ]
+  };
+
+  chartDataElaboration(type: number): void{
+    if(type==1){
+      var chart_categories1=[];
+      var chart_amounts1=[];
+      for(let i=0; i<this.expenses.length;i++){
+        if(this.expenses[i].name==this.travel1){
+          chart_categories1.push(this.expenses[i].category);
+          chart_amounts1.push(this.expenses[i].sum);
+        }
+      }
+      this.pieChartData1.labels = chart_categories1;
+      this.pieChartData1.datasets[0].data = chart_amounts1;
+      this.chart2?.update();
+    }else{
+      console.log("chartDataElaboration 2");
+      var chart_categories2=[];
+      var chart_amounts2=[];
+      for(let i=0; i<this.expenses.length;i++){
+        if(this.expenses[i].name==this.travel2){
+          console.log("expenses "+this.expenses[i].name);
+          chart_categories2.push(this.expenses[i].category);
+          chart_amounts2.push(this.expenses[i].sum);
+        }
+      }
+      this.pieChartData2.labels = chart_categories2;
+      this.pieChartData2.datasets[0].data = chart_amounts2;
+      console.log("done");
+      this.chart2?.update();
+    }
+  }
+
 }
