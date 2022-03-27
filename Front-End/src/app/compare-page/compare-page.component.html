@@ -4,7 +4,7 @@
         <div class="col">
             <div class="card travel">
                 <div class="card-body mt-auto">
-                    <select name="travels" id="travels1" class="travels">
+                    <select name="travels" id="travels1" class="travels" (change)="selectTravel($event.target.value,1)">
                         <option value="" disabled selected> Travels </option>
                         <option *ngFor="let travel of travels" value="{{travel.name}}"> {{travel.name}} </option>
                     </select>
@@ -14,7 +14,7 @@
         <div class="col">
             <div class="card travel">
                 <div class="card-body mt-auto">
-                    <select name="travels" id="travels2" class="travels">
+                    <select name="travels" id="travels2" class="travels" (change)="selectTravel($event.target.value,2)">
                         <option value="" disabled selected> Travels </option>
                         <option *ngFor="let travel of travels" value="{{travel.name}}"> {{travel.name}} </option>
                     </select>
@@ -23,9 +23,16 @@
         </div>
     </div>
     <div class="mt-5">
-        <select name="compare" id="compare" class="compares">
-            <option value="" disabled selected> Select Graph </option>
-        </select>
+        <div class="card _chart">
+            <div style="display: block">
+              <canvas baseChart
+                [data]="barChartData"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [type]="barChartType">
+              </canvas>
+            </div>
+          </div>
     </div>
 </div>
 
