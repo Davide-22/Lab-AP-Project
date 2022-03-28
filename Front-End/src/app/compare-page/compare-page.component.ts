@@ -117,7 +117,7 @@ export class ComparePageComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
-        position: 'top',
+        position: 'right',
       },
       datalabels: {
         formatter: (value, ctx) => {

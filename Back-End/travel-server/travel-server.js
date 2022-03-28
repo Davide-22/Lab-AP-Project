@@ -22,8 +22,9 @@ app.use(function(req, res, next) {
   });
 
   function sendLog(message) {
-    console.log(message)
-    amqp.connect('amqp://rabbitmq', function (error0, connection) {
+    console.log(message);
+    try{
+        amqp.connect('amqp://rabbitmq', function (error0, connection) {
         if (error0) {
             throw error0;
         }
@@ -44,7 +45,10 @@ app.use(function(req, res, next) {
         setTimeout(function () {
             connection.close();
         }, 500);
-    })
+        })
+    }catch(error){
+        console.log(error);
+    }
 }
 
 app.post('/addTravel', jsonParser, function (req,res) {

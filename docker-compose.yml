@@ -37,6 +37,7 @@ services:
             - rabbitmq
         command: "./wait-for-it.sh -t 60 rabbitmq:15672 -- npm run start"
     user-server:
+        restart: unless-stopped
         build:
             context: ./Back-End/user-server
         container_name: 'user-server'
@@ -48,6 +49,7 @@ services:
             - postgres
         command: "./wait-for-it.sh -t 60 rabbitmq:15672 -- node user-server.js"
     travel-server:
+        restart: unless-stopped
         build:
             context: ./Back-End/travel-server
         container_name: 'travel-server'

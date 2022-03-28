@@ -42,7 +42,7 @@
 
 <div class="pag card text-center" *ngIf="!compares && travels.length > 0 && !selected">
     <div class="card-body mt-auto">
-        <div *ngFor="let travel of travels | paginate: {itemsPerPage: 5, currentPage: p}">
+        <div *ngFor="let travel of travels | paginate: {itemsPerPage: 4, currentPage: p}">
             <div class="travels card m-2">
                 <div class="card-body">
                     <div class="row">
@@ -71,7 +71,7 @@
     </div>
 </div>
 
-<div *ngIf="add" class="pag card text-center mt-5">
+<div *ngIf="add && !compares && !selected" class="pag card text-center mt-5">
    <div class="card-body mt-auto">
        <form [formGroup]="Form" (submit)="addTravel()">
            <div class="row formrow">
@@ -142,7 +142,7 @@
         {{errorString}}
     </h3>
 </div>
-<div class="m-5" *ngIf="!compares && !selected">
+<div class="m-3" *ngIf="!compares && !selected">
     <div *ngIf="!add" class="col-sm-12 text-center">
         <button type="button" class="btn btn-dark" (click)="add = !add">
             <i class="fa fa-plus"></i>
