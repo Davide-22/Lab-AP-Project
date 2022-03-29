@@ -1,29 +1,31 @@
 <div class="compare">
     <h1> Compare Two Travels </h1>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="card travel">
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col me-3">
+            <div class="card">
                 <div class="card-body mt-auto">
                     <select name="travels" id="travels1" class="travels" (change)="selectTravel($event.target.value,1)">
-                        <option value="" disabled selected> Travels </option>
+                        <option value="" disabled selected> Select the first travel </option>
                         <option *ngFor="let travel of travels" value="{{travel.name}}"> {{travel.name}} </option>
                     </select>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card travel">
+          </div>
+          <div class="col ml-3">
+            <div class="card">
                 <div class="card-body mt-auto">
                     <select name="travels" id="travels2" class="travels" (change)="selectTravel($event.target.value,2)">
-                        <option value="" disabled selected> Travels </option>
+                        <option value="" disabled selected> Select the second travel </option>
                         <option *ngFor="let travel of travels" value="{{travel.name}}"> {{travel.name}} </option>
                     </select>
                 </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
     <div class="mt-5">
-        <div>
+        <div class="mb-3">
             <select name="chart" id="chart" (change)="selectChart($event.target.value)">
                 <option value="" disabled selected> Select Charts</option>
                 <option value="barChart"> Bar Chart </option>
