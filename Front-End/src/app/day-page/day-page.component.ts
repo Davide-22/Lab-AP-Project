@@ -145,7 +145,7 @@ export class DayPageComponent implements OnInit {
   }
 
   deleteExpense(expense: Expense): void {
-    console.log(expense);
+    
     this.expenseService.deleteExpense({token: this.userToken, travel: this.Travel.name, name: expense.name, _id:expense._id}).subscribe(result => {
       if(result.status){
         this.expenses.splice(this.expenses.indexOf(expense),1);
@@ -235,9 +235,13 @@ export class DayPageComponent implements OnInit {
               amounts.push(this.expenses[i].amount);
             }
           }
-          this.pieChartData.labels = names;
+          if(names.length != 0){
+            this.pieChartData.labels = names;
+            this.pieChartData.datasets[0].data = amounts;
+          } else{
+            this.selectCategory('all');
+          }
         }
-        this.pieChartData.datasets[0].data = amounts;
       break;
       
       case 'food':
@@ -250,9 +254,14 @@ export class DayPageComponent implements OnInit {
               amounts.push(this.expenses[i].amount);
             }
           }
-          this.pieChartData.labels = names;
+          if(names.length != 0){
+            this.pieChartData.labels = names;
+            this.pieChartData.datasets[0].data = amounts;
+          } else{
+            this.selectCategory('all');
+          }
         }
-        this.pieChartData.datasets[0].data = amounts;
+        
       break;
 
       case 'event':
@@ -265,9 +274,13 @@ export class DayPageComponent implements OnInit {
               amounts.push(this.expenses[i].amount);
             }
           }
-          this.pieChartData.labels = names;
+          if(names.length != 0){
+            this.pieChartData.labels = names;
+            this.pieChartData.datasets[0].data = amounts;
+          } else{
+            this.selectCategory('all');
+          }
         }
-        this.pieChartData.datasets[0].data = amounts;
       break;
 
       case 'cultural place':
@@ -280,9 +293,14 @@ export class DayPageComponent implements OnInit {
               amounts.push(this.expenses[i].amount);
             }
           }
-          this.pieChartData.labels = names;
+          if(names.length != 0){
+            this.pieChartData.labels = names;
+            this.pieChartData.datasets[0].data = amounts;
+          } else{
+            this.selectCategory('all');
+          }
         }
-        this.pieChartData.datasets[0].data = amounts;
+        
       break;
           
       case 'transport':
@@ -295,9 +313,13 @@ export class DayPageComponent implements OnInit {
               amounts.push(this.expenses[i].amount);
             }
           }
-          this.pieChartData.labels = names;
+          if(names.length != 0){
+            this.pieChartData.labels = names;
+            this.pieChartData.datasets[0].data = amounts;
+          } else{
+            this.selectCategory('all');
+          }
         }
-        this.pieChartData.datasets[0].data = amounts;
       break;
     }
 
