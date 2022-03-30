@@ -259,7 +259,7 @@ app.post('/Expenses', jsonParser, function(req,res) {
 
                 days = Math.floor((utc2 - utc1) / _MS_PER_DAY);
             }
-            ex.avg = ex.sum/days;
+            ex.avg = (ex.sum/days).toFixed(1);
         }
         res.send(result);
     })
