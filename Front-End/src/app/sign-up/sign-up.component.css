@@ -1,5 +1,5 @@
 .signupform{
-    width: 30%;
+    width: 45%;
     margin: 0 auto;
     border-radius: 40px;
     margin-top: 6%;
@@ -31,4 +31,23 @@
     display: flex;
     justify-content: center;
     margin-bottom: 4%;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+a:link {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+  
+a:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+a:active {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
 }

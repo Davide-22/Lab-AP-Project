@@ -1,29 +1,39 @@
-<div class="card signupform">
-    <div class="card-body mt-auto">
-        <form [formGroup] = "form" (ngSubmit)="send()">
-            <div class="col-2 icon">
-                <i class="fa fa-globe fa-3x" aria-hidden="true"></i>
+
+<a href="/" class="log"><h3>Login</h3></a>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card signupform">
+                <div class="card-body mt-auto">
+                    <form [formGroup] = "form" (ngSubmit)="send()">
+                        <div class="col-2 icon">
+                            <i class="fa fa-globe fa-3x" aria-hidden="true"></i>
+                        </div>
+                        <div class="mb-3 inputfield">
+                            <label for="inputUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="inputUsername" aria-describedby="emailHelp" formControlName="user">
+                        </div>
+                        <div class="mb-3 inputfield">
+                        <label for="inputEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" formControlName="email">
+                        </div>
+                        <div class="mb-3 inputfield">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" formControlName="password">
+                        </div>
+                        <div class="mb-3 inputfield">
+                            <label for="inputRepeatPassword" class="form-label">Repeat password</label>
+                            <input type="password" class="form-control" id="inputRepeatPassword" formControlName="repeatpassword">
+                        </div>
+                        <button type="submit" class="btn btn-dark submitbtn">Submit</button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3 inputfield">
-                <label for="inputUsername" class="form-label">Username</label>
-                <input type="text" class="form-control" id="inputUsername" aria-describedby="emailHelp" formControlName="user">
+            <div class="alert alert-danger error" role="alert" *ngIf="error">
+                <h5>{{formError}}</h5>
             </div>
-            <div class="mb-3 inputfield">
-            <label for="inputEmail" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" formControlName="email">
-            </div>
-            <div class="mb-3 inputfield">
-            <label for="inputPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword" formControlName="password">
-            </div>
-            <div class="mb-3 inputfield">
-                <label for="inputRepeatPassword" class="form-label">Repeat password</label>
-                <input type="password" class="form-control" id="inputRepeatPassword" formControlName="repeatpassword">
-            </div>
-            <button type="submit" class="btn btn-dark submitbtn">Submit</button>
-        </form>
+        </div>
     </div>
 </div>
-<div class="alert alert-danger error" role="alert" *ngIf="error">
-    <h5>{{formError}}</h5>
-</div>
+
