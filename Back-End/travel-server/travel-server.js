@@ -21,7 +21,7 @@ app.use(function(req, res, next) {
     next();
   });
 
-  function sendLog(message) {
+function sendLog(message) {
     console.log(message);
     try{
         amqp.connect('amqp://rabbitmq', function (error0, connection) {
