@@ -238,8 +238,29 @@ app.post('/Expenses', jsonParser, function(req,res) {
         sendLog(error.toString());
         return res.send({statu: false, msg:"error"});
     }
-    prova = [];
-    db.query("SELECT travels.name,avg(amount),sum(amount),category FROM travels INNER JOIN expenses ON travels.name=expenses.travel GROUP BY travels.name,category",[email]).then(result => {
+    var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    db.query("SELECT travels.name,avg(amount),sum(amount),category,start_date,end_date FROM travels INNER JOIN expenses ON travels.name=expenses.travel GROUP BY travels.name,category,start_date,end_date",[email]).then(result => {
+        for(const ex of result){
+            var days = 0;
+            if (ex.end_date != null){
+                a=ex.start_date;
+                b=ex.end_date;
+                var utc1 = Date.UTC(a.substring(0,4), a.substring(5,7), a.substring(8,10));
+                var utc2 = Date.UTC(b.substring(0,4), b.substring(5,7), b.substring(8,10));
+
+                days = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            }else{
+                a=ex.start_date;
+                var date = new Date();
+                var day = (date.getDate()<10)? ("0"+date.getDate()):(date.getDate());
+                var month = (date.getMonth()<10)? ("0"+(date.getMonth()+1)):(date.getMonth()+1);
+                var utc1 = Date.UTC(a.substring(0,4), a.substring(5,7), a.substring(8,10));
+                var utc2 = Date.UTC(date.getFullYear(),month,day);
+
+                days = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            }
+            ex.avg = ex.sum/days;
+        }
         res.send(result);
     })
     .catch(error => {
