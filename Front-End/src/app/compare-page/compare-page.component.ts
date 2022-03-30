@@ -53,6 +53,11 @@ export class ComparePageComponent implements OnInit {
     datasets: []
   };
 
+  public barChartData1: ChartData<'bar'> = {
+    labels: [],
+    datasets: []
+  };
+
   chartInitialization(): void{
     this.barChartData.labels = this.compares;
     var travels = [{data: [], label:this.travel1},{data: [], label:this.travel2}]
@@ -86,89 +91,52 @@ export class ComparePageComponent implements OnInit {
   selectTravel(travel:string,id:number): void {
     if(id == 1){
       this.travel1 = travel;
-      if(this.chartType=="pieChart"){
-        this.chartDataElaboration(1);
-      }
     }else {
       this.travel2 = travel;
-      if(this.chartType=="pieChart"){
-        this.chartDataElaboration(2);
-      }
     }
-    if(this.chartType=="barChart"){
+    if(this.chartType=="average"){
       this.chartInitialization();
+    }else {
+      this.chartInitialization1();
     }
   }
 
   selectChart(chart:string): void{
     this.chartType=chart;
-    if(this.chartType=="barChart"){
+    if(this.chartType=="average"){
       this.chartInitialization();
     }else{
-      this.chartDataElaboration(1);
-      this.chartDataElaboration(2);
+      this.chartInitialization1();
     }
   }
 
-  @ViewChild(BaseChartDirective) chart2: BaseChartDirective | undefined;
+  chartInitialization1(): void{
+    this.barChartData1.labels = this.compares;
+    var travels = [{data: [], label:this.travel1},{data: [], label:this.travel2}]
+    this.barChartData1.datasets = travels;
 
-  public pieChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'right',
-      },
-      datalabels: {
-        formatter: (value, ctx) => {
-          if (ctx.chart.data.labels) {
-            return ctx.chart.data.labels[ctx.dataIndex];
+    for(let i=0;i<this.compares.length;i++){
+      var test1: boolean = false;
+      var test2: boolean = false;
+      for(let j=0;j<this.expenses.length;j++){
+        if(this.expenses[j].category==this.compares[i]){
+          if(this.expenses[j].name == this.travel1){
+            test1 = true;
+            this.barChartData1.datasets[0].data.push(this.expenses[j].sum);
           }
-        },
-      },
-    }
-  };
-  public pieChartData1: ChartData<'pie', number[], string | string[]> = {
-    labels: [],
-    datasets: [ {
-      data: []
-    } ]
-  };
-  public pieChartType: ChartType = 'pie';
-  public pieChartPlugins = [ DataLabelsPlugin ];
-
-  public pieChartData2: ChartData<'pie', number[], string | string[]> = {
-    labels: [],
-    datasets: [ {
-      data: []
-    } ]
-  };
-
-  chartDataElaboration(type: number): void{
-    if(type==1){
-      var chart_categories1=[];
-      var chart_amounts1=[];
-      for(let i=0; i<this.expenses.length;i++){
-        if(this.expenses[i].name==this.travel1){
-          chart_categories1.push(this.expenses[i].category);
-          chart_amounts1.push(this.expenses[i].sum);
+          if(this.expenses[j].name == this.travel2){
+            test2 = true;
+            this.barChartData1.datasets[1].data.push(this.expenses[j].sum);
+          }
         }
       }
-      this.pieChartData1.labels = chart_categories1;
-      this.pieChartData1.datasets[0].data = chart_amounts1;
-      this.chart2?.update();
-    }else{
-      var chart_categories2=[];
-      var chart_amounts2=[];
-      for(let i=0; i<this.expenses.length;i++){
-        if(this.expenses[i].name==this.travel2){
-          chart_categories2.push(this.expenses[i].category);
-          chart_amounts2.push(this.expenses[i].sum);
-        }
+      if(test1 == false){
+        this.barChartData1.datasets[0].data.push(0);
       }
-      this.pieChartData2.labels = chart_categories2;
-      this.pieChartData2.datasets[0].data = chart_amounts2;
-      this.chart2?.update();
+      if(test2 == false){
+        this.barChartData1.datasets[1].data.push(0);
+      }
+      this.chart?.update();
     }
   }
 

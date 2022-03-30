@@ -28,12 +28,12 @@
         <div class="mb-3">
             <select name="chart" id="chart" (change)="selectChart($event.target.value)">
                 <option value="" disabled selected> Select Charts</option>
-                <option value="barChart"> Bar Chart </option>
-                <option value="pieChart"> Pie Chart </option>
+                <option value="average"> Average Bar Chart </option>
+                <option value="total"> Total Bar Chart </option>
             </select>
         </div>
         <div class="card _chart" *ngIf="chartType">
-            <div style="display: block" *ngIf="chartType=='barChart'">
+            <div style="display: block" *ngIf="chartType=='average'">
               <canvas baseChart
                 [data]="barChartData"
                 [options]="barChartOptions"
@@ -41,28 +41,14 @@
                 [type]="barChartType">
               </canvas>
             </div>
-            <div class="row">
-                <div class="col">
-                    <div class="chart" *ngIf="chartType=='pieChart'">
-                        <canvas baseChart
-                            [data]="pieChartData1"
-                            [type]="pieChartType"
-                            [options]="pieChartOptions"
-                            [plugins]="pieChartPlugins">
-                        </canvas>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="chart" *ngIf="chartType=='pieChart'">
-                        <canvas baseChart
-                            [data]="pieChartData2"
-                            [type]="pieChartType"
-                            [options]="pieChartOptions"
-                            [plugins]="pieChartPlugins">
-                        </canvas>
-                    </div>
-                </div>
-            </div>
+            <div style="display: block" *ngIf="chartType=='total'">
+                <canvas baseChart
+                  [data]="barChartData1"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [type]="barChartType">
+                </canvas>
+              </div>
         </div>
     </div>
 </div>
