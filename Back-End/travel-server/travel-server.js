@@ -52,7 +52,7 @@ function sendLog(message) {
 }
 
 app.post('/addTravel', jsonParser, function (req,res) {
-    sendLog('POST /addTravel' + req.body.name);
+    sendLog('POST /addTravel ' + req.body.name);
     var name = req.body.name;
     var daily_budget = req.body.daily_budget;
     var start_date = req.body.start_date;
@@ -80,7 +80,7 @@ app.post('/addTravel', jsonParser, function (req,res) {
 
 
 app.post('/deleteTravel', jsonParser, function (req,res) {
-    sendLog('POST /deleteTravel'+ req.body.name);
+    sendLog('POST /deleteTravel '+ req.body.name);
     var name = req.body.name;
     var token = req.body.token;
     try{
@@ -99,7 +99,7 @@ app.post('/deleteTravel', jsonParser, function (req,res) {
 })
 
 app.post('/completeTravel', jsonParser, function (req,res) {
-    sendLog('POST /completeTravel'+req.body.travel);
+    sendLog('POST /completeTravel '+req.body.travel);
     var name = req.body.travel;
     var userToken = req.body.userToken;
     var end_date = req.body.date;
@@ -259,7 +259,7 @@ app.post('/Expenses', jsonParser, function(req,res) {
 
                 days = Math.floor((utc2 - utc1) / _MS_PER_DAY);
             }
-            ex.avg = (ex.sum/days).toFixed(1);
+            ex.avg = (ex.sum/(days+1)).toFixed(1);
         }
         res.send(result);
     })
