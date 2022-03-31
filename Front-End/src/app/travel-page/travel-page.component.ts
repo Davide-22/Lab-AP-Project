@@ -197,11 +197,15 @@ export class TravelPageComponent implements OnInit {
     const theDate = new Date(startDate)
     while (theDate < new Date(endDate)) {
       let toAdd = (new Date(theDate)).toISOString().slice(0, 10);
-      dates = [...dates, toAdd];
+      if(!dates.includes(toAdd)){
+        dates = [...dates, toAdd];
+      }
       theDate.setDate(theDate.getDate() + 1);
     }
     let end = (new Date(endDate)).toISOString().slice(0, 10);
-    dates = [...dates, end];
+    if(!dates.includes(end)){
+      dates = [...dates, end];
+    }
     return dates;
   } 
 
