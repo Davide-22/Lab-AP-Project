@@ -176,6 +176,12 @@
             </div>
         </div>
 
+        <div class="error alert alert-danger" *ngIf="error_budget && !travel_ended" >
+            <h3>
+                {{errorString}}
+            </h3>
+        </div>
+
         <div *ngIf="expenses.length > 0">
             <div class="card _chart mt-4">
                 <div class="row">

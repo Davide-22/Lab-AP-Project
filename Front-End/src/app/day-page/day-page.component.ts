@@ -26,6 +26,7 @@ export class DayPageComponent implements OnInit {
   public displayStyle: any = "none";
   public add: boolean = false;
   public error: boolean = false;
+  public error_budget: boolean = false;
   public errorString: string='You must fill all the field';
   public selected: boolean = false;
   public travel_ended: boolean = false;
@@ -185,8 +186,11 @@ export class DayPageComponent implements OnInit {
     var BudgetLeft: number = this.Travel.daily_budget - sum_amounts;
     if(BudgetLeft < 0){
       this.budget_left = 0;
+      this.errorString = 'You are out of budget!';
+      this.error_budget = true;
     } else{
       this.budget_left = BudgetLeft;
+      this.error_budget = false;
     }
     
   }
