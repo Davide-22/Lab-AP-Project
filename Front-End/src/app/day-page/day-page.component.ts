@@ -325,6 +325,23 @@ export class DayPageComponent implements OnInit {
           }
         }
       break;
+
+      case 'other':
+        if (this.pieChartData.labels) {
+          for(let i=0; i<this.expenses.length; i++){
+            if(this.expenses[i].category == "other"){
+              names.push(this.expenses[i].name);
+              amounts.push(this.expenses[i].amount);
+            }
+          }
+          if(names.length != 0){
+            this.pieChartData.labels = names;
+            this.pieChartData.datasets[0].data = amounts;
+          } else{
+            this.selectCategory('all');
+          }
+        }
+      break;
     }
 
     this.chart?.update();

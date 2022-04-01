@@ -76,7 +76,8 @@ export class TravelPageComponent implements OnInit {
       { data: [], label: 'Food' },
       { data: [], label: 'Event' },
       { data: [], label: 'Cultural Place', backgroundColor: '#b39ddb' },
-      { data: [], label: 'Transport', backgroundColor: '#a5d6a7' }
+      { data: [], label: 'Transport', backgroundColor: '#a5d6a7' },
+      { data: [], label: 'Other' }
     ]
   };
   
@@ -233,6 +234,7 @@ export class TravelPageComponent implements OnInit {
     var event_amounts: number[] = [];
     var culturalplace_amounts: number[] = [];
     var transport_amounts: number[] = [];
+    var other_amounts: number[] = [];
     
     for(let i=0; i<this.days.length; i++){
       accomodation_amounts.push(0);
@@ -240,6 +242,7 @@ export class TravelPageComponent implements OnInit {
       event_amounts.push(0);
       culturalplace_amounts.push(0);
       transport_amounts.push(0);
+      other_amounts.push(0);
       
       var splitted = this.days[i].split("/");
       var day: string = splitted[2] + "-" +splitted[1] + "-" + splitted[0];
@@ -258,6 +261,8 @@ export class TravelPageComponent implements OnInit {
             culturalplace_amounts[i] += expenses[j].amount;
           } else if(expenses[j].category == 'transport'){
             transport_amounts[i] += expenses[j].amount;
+          } else if(expenses[j].category == 'other'){
+            other_amounts[i] += expenses[j].amount;
           }
         }
         this.barChartData.datasets[0].data = accomodation_amounts;
@@ -265,6 +270,7 @@ export class TravelPageComponent implements OnInit {
         this.barChartData.datasets[2].data = event_amounts;
         this.barChartData.datasets[3].data = culturalplace_amounts;
         this.barChartData.datasets[4].data = transport_amounts;
+        this.barChartData.datasets[5].data = other_amounts;
 
         /*let max_amount = Math.max(...accomodation_amounts, ...food_amounts, ...event_amounts, ...culturalplace_amounts, ...transport_amounts);
         this.barChartOptions.scales.y.max = max_amount;
