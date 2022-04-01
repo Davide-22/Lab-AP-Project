@@ -235,33 +235,34 @@ export class TravelPageComponent implements OnInit {
     var culturalplace_amounts: number[] = [];
     var transport_amounts: number[] = [];
     var other_amounts: number[] = [];
-    
-    for(let i=0; i<this.days.length; i++){
-      accomodation_amounts.push(0);
-      food_amounts.push(0);
-      event_amounts.push(0);
-      culturalplace_amounts.push(0);
-      transport_amounts.push(0);
-      other_amounts.push(0);
-      
-      var splitted = this.days[i].split("/");
-      var day: string = splitted[2] + "-" +splitted[1] + "-" + splitted[0];
-      
-      this.expenseService.getExpenses({travel: this.Travel.name, token: this.userToken, date: day}).subscribe((result) => {
-        expenses = result;
 
+    this.expenseService.getAll({travel: this.Travel.name, token: this.userToken}).subscribe((result) => {
+      expenses = result;
+
+      for(let i=0; i<this.days.length; i++){
+        accomodation_amounts.push(0);
+        food_amounts.push(0);
+        event_amounts.push(0);
+        culturalplace_amounts.push(0);
+        transport_amounts.push(0);
+        other_amounts.push(0);
+        
+        var splitted = this.days[i].split("/");
+        var day: string = splitted[2] + "-" +splitted[1] + "-" + splitted[0];
+
+  
         for(let j=0; j<expenses.length; j++){
-          if(expenses[j].category == 'accomodation'){
+          if(expenses[j].category == 'accomodation' && day == expenses[j].date){
             accomodation_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'food'){
+          } else if(expenses[j].category == 'food' && day == expenses[j].date){
             food_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'event'){
+          } else if(expenses[j].category == 'event' && day == expenses[j].date){
             event_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'cultural place'){
+          } else if(expenses[j].category == 'cultural place' && day == expenses[j].date){
             culturalplace_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'transport'){
+          } else if(expenses[j].category == 'transport' && day == expenses[j].date){
             transport_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'other'){
+          } else if(expenses[j].category == 'other' && day == expenses[j].date){
             other_amounts[i] += expenses[j].amount;
           }
         }
@@ -271,14 +272,11 @@ export class TravelPageComponent implements OnInit {
         this.barChartData.datasets[3].data = culturalplace_amounts;
         this.barChartData.datasets[4].data = transport_amounts;
         this.barChartData.datasets[5].data = other_amounts;
-
-        /*let max_amount = Math.max(...accomodation_amounts, ...food_amounts, ...event_amounts, ...culturalplace_amounts, ...transport_amounts);
-        this.barChartOptions.scales.y.max = max_amount;
-        console.log(this.barChartOptions.scales.y.max )*/
-
+  
         this.chart?.update();
-      });
-    }
+      }
+      
+    })
     
   }
 

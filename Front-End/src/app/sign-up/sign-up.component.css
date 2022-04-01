@@ -32,22 +32,3 @@
     justify-content: center;
     margin-bottom: 4%;
 }
-
-a{
-    color: black;
-    text-decoration: none;
-}
-a:link {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-}
-  
-a:hover {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-}
-
-a:active {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-}

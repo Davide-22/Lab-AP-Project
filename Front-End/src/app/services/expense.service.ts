@@ -8,6 +8,8 @@ import { Ack } from "../models/acks";
 import { DeleteExpense } from "../models/delete_expense.model";
 import { Compare } from "../models/compare.model";
 import { Token } from "../models/token.model";
+import { Delete } from "../models/delete.model";
+import { GetDays } from "../models/getdays.model";
 
 @Injectable({providedIn: 'root' })
 export class ExpenseService {
@@ -43,6 +45,15 @@ export class ExpenseService {
 
     public getAllExpenses(token: Token): Observable<Compare[]>{
         return this.http.post<Compare[]>('http://localhost:3002/Expenses', Token.toJSON(token))
+        .pipe(
+            map(res => {
+                return res
+            })
+        )
+    }
+
+    public getAll(travel: GetDays): Observable<Expense[]>{
+        return this.http.post<Expense[]>('http://localhost:3002/getAllExpenses', GetDays.toJSON(travel))
         .pipe(
             map(res => {
                 return res

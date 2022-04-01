@@ -37,7 +37,7 @@ export class ChangePasswordComponent implements OnInit {
       this.error = true;
       return true;
     }
-    if(this.form.controls['password'].value.length != this.form.controls['repeatpassword'].value.length){
+    if(this.form.controls['password'].value != this.form.controls['repeatpassword'].value){
       this.formError = "Passwords don't match";
       this.error = true;
       return true;

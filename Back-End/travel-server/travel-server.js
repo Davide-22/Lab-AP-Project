@@ -270,6 +270,26 @@ app.post('/Expenses', jsonParser, function(req,res) {
     
 })
 
+app.post('/getAllExpenses', jsonParser, function(req,res) {
+    sendLog("POST /getAllExpenses");
+    var travel = req.body.travel;
+    token = req.body.token;
+    try{
+        const decode = jwt.verify(token, 'testkey');
+        email = decode.email;
+        db.query("SELECT * FROM expenses WHERE user_email = $1 AND travel = $2 ORDER BY date", [email, travel]).then(result => {
+            res.send(result);
+        })
+        .catch(err => {
+            sendLog(err.toString());
+            return res.send({status: false, msg: "error"})
+        })
+    }catch(error){
+        sendLog(error.toString());
+        return res.send({status: false, msg:"error"});
+    } 
+})
+
 app.listen(3002, () => {
     sendLog('Listening on port: ' + 3002);
 });
