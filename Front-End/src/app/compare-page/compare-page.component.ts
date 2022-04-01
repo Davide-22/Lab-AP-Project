@@ -17,7 +17,7 @@ export class ComparePageComponent implements OnInit {
 
   @Input() public travels: Travel[];
   public expenses: Compare[];
-  public compares: string[] = ['accomodation','food','transport','cultural place','event', 'other'];
+  public compares: string[] = ['Accomodation','Food','Transport','Cultural place','Event', 'Other'];
   public travel1: string="";
   public travel2: string="";
   public chartType: string;

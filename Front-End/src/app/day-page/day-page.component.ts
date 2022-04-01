@@ -224,17 +224,17 @@ export class DayPageComponent implements OnInit {
     var amounts: number[] = [];
     this.cat = category;
     switch(category){
-      case 'all':
+      case 'All':
         if (this.pieChartData.labels) {
           this.pieChartData.labels = this.chart_categories;
         }
         this.pieChartData.datasets[0].data = this.chart_amounts;
       break;
       
-      case 'accomodation':
+      case 'Accomodation':
         if (this.pieChartData.labels) {
           for(let i=0; i<this.expenses.length; i++){
-            if(this.expenses[i].category == "accomodation"){
+            if(this.expenses[i].category == "Accomodation"){
               names.push(this.expenses[i].name);
               amounts.push(this.expenses[i].amount);
             }
@@ -243,17 +243,17 @@ export class DayPageComponent implements OnInit {
             this.pieChartData.labels = names;
             this.pieChartData.datasets[0].data = amounts;
           } else{
-            this.selectCategory('all');
+            this.selectCategory('All');
           }
         }
       break;
       
-      case 'food':
+      case 'Food':
         if (this.pieChartData.labels) {
           var names: string[] = [];
           var amounts: number[] = [];
           for(let i=0; i<this.expenses.length; i++){
-            if(this.expenses[i].category == "food"){
+            if(this.expenses[i].category == "Food"){
               names.push(this.expenses[i].name);
               amounts.push(this.expenses[i].amount);
             }
@@ -262,18 +262,18 @@ export class DayPageComponent implements OnInit {
             this.pieChartData.labels = names;
             this.pieChartData.datasets[0].data = amounts;
           } else{
-            this.selectCategory('all');
+            this.selectCategory('All');
           }
         }
         
       break;
 
-      case 'event':
+      case 'Event':
         if (this.pieChartData.labels) {
           var names: string[] = [];
           var amounts: number[] = [];
           for(let i=0; i<this.expenses.length; i++){
-            if(this.expenses[i].category == "event"){
+            if(this.expenses[i].category == "Event"){
               names.push(this.expenses[i].name);
               amounts.push(this.expenses[i].amount);
             }
@@ -282,17 +282,17 @@ export class DayPageComponent implements OnInit {
             this.pieChartData.labels = names;
             this.pieChartData.datasets[0].data = amounts;
           } else{
-            this.selectCategory('all');
+            this.selectCategory('All');
           }
         }
       break;
 
-      case 'cultural place':
+      case 'Cultural place':
         if (this.pieChartData.labels) {
           var names: string[] = [];
           var amounts: number[] = [];
           for(let i=0; i<this.expenses.length; i++){
-            if(this.expenses[i].category == "cultural place"){
+            if(this.expenses[i].category == "Cultural place"){
               names.push(this.expenses[i].name);
               amounts.push(this.expenses[i].amount);
             }
@@ -301,18 +301,18 @@ export class DayPageComponent implements OnInit {
             this.pieChartData.labels = names;
             this.pieChartData.datasets[0].data = amounts;
           } else{
-            this.selectCategory('all');
+            this.selectCategory('All');
           }
         }
         
       break;
           
-      case 'transport':
+      case 'Transport':
         if (this.pieChartData.labels) {
           var names: string[] = [];
           var amounts: number[] = [];
           for(let i=0; i<this.expenses.length; i++){
-            if(this.expenses[i].category == "transport"){
+            if(this.expenses[i].category == "Transport"){
               names.push(this.expenses[i].name);
               amounts.push(this.expenses[i].amount);
             }
@@ -321,15 +321,15 @@ export class DayPageComponent implements OnInit {
             this.pieChartData.labels = names;
             this.pieChartData.datasets[0].data = amounts;
           } else{
-            this.selectCategory('all');
+            this.selectCategory('All');
           }
         }
       break;
 
-      case 'other':
+      case 'Other':
         if (this.pieChartData.labels) {
           for(let i=0; i<this.expenses.length; i++){
-            if(this.expenses[i].category == "other"){
+            if(this.expenses[i].category == "Other"){
               names.push(this.expenses[i].name);
               amounts.push(this.expenses[i].amount);
             }
@@ -338,7 +338,7 @@ export class DayPageComponent implements OnInit {
             this.pieChartData.labels = names;
             this.pieChartData.datasets[0].data = amounts;
           } else{
-            this.selectCategory('all');
+            this.selectCategory('All');
           }
         }
       break;

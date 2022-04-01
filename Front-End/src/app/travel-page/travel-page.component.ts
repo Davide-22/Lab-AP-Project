@@ -75,8 +75,8 @@ export class TravelPageComponent implements OnInit {
       { data: [], label: 'Accomodation' },
       { data: [], label: 'Food' },
       { data: [], label: 'Event' },
-      { data: [], label: 'Cultural Place', backgroundColor: '#b39ddb' },
-      { data: [], label: 'Transport', backgroundColor: '#a5d6a7' },
+      { data: [], label: 'Cultural place'},
+      { data: [], label: 'Transport'},
       { data: [], label: 'Other' }
     ]
   };
@@ -252,17 +252,17 @@ export class TravelPageComponent implements OnInit {
 
   
         for(let j=0; j<expenses.length; j++){
-          if(expenses[j].category == 'accomodation' && day == expenses[j].date){
+          if(expenses[j].category == 'Accomodation' && day == expenses[j].date){
             accomodation_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'food' && day == expenses[j].date){
+          } else if(expenses[j].category == 'Food' && day == expenses[j].date){
             food_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'event' && day == expenses[j].date){
+          } else if(expenses[j].category == 'Event' && day == expenses[j].date){
             event_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'cultural place' && day == expenses[j].date){
+          } else if(expenses[j].category == 'Cultural place' && day == expenses[j].date){
             culturalplace_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'transport' && day == expenses[j].date){
+          } else if(expenses[j].category == 'Transport' && day == expenses[j].date){
             transport_amounts[i] += expenses[j].amount;
-          } else if(expenses[j].category == 'other' && day == expenses[j].date){
+          } else if(expenses[j].category == 'Other' && day == expenses[j].date){
             other_amounts[i] += expenses[j].amount;
           }
         }
